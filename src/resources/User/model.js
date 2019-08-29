@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const SchemaHelper = require("./utils/SchemaHelper");
+const SchemaHelper = require("../../utils/SchemaHelper");
 
 let schema = {
   name: {
