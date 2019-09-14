@@ -1,6 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const { Task } = require("./model");
+const RouterHelper = require("../../utils/RouterHelper");
 
 router.post("/tasks", async (req, res) => {
   const { description, completed } = req.body;
@@ -20,22 +21,29 @@ router.post("/tasks", async (req, res) => {
 
 router.patch("/tasks/:id", async (req, res) => {
   const { id } = req.params;
+  const updates = Object.keys(req.body);
 
   try {
     //validate for forbidden keys
-    if (
-      (!RouterHelper.isAllowedKey(req.body, ["completed", "description"]), {})
-    ) {
+    if (!RouterHelper.isAllowedKey(req.body, ["completed", "description"])) {
       return res.status(404).send({
         status: "error",
         message: "You're trying to update some forbidden fields"
       });
     }
 
-    const task = await Task.findByIdAndUpdate(id, req.body, {
-      new: true, //return updated user
-      runValidators: true //run our standard validators on update
+    const task = await Task.findById(id);
+
+    //update every key on the user object
+    updates.forEach(update => {
+      task[update] = req.body[update];
     });
+    await task.save();
+
+    // const task = await Task.findByIdAndUpdate(id, req.body, {
+    //   new: true, //return updated user
+    //   runValidators: true //run our standard validators on update
+    // });
 
     if (!task) {
       return res.status(404).send({

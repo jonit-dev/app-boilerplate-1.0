@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const Task = mongoose.model("Task", {
+const schema = {
   description: {
     type: String,
     trim: true,
@@ -10,7 +10,20 @@ const Task = mongoose.model("Task", {
     type: Boolean,
     default: false
   }
+};
+
+const taskSchema = new mongoose.Schema(schema);
+
+taskSchema.pre("save", async function(next) {
+  const task = this; //object thats being modified. eg. user
+
+  //execute something here...
+  console.log("task middleware here!!");
+
+  next(); //proceed...
 });
+
+const Task = mongoose.model("Task", taskSchema);
 
 module.exports = {
   Task

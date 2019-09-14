@@ -1,10 +1,5 @@
-const { Task } = require("./resources/Task/model");
-
 const express = require("express");
 const mongoose = require("mongoose");
-const { ObjectId } = require("mongodb");
-const RouterHelper = require("./utils/RouterHelper");
-
 mongoose.connect("mongodb://127.0.0.1:27017/task-manager-api", {
   useNewUrlParser: true,
   useCreateIndex: true,

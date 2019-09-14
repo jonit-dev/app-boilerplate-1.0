@@ -2,8 +2,20 @@ const express = require("express");
 const router = new express.Router();
 const { User } = require("./model");
 
+const UserHelper = require("../../utils/UserHelper");
+const RouterHelper = require("../../utils/RouterHelper");
+
 router.post("/users", async (req, res) => {
-  const user = new User(req.body);
+  let { name, email, password, age } = req.body;
+
+  const hashedPassword = await UserHelper.hashPassword(password);
+
+  const user = new User({
+    name,
+    email,
+    password: hashedPassword,
+    age
+  });
 
   try {
     await user.save();
@@ -84,6 +96,7 @@ router.get("/users/:id", async (req, res) => {
 
 router.patch("/users/:id", async (req, res) => {
   const { id } = req.params;
+  const updates = Object.keys(req.body);
 
   if (
     !RouterHelper.isAllowedKey(req.body, ["name", "email", "password", "age"])
@@ -94,10 +107,18 @@ router.patch("/users/:id", async (req, res) => {
     });
   }
   try {
-    const user = await User.findByIdAndUpdate(id, req.body, {
-      new: true, //return updated user
-      runValidators: true //run our standard validators on update
+    const user = await User.findById(id);
+
+    //update every key on the user object
+    updates.forEach(update => {
+      user[update] = req.body[update];
     });
+    await user.save();
+
+    // const user = await User.findByIdAndUpdate(id, req.body, {
+    //   new: true, //return updated user
+    //   runValidators: true //run our standard validators on update
+    // });
 
     if (!user) {
       return status(400).send({
