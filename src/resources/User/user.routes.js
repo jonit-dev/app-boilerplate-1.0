@@ -1,29 +1,67 @@
 const express = require("express");
 const router = new express.Router();
-const { User } = require("./model");
-
-const UserHelper = require("../../utils/UserHelper");
+const { User } = require("./user.model");
 const RouterHelper = require("../../utils/RouterHelper");
+const jwt = require("jsonwebtoken");
 
+/*#############################################################|
+|  >>> PUBLIC ROUTES
+*##############################################################*/
+
+// Authentication ========================================
+
+//User => Login
+router.post("/users/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  console.log(`logging user: ${email} => ${password}`);
+
+  try {
+    const user = await User.findByCredentials(email, password);
+    const token = await user.generateAuthToken();
+
+    return res.status(200).send({
+      user,
+      token
+    });
+  } catch (error) {
+    console.log(`ERROR: ${error}`);
+    res.status(400).send({
+      error: error.toString()
+    });
+  }
+});
+
+// User => Sign Up
 router.post("/users", async (req, res) => {
   let { name, email, password, age } = req.body;
-
-  const hashedPassword = await UserHelper.hashPassword(password);
 
   const user = new User({
     name,
     email,
-    password: hashedPassword,
+    password,
     age
   });
 
   try {
     await user.save();
-    return res.status(201).send(user);
+
+    const token = await user.generateAuthToken();
+
+    return res.status(201).send({
+      user,
+      token
+    });
   } catch (error) {
     res.status(400).send(error);
   }
 });
+
+/*#############################################################|
+|  >>> PRIVATE ROUTES
+*##############################################################*/
+
+// Main routes ========================================
 
 router.delete("/users/:id", async (req, res) => {
   const { id } = req.params;
@@ -129,6 +167,7 @@ router.patch("/users/:id", async (req, res) => {
 
     return res.status(200).send(user);
   } catch (error) {
+    console.log(error);
     return res.status(400).send(error);
   }
 });
