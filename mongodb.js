@@ -132,14 +132,14 @@ MongoClient.connect(
     //   )
     //   .catch(err => console.log(err));
 
-    db.collection("tasks")
-      .deleteOne({
-        description: "Buy milk"
-      })
-      .then(result =>
-        result.deletedCount
-          ? console.log("Resource deleted")
-          : console.log("Failed to delete resource")
-      );
+    // db.collection("tasks")
+    //   .deleteOne({
+    //     description: "Buy milk"
+    //   })
+    //   .then(result =>
+    //     result.deletedCount
+    //       ? console.log("Resource deleted")
+    //       : console.log("Failed to delete resource")
+    //   );
   }
 );

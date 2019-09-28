@@ -64,6 +64,20 @@ userSchema.methods.generateAuthToken = async function() {
   return token;
 };
 
+//this will be fired whenever our model is converted to JSON!!
+
+userSchema.methods.toJSON = function() {
+  // delete keys that shouldn't be displayed publicly
+
+  const user = this;
+  const userObject = user.toObject(); //convert Mongoose model to Object
+
+  delete userObject.password;
+  delete userObject.tokens;
+
+  return userObject;
+};
+
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
 

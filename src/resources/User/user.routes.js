@@ -147,7 +147,9 @@ router.delete("/users/:id", async (req, res) => {
 
 router.get("/users/profile", userAuthMiddleware, async (req, res) => {
   try {
-    return res.status(200).send(req.user); //req.user is coming from the authMiddleware
+    return res.status(200).send({
+      user
+    }); //req.user is coming from the authMiddleware
   } catch (error) {
     return res.status(500).send({
       status: "error",
