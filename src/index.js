@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const serverConfig = require("./serverConfig.dev.json");
+const serverConfig = require("./constants/serverConfig.json");
 mongoose.connect("mongodb://127.0.0.1:27017/task-manager-api", {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -20,10 +20,10 @@ app.use(express.json()); // << THIS IS REQUIRED TO EXPRESS PARSING JSON DATA
 |  >>> MIDDLEWARES
 *##############################################################*/
 
-const middleware = require("./global/middlewares");
+const globalMiddlewares = require("./middlewares/global.middleware");
 
 if (serverConfig.maintenanceMode) {
-  app.use(middleware.maintenanceMode);
+  app.use(globalMiddlewares.maintenanceMode);
 }
 
 // app.use(middleware.checkMethods);

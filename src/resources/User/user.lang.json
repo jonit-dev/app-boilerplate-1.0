@@ -1,0 +1,26 @@
+{
+  "userNotAuthenticated": {
+    "eng": "User not authenticated. Please, check your authentication credentials and try again."
+  },
+  "userNotFoundOnLogin": {
+    "eng": "Error while trying to login. User not found."
+  },
+  "userWrongPassword": {
+    "eng": "Error while trying to login. Please check your credential details"
+  },
+  "usersNotFound": {
+    "eng": "No users found."
+  },
+  "userNotFound": {
+    "eng": "User not found."
+  },
+  "userDeleteNotFound": {
+    "eng": "The user you're trying to delete does not exist"
+  },
+  "userPatchForbiddenKeys": {
+    "eng": "You're trying to update forbidden keys in your request"
+  },
+  "userFailedUpdate": {
+    "eng": "Failed to update your user data."
+  }
+}

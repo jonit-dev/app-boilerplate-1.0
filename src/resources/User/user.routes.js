@@ -2,7 +2,10 @@ const express = require("express");
 const router = new express.Router();
 const { User } = require("./user.model");
 const RouterHelper = require("../../utils/RouterHelper");
-const jwt = require("jsonwebtoken");
+const authMiddleware = require("../../middlewares/auth.middleware");
+const LanguageHelper = require("../../utils/LanguageHelper");
+
+//load auth middleware for adding into specific routes!
 
 /*#############################################################|
 |  >>> PUBLIC ROUTES
@@ -72,7 +75,7 @@ router.delete("/users/:id", async (req, res) => {
     if (!user) {
       return res.status(404).send({
         status: "error",
-        message: "User not found"
+        message: LanguageHelper.getLanguageString("user", "userDeleteNotFound")
       });
     }
 
@@ -83,14 +86,14 @@ router.delete("/users/:id", async (req, res) => {
   }
 });
 
-router.get("/users", async (req, res) => {
+router.get("/users", authMiddleware.auth, async (req, res) => {
   try {
     const users = await User.find({});
 
     if (!users) {
       return res.status(404).send({
         status: "error",
-        message: "No users found!"
+        message: LanguageHelper.getLanguageString("user", "usersNotFound")
       });
     }
     return res.status(200).send(users);
@@ -108,7 +111,7 @@ router.get("/users/:id", async (req, res) => {
     if (!user) {
       return res.status(404).send({
         status: "error",
-        message: "No user found!"
+        message: LanguageHelper.getLanguageString("user", "userNotFound")
       });
     }
 
@@ -141,7 +144,10 @@ router.patch("/users/:id", async (req, res) => {
   ) {
     return res.status(400).send({
       status: "error",
-      message: "You're trying to update forbidden keys"
+      message: LanguageHelper.getLanguageString(
+        "user",
+        "userPatchForbiddenKeys"
+      )
     });
   }
   try {
@@ -161,7 +167,7 @@ router.patch("/users/:id", async (req, res) => {
     if (!user) {
       return status(400).send({
         status: "error",
-        message: "failed to update your user!"
+        message: LanguageHelper.getLanguageString("user", "userFailedUpdate")
       });
     }
 

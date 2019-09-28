@@ -2,6 +2,7 @@ const express = require("express");
 const router = new express.Router();
 const { Task } = require("./task.model");
 const RouterHelper = require("../../utils/RouterHelper");
+const LanguageHelper = require("../../utils/LanguageHelper");
 
 router.post("/tasks", async (req, res) => {
   const { description, completed } = req.body;
@@ -28,7 +29,10 @@ router.patch("/tasks/:id", async (req, res) => {
     if (!RouterHelper.isAllowedKey(req.body, ["completed", "description"])) {
       return res.status(404).send({
         status: "error",
-        message: "You're trying to update some forbidden fields"
+        message: LanguageHelper.getLanguageString(
+          "task",
+          "taskPatchForbiddenKeys"
+        )
       });
     }
 
@@ -48,7 +52,7 @@ router.patch("/tasks/:id", async (req, res) => {
     if (!task) {
       return res.status(404).send({
         status: "error",
-        message: "Task not found"
+        message: LanguageHelper.getLanguageString("task", "taskNotFound")
       });
     }
 
@@ -65,7 +69,7 @@ router.get("/tasks", async (req, res) => {
     if (!tasks) {
       return res.status(404).send({
         status: "error",
-        message: "Tasks not found!"
+        message: LanguageHelper.getLanguageString("task", "tasksNotFound")
       });
     }
     return res.status(200).send(tasks);
@@ -95,7 +99,10 @@ router.get("/tasks/completed", async (req, res) => {
     if (!tasks) {
       return res.status(404).send({
         status: "error",
-        message: "No compledted tasks found"
+        message: LanguageHelper.getLanguageString(
+          "task",
+          "taskNoCompletedTasksFound"
+        )
       });
     }
 
@@ -139,7 +146,7 @@ router.get("/tasks/:id", async (req, res) => {
     if (!task) {
       return res.status(404).send({
         status: "error",
-        message: "Tasks not found!"
+        message: LanguageHelper.getLanguageString("task", "tasksNotFound")
       });
     }
 
@@ -158,7 +165,7 @@ router.delete("/tasks/:id", async (req, res) => {
     if (!task) {
       return res.status(400).send({
         status: "error",
-        message: "Task not found"
+        message: LanguageHelper.getLanguageString("task", "taskDeleteNotFound")
       });
     }
 
@@ -166,7 +173,10 @@ router.delete("/tasks/:id", async (req, res) => {
 
     return res.status(200).send({
       status: "success",
-      message: "Task deleted",
+      message: LanguageHelper.getLanguageString(
+        "task",
+        "taskDeletedSuccessfully"
+      ),
       tasksLeft: count
     });
   } catch (error) {

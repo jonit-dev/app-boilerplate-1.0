@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const LanguageHelper = require("../../utils/LanguageHelper");
 
 // Schema ========================================
 
@@ -69,7 +70,9 @@ userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw new Error("User not found. Unable to login!");
+    throw new Error(
+      LanguageHelper.getLanguageString("user", "userNotFoundOnLogin")
+    );
   }
   console.log("user found...comparing hashes!");
   console.log(password);
@@ -79,7 +82,9 @@ userSchema.statics.findByCredentials = async (email, password) => {
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    throw new Error("Wrong password!");
+    throw new Error(
+      LanguageHelper.getLanguageString("user", "userWrongPassword")
+    );
   }
 
   return user; //return the user if everything is ok
