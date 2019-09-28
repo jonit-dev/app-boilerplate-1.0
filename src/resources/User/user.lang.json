@@ -5,11 +5,20 @@
   "userLogoutSuccess": {
     "eng": "User logged out successfully."
   },
+  "userLogoutAllSuccess": {
+    "eng": "User logged out all devices successfully"
+  },
+  "userLogoutAllError": {
+    "eng": "Error while trying to logout from all devices"
+  },
   "userNotFoundByToken": {
     "eng": "An user with the provided authentication token was not found"
   },
   "userNotAuthenticated": {
     "eng": "User not authenticated. Please, check your authentication credentials and try again."
+  },
+  "userCreationError": {
+    "eng": "Error while trying to create your user"
   },
   "userNotFoundOnLogin": {
     "eng": "Error while trying to login. User not found."
@@ -24,7 +33,13 @@
     "eng": "User not found."
   },
   "userDeleteNotFound": {
-    "eng": "The user you're trying to delete does not exist"
+    "eng": "The user you're trying to delete does not exist."
+  },
+  "userProfileGetError": {
+    "eng": "Error while trying to fetch your user's profile."
+  },
+  "userDeleteError": {
+    "eng": "Error while trying to delete your user"
   },
   "userPatchForbiddenKeys": {
     "eng": "You're trying to update forbidden keys in your request"

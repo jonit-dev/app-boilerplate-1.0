@@ -57,10 +57,7 @@ userSchema.methods.generateAuthToken = async function() {
   //we can also pass an optional configuration object
   // const token = jwt.sign({ _id: user._id.toString() }, serverConfig.jwtSecret), { expiresIn: '7 days'});
 
-  user.tokens = {
-    ...user.tokens,
-    token
-  };
+  user.tokens = [...user.tokens, { token }];
 
   await user.save();
 
@@ -94,6 +91,8 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 userSchema.pre("save", async function(next) {
   const user = this;
+
+  // console.log('user :: middleware => Running pre "save" code');
 
   //this is the document being saved
 

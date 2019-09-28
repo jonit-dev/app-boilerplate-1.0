@@ -45,8 +45,6 @@ router.post("/users/logout", userAuthMiddleware, async (req, res) => {
 
     console.log(`Logging out user: ${user.email}`);
 
-    console.log(user.tokens);
-
     await user.save(); //save user model to update records
 
     return res.status(200).send({
@@ -57,6 +55,30 @@ router.post("/users/logout", userAuthMiddleware, async (req, res) => {
     return res.status(400).send({
       status: "error",
       message: LanguageHelper.getLanguageString("user", "userLogoutError"),
+      details: error.message
+    });
+  }
+});
+
+//User ==> Logout all connected devices
+
+router.post("/users/logout/all", userAuthMiddleware, async (req, res) => {
+  const { user } = req;
+
+  try {
+    user.tokens = [];
+
+    await user.save();
+
+    return res.status(200).send({
+      status: "success",
+      message: LanguageHelper.getLanguageString("user", "userLogoutAllSuccess")
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userLogoutAllError"),
       details: error.message
     });
   }
@@ -85,7 +107,11 @@ router.post("/users", async (req, res) => {
       token
     });
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send({
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userCreationError"),
+      details: error.message
+    });
   }
 });
 
@@ -111,12 +137,24 @@ router.delete("/users/:id", async (req, res) => {
     return res.status(200).send(user);
   } catch (error) {
     console.log(error);
-    return res.status(500).send(error);
+    return res.status(500).send({
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userDeleteError"),
+      details: error.message
+    });
   }
 });
 
 router.get("/users/profile", userAuthMiddleware, async (req, res) => {
-  return res.status(200).send(req.user); //req.user is coming from the authMiddleware
+  try {
+    return res.status(200).send(req.user); //req.user is coming from the authMiddleware
+  } catch (error) {
+    return res.status(500).send({
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userProfileGetError"),
+      details: error.message
+    });
+  }
 
   // try {
   //   const users = await User.find({});
