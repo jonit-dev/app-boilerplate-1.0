@@ -2,7 +2,7 @@ const express = require("express");
 const router = new express.Router();
 const { User } = require("./user.model");
 const RouterHelper = require("../../utils/RouterHelper");
-const authMiddleware = require("../../middlewares/auth.middleware");
+const { userAuthMiddleware } = require("../../middlewares/auth.middleware");
 const LanguageHelper = require("../../utils/LanguageHelper");
 
 //load auth middleware for adding into specific routes!
@@ -17,7 +17,7 @@ const LanguageHelper = require("../../utils/LanguageHelper");
 router.post("/users/login", async (req, res) => {
   const { email, password } = req.body;
 
-  console.log(`logging user: ${email} => ${password}`);
+  console.log(`logging user: ${email}`);
 
   try {
     const user = await User.findByCredentials(email, password);
@@ -31,6 +31,33 @@ router.post("/users/login", async (req, res) => {
     console.log(`ERROR: ${error}`);
     res.status(400).send({
       error: error.toString()
+    });
+  }
+});
+
+router.post("/users/logout", userAuthMiddleware, async (req, res) => {
+  const { user } = req;
+  const reqToken = req.token;
+
+  try {
+    //remove the token that's being used for the user from our user tokens array in our database
+    user.tokens = user.tokens.filter(tokenObj => tokenObj.token !== reqToken);
+
+    console.log(`Logging out user: ${user.email}`);
+
+    console.log(user.tokens);
+
+    await user.save(); //save user model to update records
+
+    return res.status(200).send({
+      status: "success",
+      message: LanguageHelper.getLanguageString("user", "userLogoutSuccess")
+    });
+  } catch (error) {
+    return res.status(400).send({
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userLogoutError"),
+      details: error.message
     });
   }
 });
@@ -50,6 +77,8 @@ router.post("/users", async (req, res) => {
     await user.save();
 
     const token = await user.generateAuthToken();
+
+    console.log(`User created: ${user.email}`);
 
     return res.status(201).send({
       user,
@@ -86,20 +115,21 @@ router.delete("/users/:id", async (req, res) => {
   }
 });
 
-router.get("/users", authMiddleware.auth, async (req, res) => {
-  try {
-    const users = await User.find({});
+router.get("/users/profile", userAuthMiddleware, async (req, res) => {
+  return res.status(200).send(req.user); //req.user is coming from the authMiddleware
 
-    if (!users) {
-      return res.status(404).send({
-        status: "error",
-        message: LanguageHelper.getLanguageString("user", "usersNotFound")
-      });
-    }
-    return res.status(200).send(users);
-  } catch (error) {
-    res.status(400).send(error);
-  }
+  // try {
+  //   const users = await User.find({});
+  //   if (!users) {
+  //     return res.status(404).send({
+  //       status: "error",
+  //       message: LanguageHelper.getLanguageString("user", "usersNotFound")
+  //     });
+  //   }
+  //   return res.status(200).send(users);
+  // } catch (error) {
+  //   res.status(400).send(error);
+  // }
 });
 
 router.get("/users/:id", async (req, res) => {

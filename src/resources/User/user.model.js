@@ -3,6 +3,7 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const LanguageHelper = require("../../utils/LanguageHelper");
+const serverConfig = require("../../constants/serverConfig.json");
 
 // Schema ========================================
 
@@ -51,10 +52,10 @@ userSchema.statics.hashPassword = async password => {
 
 userSchema.methods.generateAuthToken = async function() {
   const user = this;
-  const token = jwt.sign({ _id: user._id.toString() }, "apiSecretValue");
+  const token = jwt.sign({ _id: user._id.toString() }, serverConfig.jwtSecret);
 
   //we can also pass an optional configuration object
-  // const token = jwt.sign({ _id: user._id.toString() }, "apiSecretValue", { expiresIn: '7 days'});
+  // const token = jwt.sign({ _id: user._id.toString() }, serverConfig.jwtSecret), { expiresIn: '7 days'});
 
   user.tokens = {
     ...user.tokens,
@@ -74,9 +75,6 @@ userSchema.statics.findByCredentials = async (email, password) => {
       LanguageHelper.getLanguageString("user", "userNotFoundOnLogin")
     );
   }
-  console.log("user found...comparing hashes!");
-  console.log(password);
-  console.log(user.password);
 
   //if our provided password is equal to the stored password
   const isMatch = await bcrypt.compare(password, user.password);
@@ -96,8 +94,8 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 userSchema.pre("save", async function(next) {
   const user = this;
+
   //this is the document being saved
-  console.log("User Middleware => saving user model and hashing password...");
 
   //check if password was modified (updated or created)
   if (user.isModified("password")) {

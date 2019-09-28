@@ -1,9 +1,12 @@
+const LanguageHelper = require("../utils/LanguageHelper");
+
 const checkMethods = (req, res, next) => {
   const { method, path } = req;
 
   if (method === "GET") {
     return res.status(401).send({
-      error: "method not allowed"
+      status: "error",
+      message: LanguageHelper.getLanguageString(null, "methodNotAllowed")
     });
   } else {
     console.log(`Express Middleware => ${method} / ${path}`);
@@ -14,7 +17,8 @@ const checkMethods = (req, res, next) => {
 
 const maintenanceMode = (req, res, next) => {
   return res.status(503).send({
-    error: "App is in maintenance mode"
+    status: "error",
+    message: LanguageHelper.getLanguageString(null, "appMaintenanceMode")
   });
 };
 
