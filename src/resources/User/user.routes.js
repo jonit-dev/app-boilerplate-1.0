@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const { User } = require("./user.model");
+const User = require("./user.model");
 const RouterHelper = require("../../utils/RouterHelper");
 const { userAuthMiddleware } = require("../../middlewares/auth.middleware");
 const LanguageHelper = require("../../utils/LanguageHelper");
@@ -67,7 +67,7 @@ router.post("/users", async (req, res) => {
 });
 
 /*#############################################################|
-|  >>> PRIVATE ROUTES
+|  >>> PROTECTED ROUTES
 *##############################################################*/
 
 // Authentication routes ========================================
@@ -144,6 +144,8 @@ router.delete("/users/me", userAuthMiddleware, async (req, res) => {
 });
 
 router.get("/users/profile", userAuthMiddleware, async (req, res) => {
+  const { user } = req;
+
   try {
     return res.status(200).send({
       user

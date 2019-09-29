@@ -9,6 +9,10 @@ const schema = {
   completed: {
     type: Boolean,
     default: false
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
   }
 };
 
@@ -18,13 +22,11 @@ taskSchema.pre("save", async function(next) {
   const task = this; //object thats being modified. eg. user
 
   //execute something here...
-  console.log("task middleware here!!");
+  // console.log("task middleware here!!");
 
   next(); //proceed...
 });
 
 const Task = mongoose.model("Task", taskSchema);
 
-module.exports = {
-  Task
-};
+module.exports = Task;

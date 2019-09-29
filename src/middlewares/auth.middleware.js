@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { User } = require("../resources/User/user.model");
+const User = require("../resources/User/user.model");
 const LanguageHelper = require("../utils/LanguageHelper");
 const serverConfig = require("../constants/serverConfig.json");
 

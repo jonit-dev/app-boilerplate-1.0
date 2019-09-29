@@ -1,22 +1,32 @@
 const express = require("express");
 const router = new express.Router();
-const { Task } = require("./task.model");
+const Task = require("./task.model");
 const RouterHelper = require("../../utils/RouterHelper");
 const LanguageHelper = require("../../utils/LanguageHelper");
 
-router.post("/tasks", async (req, res) => {
-  const { description, completed } = req.body;
+const { userAuthMiddleware } = require("../../middlewares/auth.middleware");
+
+/*#############################################################|
+|  >>> PROTECTED ROUTES
+*##############################################################*/
+
+router.post("/tasks", userAuthMiddleware, async (req, res) => {
+  const { user } = req;
 
   try {
     const task = new Task({
-      description,
-      completed
+      ...req.body,
+      owner: user._id //associate task with owner
     });
     await task.save();
 
     return res.status(201).send(task);
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(400).send({
+      status: "error",
+      message: LanguageHelper.getLanguageString("task", "taskCreationError"),
+      details: error.message
+    });
   }
 });
 
