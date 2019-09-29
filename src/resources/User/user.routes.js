@@ -35,6 +35,44 @@ router.post("/users/login", async (req, res) => {
   }
 });
 
+// User => Sign Up
+router.post("/users", async (req, res) => {
+  let { name, email, password, age } = req.body;
+
+  const user = new User({
+    name,
+    email,
+    password,
+    age
+  });
+
+  try {
+    await user.save();
+
+    const token = await user.generateAuthToken();
+
+    console.log(`User created: ${user.email}`);
+
+    return res.status(201).send({
+      user,
+      token
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userCreationError"),
+      details: error.message
+    });
+  }
+});
+
+/*#############################################################|
+|  >>> PRIVATE ROUTES
+*##############################################################*/
+
+// Authentication routes ========================================
+
+//User ==> Logout
 router.post("/users/logout", userAuthMiddleware, async (req, res) => {
   const { user } = req;
   const reqToken = req.token;
@@ -84,55 +122,15 @@ router.post("/users/logout/all", userAuthMiddleware, async (req, res) => {
   }
 });
 
-// User => Sign Up
-router.post("/users", async (req, res) => {
-  let { name, email, password, age } = req.body;
+// CRUD routes ========================================
 
-  const user = new User({
-    name,
-    email,
-    password,
-    age
-  });
+// User ==> Delete your own profile
+
+router.delete("/users/me", userAuthMiddleware, async (req, res) => {
+  const { user } = req;
 
   try {
-    await user.save();
-
-    const token = await user.generateAuthToken();
-
-    console.log(`User created: ${user.email}`);
-
-    return res.status(201).send({
-      user,
-      token
-    });
-  } catch (error) {
-    res.status(400).send({
-      status: "error",
-      message: LanguageHelper.getLanguageString("user", "userCreationError"),
-      details: error.message
-    });
-  }
-});
-
-/*#############################################################|
-|  >>> PRIVATE ROUTES
-*##############################################################*/
-
-// Main routes ========================================
-
-router.delete("/users/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const user = await User.findByIdAndDelete(id);
-
-    if (!user) {
-      return res.status(404).send({
-        status: "error",
-        message: LanguageHelper.getLanguageString("user", "userDeleteNotFound")
-      });
-    }
+    await user.remove();
 
     return res.status(200).send(user);
   } catch (error) {
@@ -172,41 +170,8 @@ router.get("/users/profile", userAuthMiddleware, async (req, res) => {
   // }
 });
 
-router.get("/users/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const user = await User.findById(id);
-
-    if (!user) {
-      return res.status(404).send({
-        status: "error",
-        message: LanguageHelper.getLanguageString("user", "userNotFound")
-      });
-    }
-
-    return res.status(200).send(user);
-  } catch (error) {
-    return res.status(400).send(error);
-  }
-
-  // User.findById(id)
-  //   .then(result => {
-  //     if (!result) {
-  //       return res.status(404).send({
-  //         status: "error",
-  //         message: "User not found"
-  //       });
-  //     }
-
-  //     console.log(result);
-  //     return res.status(200).send(result);
-  //   })
-  //   .catch(err => res.status(500).send());
-});
-
-router.patch("/users/:id", async (req, res) => {
-  const { id } = req.params;
+router.patch("/users/me", userAuthMiddleware, async (req, res) => {
+  const { user } = req;
   const updates = Object.keys(req.body);
 
   if (
@@ -221,8 +186,6 @@ router.patch("/users/:id", async (req, res) => {
     });
   }
   try {
-    const user = await User.findById(id);
-
     //update every key on the user object
     updates.forEach(update => {
       user[update] = req.body[update];
@@ -234,17 +197,14 @@ router.patch("/users/:id", async (req, res) => {
     //   runValidators: true //run our standard validators on update
     // });
 
-    if (!user) {
-      return status(400).send({
-        status: "error",
-        message: LanguageHelper.getLanguageString("user", "userFailedUpdate")
-      });
-    }
-
     return res.status(200).send(user);
   } catch (error) {
     console.log(error);
-    return res.status(400).send(error);
+    return res.status(400).send({
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userFailedUpdate"),
+      details: error.message
+    });
   }
 });
 
