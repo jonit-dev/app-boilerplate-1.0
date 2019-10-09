@@ -1,10 +1,10 @@
-const serverConfig = require("../constants/serverConfig.json");
-const TextHelper = require("../utils/TextHelper");
-const globalStrings = require("../lang/global.lang.json");
+import serverConfig from "../constants/serverConfig";
+import TextHelper from "../utils/TextHelper";
+import globalStrings from "../lang/global.lang";
 
 // load proper language strings, accordingly to the server language settings
 
-const getLanguageString = (model = null, key) => {
+const getLanguageString = (model: any = null, key) => {
   if (!model) {
     //pass only the global strings
     return globalStrings[key][serverConfig.language];
@@ -13,7 +13,7 @@ const getLanguageString = (model = null, key) => {
   //load language strings for a specific model
   let languageStrings = require(`../resources/${TextHelper.capitalizeFirstLetter(
     model
-  )}/${model}.lang.json`);
+  )}/${model}.lang.ts`);
 
   //add our global generic strings
   languageStrings = {
@@ -24,6 +24,4 @@ const getLanguageString = (model = null, key) => {
   return languageStrings[key][serverConfig.language];
 };
 
-module.exports = {
-  getLanguageString
-};
+export default { getLanguageString };

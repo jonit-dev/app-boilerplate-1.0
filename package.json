@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js",
+    "start": "node dist/index.js",
     "prestart": "/home/jonit/mongodb/bin/mongod --dbpath=/home/jonit/mongodb-data",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.ts",
+    "build": "tsc -p ."
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,12 @@
     "validator": "^11.1.0"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "@types/express": "^4.17.1",
+    "@types/jsonwebtoken": "^8.3.4",
+    "@types/mongoose": "^5.5.19",
+    "@types/node": "^12.7.12",
+    "nodemon": "^1.19.1",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.3"
   }
 }

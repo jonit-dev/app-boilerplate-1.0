@@ -4,6 +4,4 @@ const isAllowedKey = (requestBody, allowedUpdatesKeys) => {
   return updates.every(update => allowedUpdatesKeys.includes(update));
 };
 
-module.exports = {
-  isAllowedKey
-};
+export default { isAllowedKey };

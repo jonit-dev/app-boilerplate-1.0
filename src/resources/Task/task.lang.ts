@@ -1,4 +1,4 @@
-{
+export default {
   "taskCreationError": {
     "eng": "Sorry, error while trying to create your task."
   },

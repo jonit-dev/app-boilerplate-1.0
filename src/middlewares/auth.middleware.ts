@@ -1,13 +1,17 @@
-const jwt = require("jsonwebtoken");
-const User = require("../resources/User/user.model");
-const LanguageHelper = require("../utils/LanguageHelper");
-const serverConfig = require("../constants/serverConfig.json");
+import jwt from "jsonwebtoken";
+import User from "../resources/User/user.model";
+import LanguageHelper from "../utils/LanguageHelper";
+import serverConfig from "../constants/serverConfig";
+
+interface IDecoded {
+  _id: string;
+}
 
 const userAuthMiddleware = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", ""); //remove Bearer string
 
-    const decoded = jwt.verify(token, serverConfig.jwtSecret);
+    const decoded: any = jwt.verify(token, serverConfig.jwtSecret);
 
     //find an user with the correct id (passed through the token), that has the particular token stored.
 
@@ -36,6 +40,4 @@ const userAuthMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  userAuthMiddleware
-};
+export { userAuthMiddleware };

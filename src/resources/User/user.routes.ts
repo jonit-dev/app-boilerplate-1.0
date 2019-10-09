@@ -1,7 +1,12 @@
-const express = require("express");
-const router = new express.Router();
-const User = require("./user.model");
-const RouterHelper = require("../../utils/RouterHelper");
+import { Router } from "express";
+
+//@ts-ignore
+const router = new Router();
+
+import User from "./user.model";
+
+import RouterHelper from "../../utils/RouterHelper";
+
 const { userAuthMiddleware } = require("../../middlewares/auth.middleware");
 const LanguageHelper = require("../../utils/LanguageHelper");
 
@@ -210,4 +215,4 @@ router.patch("/users/me", userAuthMiddleware, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

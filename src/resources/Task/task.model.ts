@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const schema = {
   description: {
@@ -29,4 +29,4 @@ taskSchema.pre("save", async function(next) {
 
 const Task = mongoose.model("Task", taskSchema);
 
-module.exports = Task;
+export default Task;

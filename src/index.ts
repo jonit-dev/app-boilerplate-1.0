@@ -1,10 +1,14 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const serverConfig = require("./constants/serverConfig.json");
+import express from "express";
+
+import mongoose from "mongoose";
+
+import serverConfig from "./constants/serverConfig";
+
 mongoose.connect("mongodb://127.0.0.1:27017/task-manager-api", {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useUnifiedTopology: true
 });
 
 /*#############################################################|
@@ -20,10 +24,10 @@ app.use(express.json()); // << THIS IS REQUIRED TO EXPRESS PARSING JSON DATA
 |  >>> MIDDLEWARES
 *##############################################################*/
 
-const globalMiddlewares = require("./middlewares/global.middleware");
+import { maintenanceMode } from "./middlewares/global.middleware";
 
 if (serverConfig.maintenanceMode) {
-  app.use(globalMiddlewares.maintenanceMode);
+  app.use(maintenanceMode);
 }
 
 // app.use(middleware.checkMethods);
@@ -32,8 +36,9 @@ if (serverConfig.maintenanceMode) {
 |  >>> ROUTES
 *##############################################################*/
 
-const userRoutes = require("./resources/User/user.routes");
-const taskRoutes = require("./resources/Task/task.routes");
+import userRoutes from "./resources/User/user.routes";
+
+import taskRoutes from "./resources/Task/task.routes";
 
 // USERS ========================================
 

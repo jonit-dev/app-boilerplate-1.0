@@ -22,7 +22,4 @@ const maintenanceMode = (req, res, next) => {
   });
 };
 
-module.exports = {
-  checkMethods,
-  maintenanceMode
-};
+export { checkMethods, maintenanceMode };

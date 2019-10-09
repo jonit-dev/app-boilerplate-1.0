@@ -1,14 +1,15 @@
-const express = require("express");
-const router = new express.Router();
-const Task = require("./task.model");
-const RouterHelper = require("../../utils/RouterHelper");
-const LanguageHelper = require("../../utils/LanguageHelper");
-
-const { userAuthMiddleware } = require("../../middlewares/auth.middleware");
+import express from "express";
+import Task from "./task.model";
+import RouterHelper from "../../utils/RouterHelper";
+import LanguageHelper from "../../utils/LanguageHelper";
+import { userAuthMiddleware } from "../../middlewares/auth.middleware";
 
 /*#############################################################|
 |  >>> PROTECTED ROUTES
 *##############################################################*/
+
+//@ts-ignore
+const router = new express.Router();
 
 router.post("/tasks", userAuthMiddleware, async (req, res) => {
   const { user } = req;
@@ -46,7 +47,7 @@ router.patch("/tasks/:id", async (req, res) => {
       });
     }
 
-    const task = await Task.findById(id);
+    const task: any = await Task.findById(id);
 
     //update every key on the user object
     updates.forEach(update => {
@@ -194,4 +195,4 @@ router.delete("/tasks/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

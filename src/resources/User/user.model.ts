@@ -1,13 +1,38 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const LanguageHelper = require("../../utils/LanguageHelper");
-const serverConfig = require("../../constants/serverConfig.json");
+import mongoose from "mongoose";
+import validator from "validator";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import LanguageHelper from "../../utils/LanguageHelper";
+import serverConfig from "../../constants/serverConfig";
+import { Document, Schema, Model, model } from "mongoose";
 
-// Schema ========================================
+/*#############################################################|
+|  >>> MODEL FUNCTIONS (static, methods)
+*##############################################################*/
 
-let schema = {
+interface IUserDocument extends Document {
+  name: string;
+  password: string;
+  email: string;
+  age: Number;
+  tokens: Object[];
+}
+
+//methods
+export interface IUser extends IUserDocument {
+  hashPassword: (string) => string;
+  generateAuthToken: () => string;
+  toJSON: () => Object;
+}
+
+//static methods
+export interface IUserModel extends Model<IUser> {
+  findByCredentials: (email: string, password: string) => any;
+}
+
+// Statics ========================================
+
+const userSchema: Schema = new Schema({
   name: {
     type: String
   },
@@ -30,19 +55,11 @@ let schema = {
       }
     }
   ]
-};
-
-/*#############################################################|
-|  >>> MODEL FUNCTIONS (static, methods)
-*##############################################################*/
-
-// Statics ========================================
-
-const userSchema = new mongoose.Schema(schema);
+});
 
 // statics are methods that you add to your model, making it possible to access them anywhere
 
-userSchema.statics.hashPassword = async password => {
+userSchema.statics.hashPassword = async (password: string): Promise<string> => {
   return await bcrypt.hash(password, 8);
 };
 
@@ -78,8 +95,11 @@ userSchema.methods.toJSON = function() {
   return userObject;
 };
 
-userSchema.statics.findByCredentials = async (email, password) => {
-  const user = await User.findOne({ email });
+userSchema.statics.findByCredentials = async (
+  email: string,
+  password: string
+): Promise<string> => {
+  const user: any = await User.findOne({ email });
 
   if (!user) {
     throw new Error(
@@ -104,7 +124,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 *##############################################################*/
 
 userSchema.pre("save", async function(next) {
-  const user = this;
+  const user: any = this;
 
   // console.log('user :: middleware => Running pre "save" code');
 
@@ -120,6 +140,6 @@ userSchema.pre("save", async function(next) {
 
 // model ========================================
 
-const User = mongoose.model("User", userSchema);
+const User: IUserModel = model<IUser, IUserModel>("User", userSchema);
 
-module.exports = User;
+export default User;
