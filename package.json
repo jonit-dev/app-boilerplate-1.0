@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "prestart": "/home/jonit/mongodb/bin/mongod --dbpath=/home/jonit/mongodb-data",
+    "mongo": "/home/jonit/mongodb/bin/mongod --dbpath=/home/jonit/mongodb-data",
     "dev": "nodemon src/index.ts",
     "build": "tsc -p .",
     "lint": "tslint --project . --fix"
