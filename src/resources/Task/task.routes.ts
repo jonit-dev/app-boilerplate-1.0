@@ -1,4 +1,5 @@
 import express from 'express';
+
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
 import LanguageHelper from '../../utils/LanguageHelper';
 import RouterHelper from '../../utils/RouterHelper';
@@ -31,7 +32,7 @@ router.post('/tasks', userAuthMiddleware, async (req, res) => {
   }
 });
 
-router.patch('/tasks/:id', async (req, res) => {
+router.patch('/tasks/:id', userAuthMiddleware, async (req, res) => {
   const { id } = req.params;
   const updates = Object.keys(req.body);
 
@@ -73,7 +74,7 @@ router.patch('/tasks/:id', async (req, res) => {
   }
 });
 
-router.get('/tasks', async (req, res) => {
+router.get('/tasks', userAuthMiddleware, async (req, res) => {
   const tasks = await Task.find({});
 
   try {
@@ -104,7 +105,7 @@ router.get('/tasks', async (req, res) => {
 
 // number of complete tasks (promise chaining sample)
 
-router.get('/tasks/completed', async (req, res) => {
+router.get('/tasks/completed', userAuthMiddleware, async (req, res) => {
   try {
     const tasks = await Task.find({ completed: true });
     if (!tasks) {
@@ -148,7 +149,7 @@ router.get('/tasks/completed', async (req, res) => {
   //   });
 });
 
-router.get('/tasks/:id', async (req, res) => {
+router.get('/tasks/:id', userAuthMiddleware, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -167,7 +168,7 @@ router.get('/tasks/:id', async (req, res) => {
   }
 });
 
-router.delete('/tasks/:id', async (req, res) => {
+router.delete('/tasks/:id', userAuthMiddleware, async (req, res) => {
   const { id } = req.params;
 
   try {
