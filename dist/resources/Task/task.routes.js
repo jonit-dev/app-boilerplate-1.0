@@ -38,7 +38,7 @@ router.post('/tasks', auth_middleware_1.userAuthMiddleware, (req, res) => __awai
         });
     }
 }));
-router.patch('/tasks/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.patch('/tasks/:id', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const updates = Object.keys(req.body);
     try {
@@ -71,7 +71,7 @@ router.patch('/tasks/:id', (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.status(400).send(error);
     }
 }));
-router.get('/tasks', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/tasks', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const tasks = yield task_model_1.default.find({});
     try {
         if (!tasks) {
@@ -98,7 +98,7 @@ router.get('/tasks', (req, res) => __awaiter(void 0, void 0, void 0, function* (
     //   .catch(err => res.status(500).send());
 }));
 // number of complete tasks (promise chaining sample)
-router.get('/tasks/completed', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/tasks/completed', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const tasks = yield task_model_1.default.find({ completed: true });
         if (!tasks) {
@@ -135,7 +135,7 @@ router.get('/tasks/completed', (req, res) => __awaiter(void 0, void 0, void 0, f
     //     return res.status(400).send(err);
     //   });
 }));
-router.get('/tasks/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/tasks/:id', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
         const task = yield task_model_1.default.findById(id);
@@ -151,7 +151,7 @@ router.get('/tasks/:id', (req, res) => __awaiter(void 0, void 0, void 0, functio
         return res.status(400).send(error);
     }
 }));
-router.delete('/tasks/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete('/tasks/:id', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
         const task = yield task_model_1.default.findByIdAndDelete(id);

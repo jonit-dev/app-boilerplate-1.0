@@ -24,7 +24,8 @@
     "husky": "^3.0.9",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.3.1",
-    "mongoose": "^5.7.5",
+    "mongoose": "^5.7.8",
+    "tslint": "^5.20.1",
     "validator": "^11.1.0"
   },
   "devDependencies": {
@@ -35,6 +36,6 @@
     "nodemon": "^1.19.1",
     "ts-node": "^8.4.1",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.7.2"
   }
 }
