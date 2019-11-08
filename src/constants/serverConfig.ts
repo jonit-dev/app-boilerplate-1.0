@@ -1,6 +1,6 @@
 export default {
-  env: "dev",
+  env: 'dev',
   maintenanceMode: false,
-  language: "eng",
-  jwtSecret: "pez9SHY+4By+ce4PFMevcg=="
+  language: 'eng',
+  jwtSecret: 'pez9SHY+4By+ce4PFMevcg=='
 };

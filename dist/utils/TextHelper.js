@@ -1,7 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const capitalizeFirstLetter = string => {
     return string.charAt(0).toUpperCase() + string.slice(1);
 };
-module.exports = {
-    capitalizeFirstLetter
-};
+exports.default = { capitalizeFirstLetter };

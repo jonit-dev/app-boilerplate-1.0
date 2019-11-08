@@ -6,7 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const serverConfig_1 = __importDefault(require("./constants/serverConfig"));
-mongoose_1.default.connect("mongodb://127.0.0.1:27017/task-manager-api", {
+const global_middleware_1 = require("./middlewares/global.middleware");
+const task_routes_1 = __importDefault(require("./resources/Task/task.routes"));
+const user_routes_1 = __importDefault(require("./resources/User/user.routes"));
+mongoose_1.default.connect('mongodb://127.0.0.1:27017/task-manager-api', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
@@ -21,16 +24,18 @@ app.use(express_1.default.json()); // << THIS IS REQUIRED TO EXPRESS PARSING JSO
 /*#############################################################|
 |  >>> MIDDLEWARES
 *##############################################################*/
-const global_middleware_1 = require("./middlewares/global.middleware");
 if (serverConfig_1.default.maintenanceMode) {
     app.use(global_middleware_1.maintenanceMode);
 }
-const userRoutes = require("./resources/User/user.routes");
-const taskRoutes = require("./resources/Task/task.routes");
+// app.use(middleware.checkMethods);
+/*#############################################################|
+|  >>> ROUTES
+*##############################################################*/
 // USERS ========================================
-app.use(userRoutes);
+app.use(user_routes_1.default);
 // TASKS ========================================
-app.use(taskRoutes);
+app.use(task_routes_1.default);
 app.listen(port, () => {
+    // tslint:disable-next-line: no-console
     console.log(`Server is running on port ${port}`);
 });

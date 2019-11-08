@@ -1,0 +1,36 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:latest",
+        "tslint-config-prettier"
+    ],
+    "jsRules": {},
+    "rules": {
+        "no-console": false,
+        "no-trailing-whitespace": [
+            true,
+            "always"
+        ],
+        "only-arrow-functions": false,
+        "variable-name": false,
+        "prefer-const": [
+            true,
+            {
+                "destructuring": "any"
+            }
+        ],
+        "ban-types": false,
+        "semicolon": [
+            false
+        ],
+        "quotemark": [
+            true,
+            "single"
+        ],
+        "object-literal-sort-keys": false,
+        "no-this-assignment": false,
+        "no-empty-interface": true,
+        "interface-name": true
+    },
+    "rulesDirectory": []
+}

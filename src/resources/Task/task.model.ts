@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const schema = {
   description: {
@@ -18,15 +18,15 @@ const schema = {
 
 const taskSchema = new mongoose.Schema(schema);
 
-taskSchema.pre("save", async function(next) {
-  const task = this; //object thats being modified. eg. user
+taskSchema.pre('save', async function(next) {
+  // const task = this; // object thats being modified. eg. user
 
-  //execute something here...
+  // execute something here...
   // console.log("task middleware here!!");
 
-  next(); //proceed...
+  next(); // proceed...
 });
 
-const Task = mongoose.model("Task", taskSchema);
+const Task = mongoose.model('Task', taskSchema);
 
 export default Task;

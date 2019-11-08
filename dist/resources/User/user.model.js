@@ -8,15 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose = require("mongoose");
-const validator = require("validator");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const LanguageHelper = require("../../utils/LanguageHelper");
-const serverConfig = require("../../constants/serverConfig.json");
-// Schema ========================================
-let schema = {
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const mongoose_1 = require("mongoose");
+const serverConfig_1 = __importDefault(require("../../constants/serverConfig"));
+const LanguageHelper_1 = __importDefault(require("../../utils/LanguageHelper"));
+// Statics ========================================
+const userSchema = new mongoose_1.Schema({
     name: {
         type: String
     },
@@ -31,7 +33,7 @@ let schema = {
         type: Number
     },
     tokens: [
-        //this will allow multi device sign in (different devices with different tokens)
+        // this will allow multi device sign in (different devices with different tokens)
         {
             token: {
                 type: String,
@@ -39,34 +41,29 @@ let schema = {
             }
         }
     ]
-};
-/*#############################################################|
-|  >>> MODEL FUNCTIONS (static, methods)
-*##############################################################*/
-// Statics ========================================
-const userSchema = new mongoose.Schema(schema);
+});
 // statics are methods that you add to your model, making it possible to access them anywhere
 userSchema.statics.hashPassword = (password) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield bcrypt.hash(password, 8);
+    return bcryptjs_1.default.hash(password, 8);
 });
-//methods create a normal method (instance needs to be declared). Statics functions, otherwise, doesnt need to be declared. It can be accessed directly through the model
-//here we use function() instead of an arrow function because we need access to "this", that's not present on the later.
+// methods create a normal method (instance needs to be declared). Statics functions, otherwise, doesnt need to be declared. It can be accessed directly through the model
+// here we use function() instead of an arrow function because we need access to "this", that's not present on the later.
 userSchema.methods.generateAuthToken = function () {
     return __awaiter(this, void 0, void 0, function* () {
         const user = this;
-        const token = jwt.sign({ _id: user._id.toString() }, serverConfig.jwtSecret);
-        //we can also pass an optional configuration object
+        const token = jsonwebtoken_1.default.sign({ _id: user._id.toString() }, serverConfig_1.default.jwtSecret);
+        // we can also pass an optional configuration object
         // const token = jwt.sign({ _id: user._id.toString() }, serverConfig.jwtSecret), { expiresIn: '7 days'});
         user.tokens = [...user.tokens, { token }];
         yield user.save();
         return token;
     });
 };
-//this will be fired whenever our model is converted to JSON!!
+// this will be fired whenever our model is converted to JSON!!
 userSchema.methods.toJSON = function () {
     // delete keys that shouldn't be displayed publicly
     const user = this;
-    const userObject = user.toObject(); //convert Mongoose model to Object
+    const userObject = user.toObject(); // convert Mongoose model to Object
     delete userObject.password;
     delete userObject.tokens;
     return userObject;
@@ -74,30 +71,30 @@ userSchema.methods.toJSON = function () {
 userSchema.statics.findByCredentials = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield User.findOne({ email });
     if (!user) {
-        throw new Error(LanguageHelper.getLanguageString("user", "userNotFoundOnLogin"));
+        throw new Error(LanguageHelper_1.default.getLanguageString('user', 'userNotFoundOnLogin'));
     }
-    //if our provided password is equal to the stored password
-    const isMatch = yield bcrypt.compare(password, user.password);
+    // if our provided password is equal to the stored password
+    const isMatch = yield bcryptjs_1.default.compare(password, user.password);
     if (!isMatch) {
-        throw new Error(LanguageHelper.getLanguageString("user", "userWrongPassword"));
+        throw new Error(LanguageHelper_1.default.getLanguageString('user', 'userWrongPassword'));
     }
-    return user; //return the user if everything is ok
+    return user; // return the user if everything is ok
 });
 /*#############################################################|
 |  >>> MODEL MIDDLEWARES
 *##############################################################*/
-userSchema.pre("save", function (next) {
+userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         const user = this;
         // console.log('user :: middleware => Running pre "save" code');
-        //this is the document being saved
-        //check if password was modified (updated or created)
-        if (user.isModified("password")) {
+        // this is the document being saved
+        // check if password was modified (updated or created)
+        if (user.isModified('password')) {
             user.password = yield userSchema.statics.hashPassword(user.password);
         }
-        next(); //proceed...
+        next(); // proceed...
     });
 });
 // model ========================================
-const User = mongoose.model("User", userSchema);
+const User = mongoose_1.model('User', userSchema);
 exports.default = User;

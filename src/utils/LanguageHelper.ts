@@ -1,21 +1,21 @@
-import serverConfig from "../constants/serverConfig";
-import TextHelper from "../utils/TextHelper";
-import globalStrings from "../lang/global.lang";
+import serverConfig from '../constants/serverConfig';
+import globalStrings from '../lang/global.lang';
+import TextHelper from '../utils/TextHelper';
 
 // load proper language strings, accordingly to the server language settings
 
 const getLanguageString = (model: any = null, key) => {
   if (!model) {
-    //pass only the global strings
+    // pass only the global strings
     return globalStrings[key][serverConfig.language];
   }
 
-  //load language strings for a specific model
+  // load language strings for a specific model
   let languageStrings = require(`../resources/${TextHelper.capitalizeFirstLetter(
     model
   )}/${model}.lang.ts`);
 
-  //add our global generic strings
+  // add our global generic strings
   languageStrings = {
     ...languageStrings,
     ...globalStrings

@@ -1,16 +1,14 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-//@ts-ignore
+import { userAuthMiddleware } from '../../middlewares/auth.middleware';
+import LanguageHelper from '../../utils/LanguageHelper';
+import RouterHelper from '../../utils/RouterHelper';
+import User from './user.model';
+
+// @ts-ignore
 const router = new Router();
 
-import User from "./user.model";
-
-import RouterHelper from "../../utils/RouterHelper";
-
-const { userAuthMiddleware } = require("../../middlewares/auth.middleware");
-const LanguageHelper = require("../../utils/LanguageHelper");
-
-//load auth middleware for adding into specific routes!
+// load auth middleware for adding into specific routes!
 
 /*#############################################################|
 |  >>> PUBLIC ROUTES
@@ -18,8 +16,8 @@ const LanguageHelper = require("../../utils/LanguageHelper");
 
 // Authentication ========================================
 
-//User => Login
-router.post("/users/login", async (req, res) => {
+// User => Login
+router.post('/users/login', async (req, res) => {
   const { email, password } = req.body;
 
   console.log(`logging user: ${email}`);
@@ -41,8 +39,8 @@ router.post("/users/login", async (req, res) => {
 });
 
 // User => Sign Up
-router.post("/users", async (req, res) => {
-  let { name, email, password, age } = req.body;
+router.post('/users', async (req, res) => {
+  const { name, email, password, age } = req.body;
 
   const user = new User({
     name,
@@ -64,8 +62,8 @@ router.post("/users", async (req, res) => {
     });
   } catch (error) {
     res.status(400).send({
-      status: "error",
-      message: LanguageHelper.getLanguageString("user", "userCreationError"),
+      status: 'error',
+      message: LanguageHelper.getLanguageString('user', 'userCreationError'),
       details: error.message
     });
   }
@@ -77,35 +75,35 @@ router.post("/users", async (req, res) => {
 
 // Authentication routes ========================================
 
-//User ==> Logout
-router.post("/users/logout", userAuthMiddleware, async (req, res) => {
+// User ==> Logout
+router.post('/users/logout', userAuthMiddleware, async (req, res) => {
   const { user } = req;
   const reqToken = req.token;
 
   try {
-    //remove the token that's being used for the user from our user tokens array in our database
+    // remove the token that's being used for the user from our user tokens array in our database
     user.tokens = user.tokens.filter(tokenObj => tokenObj.token !== reqToken);
 
     console.log(`Logging out user: ${user.email}`);
 
-    await user.save(); //save user model to update records
+    await user.save(); // save user model to update records
 
     return res.status(200).send({
-      status: "success",
-      message: LanguageHelper.getLanguageString("user", "userLogoutSuccess")
+      status: 'success',
+      message: LanguageHelper.getLanguageString('user', 'userLogoutSuccess')
     });
   } catch (error) {
     return res.status(400).send({
-      status: "error",
-      message: LanguageHelper.getLanguageString("user", "userLogoutError"),
+      status: 'error',
+      message: LanguageHelper.getLanguageString('user', 'userLogoutError'),
       details: error.message
     });
   }
 });
 
-//User ==> Logout all connected devices
+// User ==> Logout all connected devices
 
-router.post("/users/logout/all", userAuthMiddleware, async (req, res) => {
+router.post('/users/logout/all', userAuthMiddleware, async (req, res) => {
   const { user } = req;
 
   try {
@@ -114,14 +112,14 @@ router.post("/users/logout/all", userAuthMiddleware, async (req, res) => {
     await user.save();
 
     return res.status(200).send({
-      status: "success",
-      message: LanguageHelper.getLanguageString("user", "userLogoutAllSuccess")
+      status: 'success',
+      message: LanguageHelper.getLanguageString('user', 'userLogoutAllSuccess')
     });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      status: "error",
-      message: LanguageHelper.getLanguageString("user", "userLogoutAllError"),
+      status: 'error',
+      message: LanguageHelper.getLanguageString('user', 'userLogoutAllError'),
       details: error.message
     });
   }
@@ -131,7 +129,7 @@ router.post("/users/logout/all", userAuthMiddleware, async (req, res) => {
 
 // User ==> Delete your own profile
 
-router.delete("/users/me", userAuthMiddleware, async (req, res) => {
+router.delete('/users/me', userAuthMiddleware, async (req, res) => {
   const { user } = req;
 
   try {
@@ -141,24 +139,24 @@ router.delete("/users/me", userAuthMiddleware, async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      status: "error",
-      message: LanguageHelper.getLanguageString("user", "userDeleteError"),
+      status: 'error',
+      message: LanguageHelper.getLanguageString('user', 'userDeleteError'),
       details: error.message
     });
   }
 });
 
-router.get("/users/profile", userAuthMiddleware, async (req, res) => {
+router.get('/users/profile', userAuthMiddleware, async (req, res) => {
   const { user } = req;
 
   try {
     return res.status(200).send({
       user
-    }); //req.user is coming from the authMiddleware
+    }); // req.user is coming from the authMiddleware
   } catch (error) {
     return res.status(500).send({
-      status: "error",
-      message: LanguageHelper.getLanguageString("user", "userProfileGetError"),
+      status: 'error',
+      message: LanguageHelper.getLanguageString('user', 'userProfileGetError'),
       details: error.message
     });
   }
@@ -177,23 +175,23 @@ router.get("/users/profile", userAuthMiddleware, async (req, res) => {
   // }
 });
 
-router.patch("/users/me", userAuthMiddleware, async (req, res) => {
+router.patch('/users/me', userAuthMiddleware, async (req, res) => {
   const { user } = req;
   const updates = Object.keys(req.body);
 
   if (
-    !RouterHelper.isAllowedKey(req.body, ["name", "email", "password", "age"])
+    !RouterHelper.isAllowedKey(req.body, ['name', 'email', 'password', 'age'])
   ) {
     return res.status(400).send({
-      status: "error",
+      status: 'error',
       message: LanguageHelper.getLanguageString(
-        "user",
-        "userPatchForbiddenKeys"
+        'user',
+        'userPatchForbiddenKeys'
       )
     });
   }
   try {
-    //update every key on the user object
+    // update every key on the user object
     updates.forEach(update => {
       user[update] = req.body[update];
     });
@@ -208,8 +206,8 @@ router.patch("/users/me", userAuthMiddleware, async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(400).send({
-      status: "error",
-      message: LanguageHelper.getLanguageString("user", "userFailedUpdate"),
+      status: 'error',
+      message: LanguageHelper.getLanguageString('user', 'userFailedUpdate'),
       details: error.message
     });
   }

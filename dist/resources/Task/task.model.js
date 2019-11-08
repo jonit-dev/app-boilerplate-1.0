@@ -8,7 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const mongoose = require("mongoose");
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importDefault(require("mongoose"));
 const schema = {
     description: {
         type: String,
@@ -20,18 +24,18 @@ const schema = {
         default: false
     },
     owner: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose_1.default.Schema.Types.ObjectId,
         required: true
     }
 };
-const taskSchema = new mongoose.Schema(schema);
-taskSchema.pre("save", function (next) {
+const taskSchema = new mongoose_1.default.Schema(schema);
+taskSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        const task = this; //object thats being modified. eg. user
-        //execute something here...
+        // const task = this; // object thats being modified. eg. user
+        // execute something here...
         // console.log("task middleware here!!");
-        next(); //proceed...
+        next(); // proceed...
     });
 });
-const Task = mongoose.model("Task", taskSchema);
-module.exports = Task;
+const Task = mongoose_1.default.model('Task', taskSchema);
+exports.default = Task;

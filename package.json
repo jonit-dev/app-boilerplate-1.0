@@ -7,13 +7,22 @@
     "start": "node dist/index.js",
     "prestart": "/home/jonit/mongodb/bin/mongod --dbpath=/home/jonit/mongodb-data",
     "dev": "nodemon src/index.ts",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "lint": "tslint --project . --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsc && yarn run lint",
+      "pre-push": "tsc && yarn run lint"
+    }
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
+    "husky": "^3.0.9",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.3.1",
     "mongoose": "^5.6.10",
@@ -26,6 +35,7 @@
     "@types/node": "^12.7.12",
     "nodemon": "^1.19.1",
     "ts-node": "^8.4.1",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.6.3"
   }
 }

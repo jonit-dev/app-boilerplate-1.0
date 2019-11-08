@@ -1,10 +1,12 @@
-import express from "express";
+import express from 'express';
+import mongoose from 'mongoose';
 
-import mongoose from "mongoose";
+import serverConfig from './constants/serverConfig';
+import { maintenanceMode } from './middlewares/global.middleware';
+import taskRoutes from './resources/Task/task.routes';
+import userRoutes from './resources/User/user.routes';
 
-import serverConfig from "./constants/serverConfig";
-
-mongoose.connect("mongodb://127.0.0.1:27017/task-manager-api", {
+mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -24,8 +26,6 @@ app.use(express.json()); // << THIS IS REQUIRED TO EXPRESS PARSING JSON DATA
 |  >>> MIDDLEWARES
 *##############################################################*/
 
-import { maintenanceMode } from "./middlewares/global.middleware";
-
 if (serverConfig.maintenanceMode) {
   app.use(maintenanceMode);
 }
@@ -36,10 +36,6 @@ if (serverConfig.maintenanceMode) {
 |  >>> ROUTES
 *##############################################################*/
 
-import userRoutes from "./resources/User/user.routes";
-
-import taskRoutes from "./resources/Task/task.routes";
-
 // USERS ========================================
 
 app.use(userRoutes);
@@ -49,5 +45,6 @@ app.use(userRoutes);
 app.use(taskRoutes);
 
 app.listen(port, () => {
+  // tslint:disable-next-line: no-console
   console.log(`Server is running on port ${port}`);
 });

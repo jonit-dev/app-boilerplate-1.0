@@ -13,37 +13,34 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const serverConfig_1 = __importDefault(require("../constants/serverConfig"));
 const user_model_1 = __importDefault(require("../resources/User/user.model"));
 const LanguageHelper_1 = __importDefault(require("../utils/LanguageHelper"));
-const serverConfig_1 = __importDefault(require("../constants/serverConfig"));
 const userAuthMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const token = req.header("Authorization").replace("Bearer ", ""); //remove Bearer string
+        const token = req.header('Authorization').replace('Bearer ', ''); // remove Bearer string
         const decoded = jsonwebtoken_1.default.verify(token, serverConfig_1.default.jwtSecret);
-        //find an user with the correct id (passed through the token), that has the particular token stored.
+        // find an user with the correct id (passed through the token), that has the particular token stored.
         const user = yield user_model_1.default.findOne({
             _id: decoded._id,
-            "tokens.token": token
+            'tokens.token': token
         });
         if (!user) {
             return res.status(401).send({
-                status: "error",
-                message: LanguageHelper_1.default.getLanguageString("user", "userNotFoundByToken")
+                status: 'error',
+                message: LanguageHelper_1.default.getLanguageString('user', 'userNotFoundByToken')
             });
         }
         req.token = token;
         req.user = user;
-        //proceed with user access
+        // proceed with user access
         next();
     }
     catch (error) {
-        console.error(error);
         return res.status(401).send({
-            status: "error",
-            message: LanguageHelper_1.default.getLanguageString("user", "userNotAuthenticated")
+            status: 'error',
+            message: LanguageHelper_1.default.getLanguageString('user', 'userNotAuthenticated')
         });
     }
 });
-module.exports = {
-    userAuthMiddleware
-};
+exports.userAuthMiddleware = userAuthMiddleware;

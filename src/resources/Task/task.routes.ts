@@ -1,55 +1,55 @@
-import express from "express";
-import Task from "./task.model";
-import RouterHelper from "../../utils/RouterHelper";
-import LanguageHelper from "../../utils/LanguageHelper";
-import { userAuthMiddleware } from "../../middlewares/auth.middleware";
+import express from 'express';
+import { userAuthMiddleware } from '../../middlewares/auth.middleware';
+import LanguageHelper from '../../utils/LanguageHelper';
+import RouterHelper from '../../utils/RouterHelper';
+import Task from './task.model';
 
 /*#############################################################|
 |  >>> PROTECTED ROUTES
 *##############################################################*/
 
-//@ts-ignore
+// @ts-ignore
 const router = new express.Router();
 
-router.post("/tasks", userAuthMiddleware, async (req, res) => {
+router.post('/tasks', userAuthMiddleware, async (req, res) => {
   const { user } = req;
 
   try {
     const task = new Task({
       ...req.body,
-      owner: user._id //associate task with owner
+      owner: user._id // associate task with owner
     });
     await task.save();
 
     return res.status(201).send(task);
   } catch (error) {
     return res.status(400).send({
-      status: "error",
-      message: LanguageHelper.getLanguageString("task", "taskCreationError"),
+      status: 'error',
+      message: LanguageHelper.getLanguageString('task', 'taskCreationError'),
       details: error.message
     });
   }
 });
 
-router.patch("/tasks/:id", async (req, res) => {
+router.patch('/tasks/:id', async (req, res) => {
   const { id } = req.params;
   const updates = Object.keys(req.body);
 
   try {
-    //validate for forbidden keys
-    if (!RouterHelper.isAllowedKey(req.body, ["completed", "description"])) {
+    // validate for forbidden keys
+    if (!RouterHelper.isAllowedKey(req.body, ['completed', 'description'])) {
       return res.status(404).send({
-        status: "error",
+        status: 'error',
         message: LanguageHelper.getLanguageString(
-          "task",
-          "taskPatchForbiddenKeys"
+          'task',
+          'taskPatchForbiddenKeys'
         )
       });
     }
 
     const task: any = await Task.findById(id);
 
-    //update every key on the user object
+    // update every key on the user object
     updates.forEach(update => {
       task[update] = req.body[update];
     });
@@ -62,8 +62,8 @@ router.patch("/tasks/:id", async (req, res) => {
 
     if (!task) {
       return res.status(404).send({
-        status: "error",
-        message: LanguageHelper.getLanguageString("task", "taskNotFound")
+        status: 'error',
+        message: LanguageHelper.getLanguageString('task', 'taskNotFound')
       });
     }
 
@@ -73,14 +73,14 @@ router.patch("/tasks/:id", async (req, res) => {
   }
 });
 
-router.get("/tasks", async (req, res) => {
+router.get('/tasks', async (req, res) => {
   const tasks = await Task.find({});
 
   try {
     if (!tasks) {
       return res.status(404).send({
-        status: "error",
-        message: LanguageHelper.getLanguageString("task", "tasksNotFound")
+        status: 'error',
+        message: LanguageHelper.getLanguageString('task', 'tasksNotFound')
       });
     }
     return res.status(200).send(tasks);
@@ -104,15 +104,15 @@ router.get("/tasks", async (req, res) => {
 
 // number of complete tasks (promise chaining sample)
 
-router.get("/tasks/completed", async (req, res) => {
+router.get('/tasks/completed', async (req, res) => {
   try {
     const tasks = await Task.find({ completed: true });
     if (!tasks) {
       return res.status(404).send({
-        status: "error",
+        status: 'error',
         message: LanguageHelper.getLanguageString(
-          "task",
-          "taskNoCompletedTasksFound"
+          'task',
+          'taskNoCompletedTasksFound'
         )
       });
     }
@@ -121,7 +121,7 @@ router.get("/tasks/completed", async (req, res) => {
 
     return res.status(200).send({
       numberOfTasks: count,
-      tasks: tasks
+      tasks
     });
   } catch (error) {
     return res.status(400).send(error);
@@ -148,7 +148,7 @@ router.get("/tasks/completed", async (req, res) => {
   //   });
 });
 
-router.get("/tasks/:id", async (req, res) => {
+router.get('/tasks/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -156,8 +156,8 @@ router.get("/tasks/:id", async (req, res) => {
 
     if (!task) {
       return res.status(404).send({
-        status: "error",
-        message: LanguageHelper.getLanguageString("task", "tasksNotFound")
+        status: 'error',
+        message: LanguageHelper.getLanguageString('task', 'tasksNotFound')
       });
     }
 
@@ -167,7 +167,7 @@ router.get("/tasks/:id", async (req, res) => {
   }
 });
 
-router.delete("/tasks/:id", async (req, res) => {
+router.delete('/tasks/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -175,18 +175,18 @@ router.delete("/tasks/:id", async (req, res) => {
 
     if (!task) {
       return res.status(400).send({
-        status: "error",
-        message: LanguageHelper.getLanguageString("task", "taskDeleteNotFound")
+        status: 'error',
+        message: LanguageHelper.getLanguageString('task', 'taskDeleteNotFound')
       });
     }
 
     const count = await Task.countDocuments({ completed: false });
 
     return res.status(200).send({
-      status: "success",
+      status: 'success',
       message: LanguageHelper.getLanguageString(
-        "task",
-        "taskDeletedSuccessfully"
+        'task',
+        'taskDeletedSuccessfully'
       ),
       tasksLeft: count
     });

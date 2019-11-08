@@ -1,27 +1,28 @@
 export default {
-  "taskCreationError": {
-    "eng": "Sorry, error while trying to create your task."
+  taskCreationError: {
+    eng: 'Sorry, error while trying to create your task.'
   },
-  "taskNotFound": {
-    "tasksNotFound": {
-      "eng": "Sorry, no tasks found."
+  taskNotFound: {
+    tasksNotFound: {
+      eng: 'Sorry, no tasks found.'
     },
-    "taskNotFound": {
-      "eng": "Sorry, task not found."
+    taskNotFound: {
+      eng: 'Sorry, task not found.'
     },
-    "taskDeleteNotFound": {
-      "eng": "Sorry, the task you're trying to delete does not exist."
+    taskDeleteNotFound: {
+      eng: 'Sorry, the task you\'re trying to delete does not exist.'
     },
-    "taskPatchForbiddenKeys": {
-      "eng": "You're trying to update forbidden keys in your request."
+    taskPatchForbiddenKeys: {
+      eng: 'You\'re trying to update forbidden keys in your request.'
     },
-    "taskFailedUpdate": {
-      "eng": "Failed to update your task data."
+    taskFailedUpdate: {
+      eng: 'Failed to update your task data.'
     },
-    "taskNoCompletedTasksFound": {
-      "eng": "Sorry, no completed tasks were found."
+    taskNoCompletedTasksFound: {
+      eng: 'Sorry, no completed tasks were found.'
     },
-    "taskDeletedSuccessfully": {
-      "eng": "Your task was deleted successfully!"
+    taskDeletedSuccessfully: {
+      eng: 'Your task was deleted successfully!'
     }
   }
+};
