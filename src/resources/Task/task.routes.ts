@@ -195,6 +195,8 @@ taskRouter.delete('/tasks/:id', userAuthMiddleware, async (req, res) => {
     const task = await Task.findByIdAndDelete(id);
 
     if (!task) {
+      console.log('task not found');
+
       return res.status(400).send({
         status: 'error',
         message: LanguageHelper.getLanguageString('task', 'taskDeleteNotFound')

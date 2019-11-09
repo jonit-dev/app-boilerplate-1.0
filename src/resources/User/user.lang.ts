@@ -1,4 +1,4 @@
-export default {
+export const strings = {
   userLogoutError: {
     eng: 'Error while trying to log out.'
   },
@@ -34,16 +34,16 @@ export default {
     eng: 'User not found.'
   },
   userDeleteNotFound: {
-    eng: 'The user you\'re trying to delete does not exist.'
+    eng: "The user you're trying to delete does not exist."
   },
   userProfileGetError: {
-    eng: 'Error while trying to fetch your user\'s profile.'
+    eng: "Error while trying to fetch your user's profile."
   },
   userDeleteError: {
     eng: 'Error while trying to delete your user'
   },
   userPatchForbiddenKeys: {
-    eng: 'You\'re trying to update forbidden keys in your request'
+    eng: "You're trying to update forbidden keys in your request"
   },
   userFailedUpdate: {
     eng: 'Failed to update your user data.'

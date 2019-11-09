@@ -50,6 +50,6 @@ app.listen(port, () => {
 });
 
 process.on('SIGINT', () => {
-  console.log('Bye bye!');
+  console.log('Shutting down server process...');
   process.exit();
 });
