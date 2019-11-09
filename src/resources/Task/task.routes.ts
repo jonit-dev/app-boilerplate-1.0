@@ -74,10 +74,47 @@ router.patch('/tasks/:id', userAuthMiddleware, async (req, res) => {
   }
 });
 
+export enum SortOrderType {
+  Asc = 'asc',
+  Desc = 'desc'
+}
+
 router.get('/tasks', userAuthMiddleware, async (req, res) => {
-  const tasks = await Task.find({});
+  const { query } = req;
+
+  let sortParam;
+  let conditions = {};
+
+  if (query.completed) {
+    conditions = {
+      ...conditions,
+      completed: query.completed
+    };
+  }
+
+  if (query.description) {
+    conditions = {
+      ...conditions,
+      description: query.description
+    };
+  }
+
+  if (query.sortBy) {
+    const queryData = query.sortBy.split('_');
+    const sortByParam: string = queryData[0];
+    const orderBy: SortOrderType = queryData[1];
+
+    sortParam =
+      orderBy === SortOrderType.Desc ? `-${sortByParam}` : sortByParam;
+  }
 
   try {
+    const tasks = await Task.find(conditions)
+
+      .skip(parseInt(query.skip))
+      .limit(parseInt(query.limit))
+      .sort(sortParam);
+
     if (!tasks) {
       return res.status(404).send({
         status: 'error',
@@ -88,19 +125,6 @@ router.get('/tasks', userAuthMiddleware, async (req, res) => {
   } catch (error) {
     return res.status(500).send(error);
   }
-
-  // Task.find({})
-  //   .then(results => {
-  //     if (!results) {
-  //       return res.status(404).send({
-  //         status: "error",
-  //         message: "Tasks not found!"
-  //       });
-  //     }
-
-  //     return res.status(200).send(results);
-  //   })
-  //   .catch(err => res.status(500).send());
 });
 
 // number of complete tasks (promise chaining sample)

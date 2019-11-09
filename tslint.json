@@ -30,7 +30,8 @@
         "object-literal-sort-keys": false,
         "no-this-assignment": false,
         "no-empty-interface": true,
-        "interface-name": true
+        "interface-name": true,
+        "radix": false
     },
     "rulesDirectory": []
 }

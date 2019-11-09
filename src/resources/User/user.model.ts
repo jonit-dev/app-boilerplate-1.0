@@ -31,30 +31,35 @@ export interface IUserModel extends Model<IUser> {
 
 // Statics ========================================
 
-const userSchema: Schema = new Schema({
-  name: {
-    type: String
-  },
-  password: {
-    type: String
-  },
-  email: {
-    type: String,
-    unique: true
-  },
-  age: {
-    type: Number
-  },
-  tokens: [
-    // this will allow multi device sign in (different devices with different tokens)
-    {
-      token: {
-        type: String,
-        required: true
+const userSchema: Schema = new Schema(
+  {
+    name: {
+      type: String
+    },
+    password: {
+      type: String
+    },
+    email: {
+      type: String,
+      unique: true
+    },
+    age: {
+      type: Number
+    },
+    tokens: [
+      // this will allow multi device sign in (different devices with different tokens)
+      {
+        token: {
+          type: String,
+          required: true
+        }
       }
-    }
-  ]
-});
+    ]
+  },
+  {
+    timestamps: true
+  }
+);
 
 // statics are methods that you add to your model, making it possible to access them anywhere
 
@@ -62,7 +67,7 @@ userSchema.statics.hashPassword = async (password: string): Promise<string> => {
   return bcrypt.hash(password, 8);
 };
 
-// methods create a normal method (instance needs to be declared). Statics functions, otherwise, doesnt need to be declared. It can be accessed directly through the model
+// methods create a normal method (instance needs to be declared). Statics functions, otherwise, doesn't need to be declared. It can be accessed directly through the model
 
 // here we use function() instead of an arrow function because we need access to "this", that's not present on the later.
 
