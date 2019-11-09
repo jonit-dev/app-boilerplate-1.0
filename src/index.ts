@@ -1,10 +1,10 @@
 import express from 'express';
 import mongoose from 'mongoose';
 
-import serverConfig from './constants/serverConfig';
-import { maintenanceMode } from './middlewares/global.middleware';
-import taskRoutes from './resources/Task/task.routes';
-import userRoutes from './resources/User/user.routes';
+import { serverConfig } from './constants/serverConfig';
+import { GlobalMiddleware } from './middlewares/global.middleware';
+import { taskRouter } from './resources/Task/task.routes';
+import { userRouter } from './resources/User/user.routes';
 
 mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
   useNewUrlParser: true,
@@ -27,7 +27,7 @@ app.use(express.json()); // << THIS IS REQUIRED TO EXPRESS PARSING JSON DATA
 *##############################################################*/
 
 if (serverConfig.maintenanceMode) {
-  app.use(maintenanceMode);
+  app.use(GlobalMiddleware.maintenanceMode);
 }
 
 // app.use(middleware.checkMethods);
@@ -38,11 +38,11 @@ if (serverConfig.maintenanceMode) {
 
 // USERS ========================================
 
-app.use(userRoutes);
+app.use(userRouter);
 
 // TASKS ========================================
 
-app.use(taskRoutes);
+app.use(taskRouter);
 
 app.listen(port, () => {
   // tslint:disable-next-line: no-console

@@ -13,22 +13,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const serverConfig_1 = __importDefault(require("../constants/serverConfig"));
-const user_model_1 = __importDefault(require("../resources/User/user.model"));
-const LanguageHelper_1 = __importDefault(require("../utils/LanguageHelper"));
+const serverConfig_1 = require("../constants/serverConfig");
+const user_model_1 = require("../resources/User/user.model");
+const LanguageHelper_1 = require("../utils/LanguageHelper");
 const userAuthMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const token = req.header('Authorization').replace('Bearer ', ''); // remove Bearer string
-        const decoded = jsonwebtoken_1.default.verify(token, serverConfig_1.default.jwtSecret);
+        const decoded = jsonwebtoken_1.default.verify(token, serverConfig_1.serverConfig.jwtSecret);
         // find an user with the correct id (passed through the token), that has the particular token stored.
-        const user = yield user_model_1.default.findOne({
+        const user = yield user_model_1.User.findOne({
             _id: decoded._id,
             'tokens.token': token
         });
         if (!user) {
             return res.status(401).send({
                 status: 'error',
-                message: LanguageHelper_1.default.getLanguageString('user', 'userNotFoundByToken')
+                message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userNotFoundByToken')
             });
         }
         req.token = token;
@@ -39,7 +39,7 @@ const userAuthMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0,
     catch (error) {
         return res.status(401).send({
             status: 'error',
-            message: LanguageHelper_1.default.getLanguageString('user', 'userNotAuthenticated')
+            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userNotAuthenticated')
         });
     }
 });

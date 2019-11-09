@@ -8,28 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const auth_middleware_1 = require("../../middlewares/auth.middleware");
-const LanguageHelper_1 = __importDefault(require("../../utils/LanguageHelper"));
-const RouterHelper_1 = __importDefault(require("../../utils/RouterHelper"));
-const user_model_1 = __importDefault(require("./user.model"));
+const LanguageHelper_1 = require("../../utils/LanguageHelper");
+const RouterHelper_1 = require("../../utils/RouterHelper");
+const user_model_1 = require("./user.model");
 // @ts-ignore
-const router = new express_1.Router();
+const userRouter = new express_1.Router();
+exports.userRouter = userRouter;
 // load auth middleware for adding into specific routes!
 /*#############################################################|
 |  >>> PUBLIC ROUTES
 *##############################################################*/
 // Authentication ========================================
 // User => Login
-router.post('/users/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.post('/users/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     console.log(`logging user: ${email}`);
     try {
-        const user = yield user_model_1.default.findByCredentials(email, password);
+        const user = yield user_model_1.User.findByCredentials(email, password);
         const token = yield user.generateAuthToken();
         return res.status(200).send({
             user,
@@ -44,9 +42,9 @@ router.post('/users/login', (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 }));
 // User => Sign Up
-router.post('/users', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.post('/users', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, email, password, age } = req.body;
-    const user = new user_model_1.default({
+    const user = new user_model_1.User({
         name,
         email,
         password,
@@ -64,7 +62,7 @@ router.post('/users', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     catch (error) {
         res.status(400).send({
             status: 'error',
-            message: LanguageHelper_1.default.getLanguageString('user', 'userCreationError'),
+            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userCreationError'),
             details: error.message
         });
     }
@@ -74,7 +72,7 @@ router.post('/users', (req, res) => __awaiter(void 0, void 0, void 0, function* 
 *##############################################################*/
 // Authentication routes ========================================
 // User ==> Logout
-router.post('/users/logout', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.post('/users/logout', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req;
     const reqToken = req.token;
     try {
@@ -84,40 +82,48 @@ router.post('/users/logout', auth_middleware_1.userAuthMiddleware, (req, res) =>
         yield user.save(); // save user model to update records
         return res.status(200).send({
             status: 'success',
-            message: LanguageHelper_1.default.getLanguageString('user', 'userLogoutSuccess')
+            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userLogoutSuccess')
         });
     }
     catch (error) {
         return res.status(400).send({
             status: 'error',
-            message: LanguageHelper_1.default.getLanguageString('user', 'userLogoutError'),
+            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userLogoutError'),
             details: error.message
         });
     }
 }));
 // User ==> Logout all connected devices
-router.post('/users/logout/all', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.post('/users/logout/all', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req;
     try {
         user.tokens = [];
         yield user.save();
         return res.status(200).send({
             status: 'success',
-            message: LanguageHelper_1.default.getLanguageString('user', 'userLogoutAllSuccess')
+            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userLogoutAllSuccess')
         });
     }
     catch (error) {
         console.log(error);
         return res.status(500).send({
             status: 'error',
-            message: LanguageHelper_1.default.getLanguageString('user', 'userLogoutAllError'),
+            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userLogoutAllError'),
             details: error.message
         });
     }
 }));
+// Upload routes ========================================
+// router.post('/profile/upload', async (req, res) => {
+//   try {
+//     return res.status(201).send(response);
+//   } catch (error) {
+//     res.status(400).send(error);
+//   }
+// });
 // CRUD routes ========================================
 // User ==> Delete your own profile
-router.delete('/users/me', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.delete('/users/me', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req;
     try {
         yield user.remove();
@@ -127,12 +133,12 @@ router.delete('/users/me', auth_middleware_1.userAuthMiddleware, (req, res) => _
         console.log(error);
         return res.status(500).send({
             status: 'error',
-            message: LanguageHelper_1.default.getLanguageString('user', 'userDeleteError'),
+            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userDeleteError'),
             details: error.message
         });
     }
 }));
-router.get('/users/profile', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.get('/users/profile', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req;
     try {
         return res.status(200).send({
@@ -142,7 +148,7 @@ router.get('/users/profile', auth_middleware_1.userAuthMiddleware, (req, res) =>
     catch (error) {
         return res.status(500).send({
             status: 'error',
-            message: LanguageHelper_1.default.getLanguageString('user', 'userProfileGetError'),
+            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userProfileGetError'),
             details: error.message
         });
     }
@@ -159,13 +165,13 @@ router.get('/users/profile', auth_middleware_1.userAuthMiddleware, (req, res) =>
     //   res.status(400).send(error);
     // }
 }));
-router.patch('/users/me', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.patch('/users/me', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req;
     const updates = Object.keys(req.body);
-    if (!RouterHelper_1.default.isAllowedKey(req.body, ['name', 'email', 'password', 'age'])) {
+    if (!RouterHelper_1.RouterHelper.isAllowedKey(req.body, ['name', 'email', 'password', 'age'])) {
         return res.status(400).send({
             status: 'error',
-            message: LanguageHelper_1.default.getLanguageString('user', 'userPatchForbiddenKeys')
+            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userPatchForbiddenKeys')
         });
     }
     try {
@@ -184,9 +190,8 @@ router.patch('/users/me', auth_middleware_1.userAuthMiddleware, (req, res) => __
         console.log(error);
         return res.status(400).send({
             status: 'error',
-            message: LanguageHelper_1.default.getLanguageString('user', 'userFailedUpdate'),
+            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userFailedUpdate'),
             details: error.message
         });
     }
 }));
-exports.default = router;

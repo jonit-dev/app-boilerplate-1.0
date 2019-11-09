@@ -2,8 +2,8 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Document, Model, model, Schema } from 'mongoose';
 
-import serverConfig from '../../constants/serverConfig';
-import LanguageHelper from '../../utils/LanguageHelper';
+import { serverConfig } from '../../constants/serverConfig';
+import { LanguageHelper } from '../../utils/LanguageHelper';
 
 /*#############################################################|
 |  >>> MODEL FUNCTIONS (static, methods)
@@ -146,4 +146,4 @@ userSchema.pre('save', async function(next) {
 
 const User: IUserModel = model<IUser, IUserModel>('User', userSchema);
 
-export default User;
+export { User };

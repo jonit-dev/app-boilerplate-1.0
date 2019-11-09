@@ -1,12 +1,12 @@
 import { Router } from 'express';
 
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
-import LanguageHelper from '../../utils/LanguageHelper';
-import RouterHelper from '../../utils/RouterHelper';
-import User from './user.model';
+import { LanguageHelper } from '../../utils/LanguageHelper';
+import { RouterHelper } from '../../utils/RouterHelper';
+import { User } from './user.model';
 
 // @ts-ignore
-const router = new Router();
+const userRouter = new Router();
 
 // load auth middleware for adding into specific routes!
 
@@ -17,7 +17,7 @@ const router = new Router();
 // Authentication ========================================
 
 // User => Login
-router.post('/users/login', async (req, res) => {
+userRouter.post('/users/login', async (req, res) => {
   const { email, password } = req.body;
 
   console.log(`logging user: ${email}`);
@@ -39,7 +39,7 @@ router.post('/users/login', async (req, res) => {
 });
 
 // User => Sign Up
-router.post('/users', async (req, res) => {
+userRouter.post('/users', async (req, res) => {
   const { name, email, password, age } = req.body;
 
   const user = new User({
@@ -76,7 +76,7 @@ router.post('/users', async (req, res) => {
 // Authentication routes ========================================
 
 // User ==> Logout
-router.post('/users/logout', userAuthMiddleware, async (req, res) => {
+userRouter.post('/users/logout', userAuthMiddleware, async (req, res) => {
   const { user } = req;
   const reqToken = req.token;
 
@@ -103,7 +103,7 @@ router.post('/users/logout', userAuthMiddleware, async (req, res) => {
 
 // User ==> Logout all connected devices
 
-router.post('/users/logout/all', userAuthMiddleware, async (req, res) => {
+userRouter.post('/users/logout/all', userAuthMiddleware, async (req, res) => {
   const { user } = req;
 
   try {
@@ -125,11 +125,22 @@ router.post('/users/logout/all', userAuthMiddleware, async (req, res) => {
   }
 });
 
+// Upload routes ========================================
+
+// router.post('/profile/upload', async (req, res) => {
+//   try {
+
+//     return res.status(201).send(response);
+//   } catch (error) {
+//     res.status(400).send(error);
+//   }
+// });
+
 // CRUD routes ========================================
 
 // User ==> Delete your own profile
 
-router.delete('/users/me', userAuthMiddleware, async (req, res) => {
+userRouter.delete('/users/me', userAuthMiddleware, async (req, res) => {
   const { user } = req;
 
   try {
@@ -146,7 +157,7 @@ router.delete('/users/me', userAuthMiddleware, async (req, res) => {
   }
 });
 
-router.get('/users/profile', userAuthMiddleware, async (req, res) => {
+userRouter.get('/users/profile', userAuthMiddleware, async (req, res) => {
   const { user } = req;
 
   try {
@@ -175,7 +186,7 @@ router.get('/users/profile', userAuthMiddleware, async (req, res) => {
   // }
 });
 
-router.patch('/users/me', userAuthMiddleware, async (req, res) => {
+userRouter.patch('/users/me', userAuthMiddleware, async (req, res) => {
   const { user } = req;
   const updates = Object.keys(req.body);
 
@@ -213,4 +224,4 @@ router.patch('/users/me', userAuthMiddleware, async (req, res) => {
   }
 });
 
-export default router;
+export { userRouter };

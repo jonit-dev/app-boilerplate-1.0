@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const mongoose_1 = require("mongoose");
-const serverConfig_1 = __importDefault(require("../../constants/serverConfig"));
-const LanguageHelper_1 = __importDefault(require("../../utils/LanguageHelper"));
+const serverConfig_1 = require("../../constants/serverConfig");
+const LanguageHelper_1 = require("../../utils/LanguageHelper");
 // Statics ========================================
 const userSchema = new mongoose_1.Schema({
     name: {
@@ -41,17 +41,19 @@ const userSchema = new mongoose_1.Schema({
             }
         }
     ]
+}, {
+    timestamps: true
 });
 // statics are methods that you add to your model, making it possible to access them anywhere
 userSchema.statics.hashPassword = (password) => __awaiter(void 0, void 0, void 0, function* () {
     return bcryptjs_1.default.hash(password, 8);
 });
-// methods create a normal method (instance needs to be declared). Statics functions, otherwise, doesnt need to be declared. It can be accessed directly through the model
+// methods create a normal method (instance needs to be declared). Statics functions, otherwise, doesn't need to be declared. It can be accessed directly through the model
 // here we use function() instead of an arrow function because we need access to "this", that's not present on the later.
 userSchema.methods.generateAuthToken = function () {
     return __awaiter(this, void 0, void 0, function* () {
         const user = this;
-        const token = jsonwebtoken_1.default.sign({ _id: user._id.toString() }, serverConfig_1.default.jwtSecret);
+        const token = jsonwebtoken_1.default.sign({ _id: user._id.toString() }, serverConfig_1.serverConfig.jwtSecret);
         // we can also pass an optional configuration object
         // const token = jwt.sign({ _id: user._id.toString() }, serverConfig.jwtSecret), { expiresIn: '7 days'});
         user.tokens = [...user.tokens, { token }];
@@ -71,12 +73,12 @@ userSchema.methods.toJSON = function () {
 userSchema.statics.findByCredentials = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield User.findOne({ email });
     if (!user) {
-        throw new Error(LanguageHelper_1.default.getLanguageString('user', 'userNotFoundOnLogin'));
+        throw new Error(LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userNotFoundOnLogin'));
     }
     // if our provided password is equal to the stored password
     const isMatch = yield bcryptjs_1.default.compare(password, user.password);
     if (!isMatch) {
-        throw new Error(LanguageHelper_1.default.getLanguageString('user', 'userWrongPassword'));
+        throw new Error(LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userWrongPassword'));
     }
     return user; // return the user if everything is ok
 });
@@ -97,4 +99,4 @@ userSchema.pre('save', function (next) {
 });
 // model ========================================
 const User = mongoose_1.model('User', userSchema);
-exports.default = User;
+exports.User = User;

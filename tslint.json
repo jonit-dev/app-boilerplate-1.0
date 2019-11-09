@@ -31,7 +31,8 @@
         "no-this-assignment": false,
         "no-empty-interface": true,
         "interface-name": true,
-        "radix": false
+        "radix": false,
+        "no-default-export": true
     },
     "rulesDirectory": []
 }

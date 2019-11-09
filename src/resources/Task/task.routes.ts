@@ -2,18 +2,18 @@ import express from 'express';
 
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
 import { SortOrderType } from '../../types/global';
-import LanguageHelper from '../../utils/LanguageHelper';
-import RouterHelper from '../../utils/RouterHelper';
-import Task from './task.model';
+import { LanguageHelper } from '../../utils/LanguageHelper';
+import { RouterHelper } from '../../utils/RouterHelper';
+import { Task } from './task.model';
 
 /*#############################################################|
 |  >>> PROTECTED ROUTES
 *##############################################################*/
 
 // @ts-ignore
-const router = new express.Router();
+const taskRouter = new express.Router();
 
-router.post('/tasks', userAuthMiddleware, async (req, res) => {
+taskRouter.post('/tasks', userAuthMiddleware, async (req, res) => {
   const { user } = req;
 
   try {
@@ -33,7 +33,7 @@ router.post('/tasks', userAuthMiddleware, async (req, res) => {
   }
 });
 
-router.patch('/tasks/:id', userAuthMiddleware, async (req, res) => {
+taskRouter.patch('/tasks/:id', userAuthMiddleware, async (req, res) => {
   const { id } = req.params;
   const updates = Object.keys(req.body);
 
@@ -75,8 +75,7 @@ router.patch('/tasks/:id', userAuthMiddleware, async (req, res) => {
   }
 });
 
-
-router.get('/tasks', userAuthMiddleware, async (req, res) => {
+taskRouter.get('/tasks', userAuthMiddleware, async (req, res) => {
   const { query } = req;
 
   let sortParam;
@@ -126,7 +125,7 @@ router.get('/tasks', userAuthMiddleware, async (req, res) => {
 
 // number of complete tasks (promise chaining sample)
 
-router.get('/tasks/completed', userAuthMiddleware, async (req, res) => {
+taskRouter.get('/tasks/completed', userAuthMiddleware, async (req, res) => {
   try {
     const tasks = await Task.find({ completed: true });
     if (!tasks) {
@@ -170,7 +169,7 @@ router.get('/tasks/completed', userAuthMiddleware, async (req, res) => {
   //   });
 });
 
-router.get('/tasks/:id', userAuthMiddleware, async (req, res) => {
+taskRouter.get('/tasks/:id', userAuthMiddleware, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -189,7 +188,7 @@ router.get('/tasks/:id', userAuthMiddleware, async (req, res) => {
   }
 });
 
-router.delete('/tasks/:id', userAuthMiddleware, async (req, res) => {
+taskRouter.delete('/tasks/:id', userAuthMiddleware, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -217,4 +216,4 @@ router.delete('/tasks/:id', userAuthMiddleware, async (req, res) => {
   }
 });
 
-export default router;
+export { taskRouter };

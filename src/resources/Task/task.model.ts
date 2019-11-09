@@ -32,4 +32,4 @@ taskSchema.pre('save', async function(next) {
 
 const Task = mongoose.model('Task', taskSchema);
 
-export default Task;
+export { Task };

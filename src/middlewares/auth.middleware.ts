@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 
-import serverConfig from '../constants/serverConfig';
-import User from '../resources/User/user.model';
-import LanguageHelper from '../utils/LanguageHelper';
+import { serverConfig } from '../constants/serverConfig';
+import { User } from '../resources/User/user.model';
+import { LanguageHelper } from '../utils/LanguageHelper';
 
 const userAuthMiddleware = async (req, res, next) => {
   try {

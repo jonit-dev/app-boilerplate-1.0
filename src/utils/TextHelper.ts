@@ -1,5 +1,5 @@
-const capitalizeFirstLetter = string => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-export default { capitalizeFirstLetter };
+export class TextHelper {
+  public static capitalizeFirstLetter = string => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+}

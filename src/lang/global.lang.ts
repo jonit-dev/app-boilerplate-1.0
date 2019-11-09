@@ -1,4 +1,4 @@
-export default {
+export const globalStrings = {
   methodNotAllowed: {
     eng: 'Sorry, this request method is not allowed.'
   },

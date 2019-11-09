@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
+exports.serverConfig = {
     env: 'dev',
     maintenanceMode: false,
     language: 'eng',
