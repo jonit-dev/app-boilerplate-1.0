@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "node --inspect=5858 -r ts-node/register ./src/index.ts",
     "mongo": "/home/jonit/mongodb/bin/mongod --dbpath=/home/jonit/mongodb-data",
-    "dev": "ts-node-dev --respawn src/index.ts",
+    "dev": "nodemon --signal SIGTERM --delay 1500ms",
     "build": "tsc -p .",
     "lint": "tslint --project . --fix"
   },
@@ -26,6 +26,8 @@
     "mongodb": "^3.3.1",
     "mongoose": "^5.7.8",
     "multer": "^1.4.2",
+    "nodemon": "^1.19.4",
+    "ts-node": "^8.4.1",
     "validator": "^11.1.0"
   },
   "devDependencies": {
@@ -34,8 +36,21 @@
     "@types/mongoose": "^5.5.19",
     "@types/node": "^12.7.12",
     "ts-node-dev": "^1.0.0-pre.44",
+    "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.7.2",
-    "tslint": "^5.20.1"
+    "typescript": "^3.7.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "npm start",
+    "ext": "ts"
   }
 }

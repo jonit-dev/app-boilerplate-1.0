@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { existsSync, mkdirSync } from 'fs';
 import multer from 'multer';
 
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
@@ -127,7 +126,7 @@ userRouter.post('/users/logout/all', userAuthMiddleware, async (req, res) => {
   }
 });
 
-// Upload routes ========================================
+// User ==> Upload profile picture
 
 const upload = multer({
   // multer (upload library) configuration
@@ -156,23 +155,7 @@ const upload = multer({
     }
 
     cb(undefined, true); // acccept file callback
-  },
-  storage: multer.diskStorage({
-    destination(req, file, cb) {
-      const { user } = req;
-
-      // create user directory, if it does not exists yet
-      if (!existsSync(`uploads/images/${user._id}`)) {
-        mkdirSync(`uploads/images/${user._id}`);
-      }
-
-      // save the uploaded file
-      cb(null, `uploads/images/${user._id}`);
-    },
-    filename(req, file, cb) {
-      cb(null, file.originalname);
-    }
-  })
+  }
 });
 
 // !upload-key should match postman's form-data key. set key as 'file' instead of text
@@ -182,15 +165,25 @@ userRouter.post(
   async (req, res) => {
     console.log('uploading your file...');
 
+    // here we're saving the file directly in our database
+    const { user } = req;
+    const { buffer } = req.file;
+
+    user.avatar = buffer;
+    await user.save();
+
     return res.status(200).send({
       status: 'success',
-      message: LanguageHelper.getLanguageString('user', 'userFileUploaded')
+      message: LanguageHelper.getLanguageString('user', 'userAvatarUploaded')
     });
   },
   (error, req, res, next) => {
     return res.status(500).send({
       status: 'error',
-      message: LanguageHelper.getLanguageString('user', 'userErrorFileUpload'),
+      message: LanguageHelper.getLanguageString(
+        'user',
+        'userAvatarErrorUpload'
+      ),
       details: error.message
     });
   }
@@ -198,7 +191,59 @@ userRouter.post(
 
 // CRUD routes ========================================
 
-// User ==> Delete your own profile
+// User => Serve avatar picture ========================================
+
+userRouter.get('/user/:id/profile', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user || !user.avatar) {
+      return res.status(500).send({
+        status: 'error',
+        message: LanguageHelper.getLanguageString(
+          'user',
+          'userAvatarUploadEmpty'
+        )
+      });
+    }
+
+    res.set('Content-Type', 'image/jpg');
+
+    return res.send(user.avatar);
+  } catch (error) {
+    return res.status(404).send();
+  }
+});
+
+// User => Delete avatar picture ========================================
+
+userRouter.delete('/users/profile/me', userAuthMiddleware, async (req, res) => {
+  try {
+    const { user } = req;
+
+    user.avatar = undefined;
+    user.save();
+
+    return res.status(200).send({
+      status: 'success',
+      message: LanguageHelper.getLanguageString(
+        'user',
+        'userAvatarUploadDeleted'
+      )
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: 'error',
+      message: LanguageHelper.getLanguageString(
+        'user',
+        'userAvatarUploadDeletedError'
+      ),
+      details: error.message
+    });
+  }
+});
+
+// User ==> Delete your own account
 
 userRouter.delete('/users/me', userAuthMiddleware, async (req, res) => {
   const { user } = req;

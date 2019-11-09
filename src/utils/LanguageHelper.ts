@@ -32,14 +32,10 @@ export class LanguageHelper {
     let string: string = languageStrings[key][serverConfig.language];
     const customVarsKeys = Object.keys(customVars);
     if (customVarsKeys) {
-      console.log(customVarsKeys);
-
       for (const k of customVarsKeys) {
         string = string.replace(new RegExp(`{{${k}}}`, 'g'), customVars[k]);
       }
     }
-
-    console.log(string);
 
     return string;
   };

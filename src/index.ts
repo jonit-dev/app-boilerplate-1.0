@@ -1,3 +1,4 @@
+import { exec } from 'child_process';
 import express from 'express';
 import mongoose from 'mongoose';
 
@@ -16,6 +17,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
 /*#############################################################|
 |  >>> EXPRESS - INITIALIZATION
 *##############################################################*/
+
+// ! Tip: if nodemon hangs on "EADDRESSINUSE" error, run: "killall node"
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -49,7 +52,9 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-process.on('SIGINT', () => {
-  console.log('Shutting down server process...');
-  process.exit();
+app.on('error', err => {
+  // @ts-ignore
+  if (err.code === 'EADDRINUSE') {
+    exec(`sh ./scripts/nodemon.sh`);
+  }
 });

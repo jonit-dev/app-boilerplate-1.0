@@ -49,13 +49,22 @@ export const strings = {
   userFailedUpdate: {
     eng: 'Failed to update your user data.'
   },
-  userFileUploaded: {
-    eng: 'Your file was uploaded successfully'
+  userAvatarUploaded: {
+    eng: 'Your avatar was uploaded successfully.'
   },
-  userErrorFileUpload: {
-    eng: 'Error while uploading your file'
+  userAvatarErrorUpload: {
+    eng: 'Error while uploading your avatar.'
   },
   userErrorFileUploadFormat: {
-    eng: 'Please, upload a {{format}} file'
+    eng: 'Please, upload a {{format}} avatar file.'
+  },
+  userAvatarUploadDeleted: {
+    eng: 'Your profile picture was deleted successfully'
+  },
+  userAvatarUploadDeletedError: {
+    eng: 'Error while trying to delete your profile picture.'
+  },
+  userAvatarUploadEmpty: {
+    eng: 'This user does not have an avatar'
   }
 };

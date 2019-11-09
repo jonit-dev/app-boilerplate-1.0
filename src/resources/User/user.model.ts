@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { Binary } from 'mongodb';
 import { Document, Model, model, Schema } from 'mongoose';
 
 import { serverConfig } from '../../constants/serverConfig';
@@ -9,12 +10,13 @@ import { LanguageHelper } from '../../utils/LanguageHelper';
 |  >>> MODEL FUNCTIONS (static, methods)
 *##############################################################*/
 
-interface IUserDocument extends Document {
+export interface IUserDocument extends Document {
   name: string;
   password: string;
   email: string;
   age: Number;
   tokens: Object[];
+  avatar: Binary;
 }
 
 // methods
@@ -54,7 +56,10 @@ const userSchema: Schema = new Schema(
           required: true
         }
       }
-    ]
+    ],
+    avatar: {
+      type: Buffer
+    }
   },
   {
     timestamps: true
