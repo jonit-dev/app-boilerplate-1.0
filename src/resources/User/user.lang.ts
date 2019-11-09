@@ -47,5 +47,11 @@ export const strings = {
   },
   userFailedUpdate: {
     eng: 'Failed to update your user data.'
+  },
+  userFileUploaded: {
+    eng: 'Your file was uploaded successfully'
+  },
+  userErrorFileUpload: {
+    eng: 'Error while uploading your file'
   }
 };

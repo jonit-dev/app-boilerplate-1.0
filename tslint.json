@@ -32,7 +32,8 @@
         "no-empty-interface": true,
         "interface-name": true,
         "radix": false,
-        "no-default-export": true
+        "no-default-export": true,
+        "no-unused-variable": false
     },
     "rulesDirectory": []
 }

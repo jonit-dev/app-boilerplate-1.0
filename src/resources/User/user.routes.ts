@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import { existsSync, mkdirSync } from 'fs';
+import multer from 'multer';
 
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
 import { LanguageHelper } from '../../utils/LanguageHelper';
@@ -127,14 +129,65 @@ userRouter.post('/users/logout/all', userAuthMiddleware, async (req, res) => {
 
 // Upload routes ========================================
 
-// router.post('/profile/upload', async (req, res) => {
-//   try {
+const upload = multer({
+  // multer (upload library) configuration
 
-//     return res.status(201).send(response);
-//   } catch (error) {
-//     res.status(400).send(error);
-//   }
-// });
+  limits: {
+    fileSize: 1000000 // 1.000.000 bytes = 1 mb
+  },
+  fileFilter(req, file, cb) {
+    // file type restriction
+
+    console.log(`received file ${file.originalname}`);
+
+    if (!file.originalname.match(/\.(png|jpeg|jpg)$/)) {
+      // reject file callback
+      return cb(new Error('Please, upload a jpg or png file'));
+    }
+
+    cb(undefined, true); // acccept file callback
+  },
+  storage: multer.diskStorage({
+    destination(req, file, cb) {
+      const { user } = req;
+
+      // create user directory, if it does not exists yet
+      if (!existsSync(`uploads/images/${user._id}`)) {
+        mkdirSync(`uploads/images/${user._id}`);
+      }
+
+      // save the uploaded file
+      cb(null, `uploads/images/${user._id}`);
+    },
+    filename(req, file, cb) {
+      cb(null, file.originalname);
+    }
+  })
+});
+
+// !upload-key should match postman's form-data key. set key as 'file' instead of text
+userRouter.post(
+  '/profile/avatar',
+  [userAuthMiddleware, upload.single('avatar')],
+  async (req, res) => {
+    console.log('uploading your file...');
+    try {
+      return res.status(200).send({
+        status: 'success',
+        message: LanguageHelper.getLanguageString('user', 'userFileUploaded')
+      });
+    } catch (error) {
+      return res.status(500).send({
+        status: 'error',
+        message: LanguageHelper.getLanguageString(
+          'user',
+          'userErrorFileUpload'
+        ),
+        details: error.message
+      });
+    }
+  }
+);
 
 // CRUD routes ========================================
 
