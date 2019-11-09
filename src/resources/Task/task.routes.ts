@@ -1,6 +1,7 @@
 import express from 'express';
 
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
+import { SortOrderType } from '../../types/global';
 import LanguageHelper from '../../utils/LanguageHelper';
 import RouterHelper from '../../utils/RouterHelper';
 import Task from './task.model';
@@ -74,10 +75,6 @@ router.patch('/tasks/:id', userAuthMiddleware, async (req, res) => {
   }
 });
 
-export enum SortOrderType {
-  Asc = 'asc',
-  Desc = 'desc'
-}
 
 router.get('/tasks', userAuthMiddleware, async (req, res) => {
   const { query } = req;
@@ -85,17 +82,17 @@ router.get('/tasks', userAuthMiddleware, async (req, res) => {
   let sortParam;
   let conditions = {};
 
-  if (query.completed) {
-    conditions = {
-      ...conditions,
-      completed: query.completed
-    };
-  }
-
   if (query.description) {
     conditions = {
       ...conditions,
       description: query.description
+    };
+  }
+
+  if (query.completed) {
+    conditions = {
+      ...conditions,
+      completed: query.completed
     };
   }
 
