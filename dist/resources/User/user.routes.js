@@ -8,8 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const fs_1 = require("fs");
+const multer_1 = __importDefault(require("multer"));
 const auth_middleware_1 = require("../../middlewares/auth.middleware");
 const LanguageHelper_1 = require("../../utils/LanguageHelper");
 const RouterHelper_1 = require("../../utils/RouterHelper");
@@ -114,13 +119,52 @@ userRouter.post('/users/logout/all', auth_middleware_1.userAuthMiddleware, (req,
     }
 }));
 // Upload routes ========================================
-// router.post('/profile/upload', async (req, res) => {
-//   try {
-//     return res.status(201).send(response);
-//   } catch (error) {
-//     res.status(400).send(error);
-//   }
-// });
+const upload = multer_1.default({
+    // multer (upload library) configuration
+    limits: {
+        fileSize: 1000000 // 1.000.000 bytes = 1 mb
+    },
+    fileFilter(req, file, cb) {
+        // file type restriction
+        console.log(`received file ${file.originalname}`);
+        if (!file.originalname.match(/\.(png|jpeg|jpg)$/)) {
+            // reject file callback
+            return cb(new Error('Please, upload a jpg or png file'));
+        }
+        cb(undefined, true); // acccept file callback
+    },
+    storage: multer_1.default.diskStorage({
+        destination(req, file, cb) {
+            const { user } = req;
+            // create user directory, if it does not exists yet
+            if (!fs_1.existsSync(`uploads/images/${user._id}`)) {
+                fs_1.mkdirSync(`uploads/images/${user._id}`);
+            }
+            // save the uploaded file
+            cb(null, `uploads/images/${user._id}`);
+        },
+        filename(req, file, cb) {
+            cb(null, file.originalname);
+        }
+    })
+});
+// !upload-key should match postman's form-data key. set key as 'file' instead of text
+userRouter.post('/profile/avatar', [auth_middleware_1.userAuthMiddleware, upload.single('avatar')], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('uploading your file...');
+    try {
+        return res.status(200).send({
+            status: 'success',
+            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userFileUploaded')
+        });
+    }
+    catch (error) {
+        return res.status(500).send({
+            status: 'error',
+            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userErrorFileUpload'),
+            details: error.message
+        });
+    }
+}));
 // CRUD routes ========================================
 // User ==> Delete your own profile
 userRouter.delete('/users/me', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {

@@ -18,6 +18,7 @@ export const strings = {
     eng:
       'User not authenticated. Please, check your authentication credentials and try again.'
   },
+
   userCreationError: {
     eng: 'Error while trying to create your user'
   },

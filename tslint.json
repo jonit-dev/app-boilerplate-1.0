@@ -23,10 +23,6 @@
         "semicolon": [
             false
         ],
-        "quotemark": [
-            true,
-            "single"
-        ],
         "object-literal-sort-keys": false,
         "no-this-assignment": false,
         "no-empty-interface": true,

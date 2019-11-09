@@ -40,6 +40,6 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 process.on('SIGINT', () => {
-    console.log('Bye bye!');
+    console.log('Shutting down server process...');
     process.exit();
 });

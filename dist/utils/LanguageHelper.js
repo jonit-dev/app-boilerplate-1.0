@@ -13,8 +13,8 @@ LanguageHelper.getLanguageString = (model = null, key) => {
         return global_lang_1.globalStrings[key][serverConfig_1.serverConfig.language];
     }
     // load language strings for a specific model
-    let languageStrings = require(`../resources/${TextHelper_1.TextHelper.capitalizeFirstLetter(model)}/${model}.lang.ts`);
+    const { strings } = require(`../resources/${TextHelper_1.TextHelper.capitalizeFirstLetter(model)}/${model}.lang.ts`);
     // add our global generic strings
-    languageStrings = Object.assign(Object.assign({}, languageStrings), global_lang_1.globalStrings);
+    const languageStrings = Object.assign(Object.assign({}, strings), global_lang_1.globalStrings);
     return languageStrings[key][serverConfig_1.serverConfig.language];
 };
