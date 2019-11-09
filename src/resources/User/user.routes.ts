@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
+import sharp from 'sharp';
 
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
 import { LanguageHelper } from '../../utils/LanguageHelper';
@@ -169,7 +170,17 @@ userRouter.post(
     const { user } = req;
     const { buffer } = req.file;
 
-    user.avatar = buffer;
+    // Let's use sharp library to change the file (crop, change format, etc)
+
+    const editedImageBuffer = await sharp(buffer)
+      .resize({
+        width: 250,
+        height: 250
+      })
+      .png()
+      .toBuffer();
+
+    user.avatar = editedImageBuffer;
     await user.save();
 
     return res.status(200).send({
@@ -207,7 +218,7 @@ userRouter.get('/user/:id/profile', async (req, res) => {
       });
     }
 
-    res.set('Content-Type', 'image/jpg');
+    res.set('Content-Type', 'image/png');
 
     return res.send(user.avatar);
   } catch (error) {

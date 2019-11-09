@@ -93,13 +93,14 @@ userSchema.methods.generateAuthToken = async function() {
 // this will be fired whenever our model is converted to JSON!!
 
 userSchema.methods.toJSON = function() {
-  // delete keys that shouldn't be displayed publicly
+  // this code will delete keys that shouldn't be displayed publicly
 
   const user = this;
   const userObject = user.toObject(); // convert Mongoose model to Object
 
   delete userObject.password;
   delete userObject.tokens;
+  delete userObject.avatar;
 
   return userObject;
 };
