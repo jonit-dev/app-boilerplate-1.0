@@ -406,7 +406,7 @@
         "signature": "27162da05b60e4d25abe5861deeeeb5f274beff77f2768213910025e60a54d38"
       },
       "./src/resources/User/user.lang.ts": {
-        "version": "8cb7ce7e4f94b56166835d310ec3cde698abfa6125752b5186914deba89309fb",
+        "version": "4fa0c6398b8349a1cb3d022653fb3cbdd81422bf1974780ee0c9c8e58f4ad80a",
         "signature": "239b500ba9f8c0880043e214785b269ac8bbfe45457aec24b6a5979e1bad14bb"
       },
       "./node_modules/@types/normalize-package-data/index.d.ts": {
@@ -1581,21 +1581,21 @@
       "./src/constants/serverConfig.ts",
       "./src/lang/global.lang.ts",
       "./src/utils/TextHelper.ts",
+      "./src/utils/LanguageHelper.ts",
+      "./src/middlewares/global.middleware.ts",
       "./node_modules/@types/jsonwebtoken/index.d.ts",
+      "./src/resources/User/user.model.ts",
+      "./src/middlewares/auth.middleware.ts",
       "./src/types/global.ts",
       "./src/utils/RouterHelper.ts",
       "./src/resources/Task/task.model.ts",
+      "./src/resources/Task/task.routes.ts",
+      "./src/resources/User/user.routes.ts",
+      "./src/index.ts",
+      "./src/resources/Task/task.lang.ts",
       "./node_modules/@types/normalize-package-data/index.d.ts",
       "./node_modules/@types/strip-bom/index.d.ts",
       "./node_modules/@types/strip-json-comments/index.d.ts",
-      "./src/utils/LanguageHelper.ts",
-      "./src/resources/User/user.routes.ts",
-      "./src/resources/Task/task.routes.ts",
-      "./src/middlewares/auth.middleware.ts",
-      "./src/resources/User/user.model.ts",
-      "./src/middlewares/global.middleware.ts",
-      "./src/index.ts",
-      "./src/resources/Task/task.lang.ts",
       "./src/resources/User/user.lang.ts"
     ]
   },

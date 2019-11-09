@@ -142,7 +142,17 @@ const upload = multer({
 
     if (!file.originalname.match(/\.(png|jpeg|jpg)$/)) {
       // reject file callback
-      return cb(new Error('Please, upload a jpg or png file'));
+      return cb(
+        new Error(
+          LanguageHelper.getLanguageString(
+            'user',
+            'userErrorFileUploadFormat',
+            {
+              format: 'png or jpg'
+            }
+          )
+        )
+      );
     }
 
     cb(undefined, true); // acccept file callback
@@ -171,21 +181,18 @@ userRouter.post(
   [userAuthMiddleware, upload.single('avatar')],
   async (req, res) => {
     console.log('uploading your file...');
-    try {
-      return res.status(200).send({
-        status: 'success',
-        message: LanguageHelper.getLanguageString('user', 'userFileUploaded')
-      });
-    } catch (error) {
-      return res.status(500).send({
-        status: 'error',
-        message: LanguageHelper.getLanguageString(
-          'user',
-          'userErrorFileUpload'
-        ),
-        details: error.message
-      });
-    }
+
+    return res.status(200).send({
+      status: 'success',
+      message: LanguageHelper.getLanguageString('user', 'userFileUploaded')
+    });
+  },
+  (error, req, res, next) => {
+    return res.status(500).send({
+      status: 'error',
+      message: LanguageHelper.getLanguageString('user', 'userErrorFileUpload'),
+      details: error.message
+    });
   }
 );
 

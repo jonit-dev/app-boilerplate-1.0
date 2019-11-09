@@ -5,7 +5,11 @@ import { TextHelper } from '../utils/TextHelper';
 // load proper language strings, accordingly to the server language settings
 
 export class LanguageHelper {
-  public static getLanguageString = (model: any = null, key: string) => {
+  public static getLanguageString = (
+    model: any = null,
+    key: string,
+    customVars: object = {}
+  ) => {
     if (!model) {
       // pass only the global strings
       return globalStrings[key][serverConfig.language];
@@ -25,6 +29,18 @@ export class LanguageHelper {
       ...globalStrings
     };
 
-    return languageStrings[key][serverConfig.language];
+    let string: string = languageStrings[key][serverConfig.language];
+    const customVarsKeys = Object.keys(customVars);
+    if (customVarsKeys) {
+      console.log(customVarsKeys);
+
+      for (const key of customVarsKeys) {
+        string = string.replace(new RegExp(`{{${key}}}`, 'g'), customVars[key]);
+      }
+    }
+
+    console.log(string);
+
+    return string;
   };
 }
