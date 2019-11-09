@@ -231,19 +231,6 @@ userRouter.get('/users/profile', userAuthMiddleware, async (req, res) => {
       details: error.message
     });
   }
-
-  // try {
-  //   const users = await User.find({});
-  //   if (!users) {
-  //     return res.status(404).send({
-  //       status: "error",
-  //       message: LanguageHelper.getLanguageString("user", "usersNotFound")
-  //     });
-  //   }
-  //   return res.status(200).send(users);
-  // } catch (error) {
-  //   res.status(400).send(error);
-  // }
 });
 
 userRouter.patch('/users/me', userAuthMiddleware, async (req, res) => {

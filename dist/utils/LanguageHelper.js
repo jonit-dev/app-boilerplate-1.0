@@ -7,7 +7,7 @@ const TextHelper_1 = require("../utils/TextHelper");
 class LanguageHelper {
 }
 exports.LanguageHelper = LanguageHelper;
-LanguageHelper.getLanguageString = (model = null, key) => {
+LanguageHelper.getLanguageString = (model = null, key, customVars = {}) => {
     if (!model) {
         // pass only the global strings
         return global_lang_1.globalStrings[key][serverConfig_1.serverConfig.language];
@@ -16,5 +16,14 @@ LanguageHelper.getLanguageString = (model = null, key) => {
     const { strings } = require(`../resources/${TextHelper_1.TextHelper.capitalizeFirstLetter(model)}/${model}.lang.ts`);
     // add our global generic strings
     const languageStrings = Object.assign(Object.assign({}, strings), global_lang_1.globalStrings);
-    return languageStrings[key][serverConfig_1.serverConfig.language];
+    let string = languageStrings[key][serverConfig_1.serverConfig.language];
+    const customVarsKeys = Object.keys(customVars);
+    if (customVarsKeys) {
+        console.log(customVarsKeys);
+        for (const key of customVarsKeys) {
+            string = string.replace(new RegExp(`{{${key}}}`, 'g'), customVars[key]);
+        }
+    }
+    console.log(string);
+    return string;
 };

@@ -129,7 +129,9 @@ const upload = multer_1.default({
         console.log(`received file ${file.originalname}`);
         if (!file.originalname.match(/\.(png|jpeg|jpg)$/)) {
             // reject file callback
-            return cb(new Error('Please, upload a jpg or png file'));
+            return cb(new Error(LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userErrorFileUploadFormat', {
+                format: 'png or jpg'
+            })));
         }
         cb(undefined, true); // acccept file callback
     },
@@ -151,20 +153,17 @@ const upload = multer_1.default({
 // !upload-key should match postman's form-data key. set key as 'file' instead of text
 userRouter.post('/profile/avatar', [auth_middleware_1.userAuthMiddleware, upload.single('avatar')], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('uploading your file...');
-    try {
-        return res.status(200).send({
-            status: 'success',
-            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userFileUploaded')
-        });
-    }
-    catch (error) {
-        return res.status(500).send({
-            status: 'error',
-            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userErrorFileUpload'),
-            details: error.message
-        });
-    }
-}));
+    return res.status(200).send({
+        status: 'success',
+        message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userFileUploaded')
+    });
+}), (error, req, res, next) => {
+    return res.status(500).send({
+        status: 'error',
+        message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userErrorFileUpload'),
+        details: error.message
+    });
+});
 // CRUD routes ========================================
 // User ==> Delete your own profile
 userRouter.delete('/users/me', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -196,18 +195,6 @@ userRouter.get('/users/profile', auth_middleware_1.userAuthMiddleware, (req, res
             details: error.message
         });
     }
-    // try {
-    //   const users = await User.find({});
-    //   if (!users) {
-    //     return res.status(404).send({
-    //       status: "error",
-    //       message: LanguageHelper.getLanguageString("user", "usersNotFound")
-    //     });
-    //   }
-    //   return res.status(200).send(users);
-    // } catch (error) {
-    //   res.status(400).send(error);
-    // }
 }));
 userRouter.patch('/users/me', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req;

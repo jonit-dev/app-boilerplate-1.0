@@ -358,8 +358,8 @@
         "signature": "3b8c4f2fb4e65e6d6715e48e8b8b68369b7e9510f9a225c36878b4277c70c605"
       },
       "./src/utils/LanguageHelper.ts": {
-        "version": "1c43f1ce0ee3699ea78620119b69268bfc4e1e99ca6f45ae5bf1f45dfc424450",
-        "signature": "fe3b54b013fbbb1f72d719354f09461e353b540a4cb66b296649161546582399"
+        "version": "71d1c4f8c43de188acbff161edda8dfff0d9c4f2cbb797738e9c30e70b213777",
+        "signature": "230b1fde7c459d24755c0dc8ff1d5c1405f4691db9103b2a01d45ee8cd4563a7"
       },
       "./src/middlewares/global.middleware.ts": {
         "version": "89989cf487f3d186e50111ca7dda659a3cc4bb396085ab9ed9c16d85a9940afd",
@@ -394,7 +394,7 @@
         "signature": "dbf1a16454e8b56064b3ba7afc3a4cfc70a85e55bb2ba06a03e224c4bb709283"
       },
       "./src/resources/User/user.routes.ts": {
-        "version": "c48ef519d13052d78d8d6118c23f6d79b71fea34bac7bb53d5849c5940be63f5",
+        "version": "9ea81492e175213fb01cf49ed78238685d243218967975aaf007ceeee8b33b6e",
         "signature": "8c8ea754c669ad8c1fd4c1dcbfa611ebfd5497455396256ab0141e96103f835a"
       },
       "./src/index.ts": {
@@ -406,8 +406,8 @@
         "signature": "27162da05b60e4d25abe5861deeeeb5f274beff77f2768213910025e60a54d38"
       },
       "./src/resources/User/user.lang.ts": {
-        "version": "4fa0c6398b8349a1cb3d022653fb3cbdd81422bf1974780ee0c9c8e58f4ad80a",
-        "signature": "239b500ba9f8c0880043e214785b269ac8bbfe45457aec24b6a5979e1bad14bb"
+        "version": "f36aefb4712e8ba3f7f38668bef3f9932f64939c600d39a34aaa74cdaadfd280",
+        "signature": "7354e6ee24ed0668de660069d209d82b5011b5042bd2aae2225a88e36eede843"
       },
       "./node_modules/@types/normalize-package-data/index.d.ts": {
         "version": "c9ad058b2cc9ce6dc2ed92960d6d009e8c04bef46d3f5312283debca6869f613",
@@ -1581,21 +1581,21 @@
       "./src/constants/serverConfig.ts",
       "./src/lang/global.lang.ts",
       "./src/utils/TextHelper.ts",
-      "./src/utils/LanguageHelper.ts",
-      "./src/middlewares/global.middleware.ts",
       "./node_modules/@types/jsonwebtoken/index.d.ts",
-      "./src/resources/User/user.model.ts",
-      "./src/middlewares/auth.middleware.ts",
       "./src/types/global.ts",
       "./src/utils/RouterHelper.ts",
       "./src/resources/Task/task.model.ts",
-      "./src/resources/Task/task.routes.ts",
-      "./src/resources/User/user.routes.ts",
       "./src/index.ts",
       "./src/resources/Task/task.lang.ts",
       "./node_modules/@types/normalize-package-data/index.d.ts",
       "./node_modules/@types/strip-bom/index.d.ts",
       "./node_modules/@types/strip-json-comments/index.d.ts",
+      "./src/utils/LanguageHelper.ts",
+      "./src/resources/User/user.routes.ts",
+      "./src/resources/Task/task.routes.ts",
+      "./src/middlewares/auth.middleware.ts",
+      "./src/resources/User/user.model.ts",
+      "./src/middlewares/global.middleware.ts",
       "./src/resources/User/user.lang.ts"
     ]
   },

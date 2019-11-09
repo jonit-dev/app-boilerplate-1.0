@@ -34,8 +34,8 @@ export class LanguageHelper {
     if (customVarsKeys) {
       console.log(customVarsKeys);
 
-      for (const key of customVarsKeys) {
-        string = string.replace(new RegExp(`{{${key}}}`, 'g'), customVars[key]);
+      for (const k of customVarsKeys) {
+        string = string.replace(new RegExp(`{{${k}}}`, 'g'), customVars[k]);
       }
     }
 

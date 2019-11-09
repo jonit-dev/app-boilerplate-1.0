@@ -54,5 +54,8 @@ exports.strings = {
     },
     userErrorFileUpload: {
         eng: 'Error while uploading your file'
+    },
+    userErrorFileUploadFormat: {
+        eng: 'Please, upload a {{format}} file'
     }
 };
