@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { serverConfig } from '../constants/serverConfig';
+import { serverConfig } from '../constants/env';
 import { User } from '../resources/User/user.model';
 import { LanguageHelper } from '../utils/LanguageHelper';
 

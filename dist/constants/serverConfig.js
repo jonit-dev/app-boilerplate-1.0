@@ -2,12 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const appName = 'App Boilerplate';
 const supportEmail = 'email@gmail.com';
+const env = 'dev'; // Set your main dev here
 exports.serverConfig = {
     app: {
         name: appName,
-        devUrl: 'http://localhost:3000/',
-        productionUrl: 'https://appboilerplate.io',
-        mongodbConnectionUrl: 'mongodb://mongo:27017/task-manager-api'
+        port: 3000,
+        url: 'http://localhost:3000/',
+        mongodbConnectionUrl: 'mongodb://mongo:27017/app'
     },
     email: {
         supportEmail,

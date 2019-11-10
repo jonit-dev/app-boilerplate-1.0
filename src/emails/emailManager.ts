@@ -1,7 +1,7 @@
 import sgMail from '@sendgrid/mail';
 import { readFileSync } from 'fs';
 
-import { serverConfig } from '../constants/serverConfig';
+import { serverConfig } from '../constants/env';
 import { TextHelper } from '../utils/TextHelper';
 
 export enum EmailType {

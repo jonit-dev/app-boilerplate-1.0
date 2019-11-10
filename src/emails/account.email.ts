@@ -1,4 +1,4 @@
-import { serverConfig } from '../constants/serverConfig';
+import { serverConfig } from '../constants/env';
 import { EmailManager, EmailType } from './emailManager';
 
 export class AccountEmailManager extends EmailManager {

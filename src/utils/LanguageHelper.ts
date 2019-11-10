@@ -1,4 +1,4 @@
-import { serverConfig } from '../constants/serverConfig';
+import { serverConfig } from '../constants/env';
 import { globalStrings } from '../lang/global.lang';
 import { TextHelper } from '../utils/TextHelper';
 

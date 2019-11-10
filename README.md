@@ -45,7 +45,6 @@ export const serverConfig = {
 Run:
 
 ```
-
 docker-compose up
 
 ```
@@ -65,3 +64,7 @@ then select one (name). For example: docker-node-mongo. Then run:
 ```
 docker exec -it docker-node-mongo /bin/bash
 ```
+
+## Mongo Admin
+
+- Access http://localhost:1234 to manage your mongodb database

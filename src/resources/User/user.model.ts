@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { Binary } from 'mongodb';
 import { Document, Model, model, Schema } from 'mongoose';
 
-import { serverConfig } from '../../constants/serverConfig';
+import { serverConfig } from '../../constants/env';
 import { LanguageHelper } from '../../utils/LanguageHelper';
 
 /*#############################################################|

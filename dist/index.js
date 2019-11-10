@@ -21,7 +21,7 @@ mongoose_1.default.connect(serverConfig_1.serverConfig.app.mongodbConnectionUrl,
 *##############################################################*/
 // ! Tip: if nodemon hangs on "EADDRESSINUSE" error, run: "killall node"
 const app = express_1.default();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || serverConfig_1.serverConfig.app.port;
 app.use(express_1.default.json()); // << THIS IS REQUIRED TO EXPRESS PARSING JSON DATA
 /*#############################################################|
 |  >>> MIDDLEWARES
@@ -44,6 +44,6 @@ app.listen(port, () => {
 app.on('error', err => {
     // @ts-ignore
     if (err.code === 'EADDRINUSE') {
-        child_process_1.exec(`sh ./scripts/nodemon.sh`);
+        child_process_1.exec(`killall node`);
     }
 });

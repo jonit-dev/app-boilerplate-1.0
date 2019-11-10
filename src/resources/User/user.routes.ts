@@ -2,7 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import sharp from 'sharp';
 
-import { serverConfig } from '../../constants/serverConfig';
+import { serverConfig } from '../../constants/env';
 import { AccountEmailManager } from '../../emails/account.email';
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
 import { LanguageHelper } from '../../utils/LanguageHelper';

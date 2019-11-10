@@ -4,7 +4,6 @@ services:
     container_name: docker-node-mongo
     restart: always
     build: .
-    command: npm run dev
     ports:
       - '3000:3000'
     volumes:
