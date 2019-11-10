@@ -2,6 +2,8 @@ import { Router } from 'express';
 import multer from 'multer';
 import sharp from 'sharp';
 
+import { serverConfig } from '../../constants/serverConfig';
+import { AccountEmailManager } from '../../emails/account.email';
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
 import { LanguageHelper } from '../../utils/LanguageHelper';
 import { RouterHelper } from '../../utils/RouterHelper';
@@ -23,6 +25,24 @@ userRouter.post('/users/login', async (req, res) => {
   const { email, password } = req.body;
 
   console.log(`logging user: ${email}`);
+
+  const accountEmailManager = new AccountEmailManager();
+
+  accountEmailManager.newAccount(
+    'jfurtado141@gmail.com',
+    'Hello World!',
+    'welcome',
+    {
+      name: 'Joao',
+      login_url: 'http://appboilerplate.com/login',
+      username: 'joaouser',
+      trial_start_date: '2019-11-09',
+      trial_end_date: '2019-11-29',
+      trial_length: 30,
+      support_email: serverConfig.email.supportEmail,
+      action_url: 'https://someactionurl.com'
+    }
+  );
 
   try {
     const user = await User.findByCredentials(email, password);
