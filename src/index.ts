@@ -7,7 +7,7 @@ import { GlobalMiddleware } from './middlewares/global.middleware';
 import { taskRouter } from './resources/Task/task.routes';
 import { userRouter } from './resources/User/user.routes';
 
-mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
+mongoose.connect(serverConfig.app.mongodbConnectionUrl, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
