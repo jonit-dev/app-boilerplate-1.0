@@ -1,3 +1,6 @@
 node_modules
 
 serverConfig.dev.jsonsendgrid.env
+
+
+src/constants/serverConfig.ts

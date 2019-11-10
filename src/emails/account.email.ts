@@ -1,5 +1,5 @@
 import { serverConfig } from '../constants/serverConfig';
-import { EmailManager } from './emailManager';
+import { EmailManager, EmailType } from './emailManager';
 
 export class AccountEmailManager extends EmailManager {
   public newAccount(
@@ -10,13 +10,15 @@ export class AccountEmailManager extends EmailManager {
   ): void {
     console.log('Sending new account email...');
 
-    const htmlEmail = this.loadTemplate(template, customVars);
+    const htmlEmail = this.loadTemplate(EmailType.Html, template, customVars);
+    const textEmail = this.loadTemplate(EmailType.Text, template, customVars);
 
     this.sendGrid.send({
       to,
       from: serverConfig.email.supportEmail,
       subject,
-      html: htmlEmail
+      html: htmlEmail,
+      text: textEmail
     });
   }
 }

@@ -4,23 +4,36 @@ import { readFileSync } from 'fs';
 import { serverConfig } from '../constants/serverConfig';
 import { TextHelper } from '../utils/TextHelper';
 
+export enum EmailType {
+  Html = 'Html',
+  Text = 'Text'
+}
+
 export class EmailManager {
-  private apiKey: string;
+  private _apiKey: string;
   public sendGrid: any;
 
   constructor() {
-    this.apiKey = serverConfig.email.sendGridAPIKey;
+    this._apiKey = serverConfig.email.sendGridAPIKey;
     this.sendGrid = sgMail;
-    this.sendGrid.setApiKey(this.apiKey);
+    this.sendGrid.setApiKey(this._apiKey);
   }
 
-  public loadTemplate(template: string, customVars: object) {
-    const html = readFileSync(
-      `${serverConfig.email.templatesFolder}/${template}/content.html`,
+  public loadTemplate(type: EmailType, template: string, customVars: object) {
+    let extension;
+
+    if (type === EmailType.Html) {
+      extension = '.html';
+    } else if (type === EmailType.Text) {
+      extension = '.txt';
+    }
+
+    const data = readFileSync(
+      `${serverConfig.email.templatesFolder}/${template}/content${extension}`,
       'utf-8'
     ).toString();
 
-    return this.replaceTemplateCustomVars(html, customVars);
+    return this.replaceTemplateCustomVars(data, customVars);
   }
 
   private replaceTemplateCustomVars(html: string, customVars: object): string {
