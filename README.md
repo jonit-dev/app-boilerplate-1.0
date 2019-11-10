@@ -49,3 +49,19 @@ Run:
 docker-compose up
 
 ```
+
+## Useful commands
+
+- SSH into running container:
+
+1. Check the running docker containers:
+
+```
+docker ps
+```
+
+then select one (name). For example: docker-node-mongo. Then run:
+
+```
+docker exec -it docker-node-mongo /bin/bash
+```
