@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node --inspect=5858 -r ts-node/register ./src/index.ts",
     "mongo": "/home/jonit/mongodb/bin/mongod --dbpath=/home/jonit/mongodb-data",
-    "dev": "nodemon --signal SIGTERM --delay 1500ms",
+    "dev": "nodemon",
     "build": "tsc -p .",
     "lint": "tslint --project . --fix"
   },

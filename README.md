@@ -40,32 +40,12 @@ export const serverConfig = {
 };
 ```
 
-- Please install typescript and tslint globally:
-
-```
-yarn global add tslint typescript
-```
-
-- Download VsCode TSLint extension
-
-* then install our dependencies by running.
-
-```
-sudo yarn install
-```
-
 ## Usage
-
-In separate terminals, run:
 
 Run:
 
 ```
-npm run dev
-```
 
-and:
+docker-compose up
 
-```
-npm run mongo
 ```
