@@ -346,8 +346,8 @@
         "signature": "62cd1ca7e3295296c494d21493b2514f45f75d6837e61911aecdb2434f605aa0"
       },
       "./src/constants/serverConfig.ts": {
-        "version": "a029853938c7dd160516ee593dd2b005743a62e5677a34d08eaf4ec7c2cb92d3",
-        "signature": "fc2e35ae0d9446392ff4b43e34a875d00470dad99dcfcadf678871cdc12a8712"
+        "version": "81d05595ab392e38296f185f196ad0a615a2f068ae8a9c4ee29408fe7f3b5d84",
+        "signature": "7d97bd6ce948a0018fc1722c22cc3debd4b748fc33250f20a0c44822ac3dd6d2"
       },
       "./src/lang/global.lang.ts": {
         "version": "19f74aae830e166661a7c0288ef3c79c5440ce99f63ae0eb8ea303540c17ca11",
@@ -470,7 +470,7 @@
         "signature": "8c8ea754c669ad8c1fd4c1dcbfa611ebfd5497455396256ab0141e96103f835a"
       },
       "./src/index.ts": {
-        "version": "5ae3733b81d50204bd3a48f5adc7bd8ea2c4770997aa6e37bf673b54cda7b37d",
+        "version": "00e43ed71766307b83172816bc313c49acf8722bdc7c94d8621cdee2ec4aaf98",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
       },
       "./src/resources/Task/task.lang.ts": {
@@ -1897,13 +1897,13 @@
       "./node_modules/@types/strip-bom/index.d.ts",
       "./node_modules/@types/strip-json-comments/index.d.ts",
       "./src/constants/serverConfig.ts",
+      "./src/index.ts",
+      "./src/resources/User/user.routes.ts",
       "./src/emails/account.email.ts",
       "./src/emails/emailManager.ts",
       "./src/middlewares/auth.middleware.ts",
       "./src/resources/User/user.model.ts",
-      "./src/utils/LanguageHelper.ts",
-      "./src/resources/User/user.routes.ts",
-      "./src/index.ts"
+      "./src/utils/LanguageHelper.ts"
     ]
   },
   "version": "3.7.2"

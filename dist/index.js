@@ -10,7 +10,7 @@ const serverConfig_1 = require("./constants/serverConfig");
 const global_middleware_1 = require("./middlewares/global.middleware");
 const task_routes_1 = require("./resources/Task/task.routes");
 const user_routes_1 = require("./resources/User/user.routes");
-mongoose_1.default.connect('mongodb://127.0.0.1:27017/task-manager-api', {
+mongoose_1.default.connect(serverConfig_1.serverConfig.app.mongodbConnectionUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,

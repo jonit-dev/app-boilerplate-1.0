@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const appName = 'App Boilerplate';
-const supportEmail = 'jfurtado141@gmail.com';
+const supportEmail = 'email@gmail.com';
 exports.serverConfig = {
     app: {
         name: appName,
         devUrl: 'http://localhost:3000/',
-        productionUrl: 'https://appboilerplate.io'
+        productionUrl: 'https://appboilerplate.io',
+        mongodbConnectionUrl: 'mongodb://mongo:27017/task-manager-api'
     },
     email: {
         supportEmail,
