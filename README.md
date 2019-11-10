@@ -13,7 +13,7 @@ First you should configure your serverConfig.ts file inside src/constants folder
 
 ```
 const appName = 'App Boilerplate';
-const supportEmail = 'jfurtado141@gmail.com';
+const supportEmail = 'email@gmail.com';
 
 export const serverConfig = {
   app: {
@@ -24,7 +24,7 @@ export const serverConfig = {
   email: {
     supportEmail,
     sendGridAPIKey:
-      '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',
+      'API_KEY',
     templatesFolder: './src/emails/templates',
     globalTemplateVars: {
       'Product Name': appName,
@@ -36,7 +36,7 @@ export const serverConfig = {
   env: 'dev',
   maintenanceMode: false,
   language: 'eng',
-  jwtSecret: 'pez9SHY+4By+ce4PFMevcg=='
+  jwtSecret: 'yourJWTTOKEN'
 };
 ```
 
