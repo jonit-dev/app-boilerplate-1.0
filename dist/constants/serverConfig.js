@@ -4,7 +4,9 @@ const appName = 'App Boilerplate';
 const supportEmail = 'jfurtado141@gmail.com';
 exports.serverConfig = {
     app: {
-        name: appName
+        name: appName,
+        devUrl: 'http://localhost:3000/',
+        productionUrl: 'https://appboilerplate.io'
     },
     email: {
         supportEmail,

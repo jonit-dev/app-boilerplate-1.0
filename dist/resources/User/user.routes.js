@@ -33,17 +33,6 @@ exports.userRouter = userRouter;
 userRouter.post('/users/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     console.log(`logging user: ${email}`);
-    const accountEmailManager = new account_email_1.AccountEmailManager();
-    accountEmailManager.newAccount('jfurtado141@gmail.com', 'Hello World!', 'welcome', {
-        name: 'Joao',
-        login_url: 'http://appboilerplate.com/login',
-        username: 'joaouser',
-        trial_start_date: '2019-11-09',
-        trial_end_date: '2019-11-29',
-        trial_length: 30,
-        support_email: serverConfig_1.serverConfig.email.supportEmail,
-        action_url: 'https://someactionurl.com'
-    });
     try {
         const user = yield user_model_1.User.findByCredentials(email, password);
         const token = yield user.generateAuthToken();
@@ -72,6 +61,18 @@ userRouter.post('/users', (req, res) => __awaiter(void 0, void 0, void 0, functi
         yield user.save();
         const token = yield user.generateAuthToken();
         console.log(`User created: ${user.email}`);
+        const accountEmailManager = new account_email_1.AccountEmailManager();
+        // sample email
+        accountEmailManager.newAccount('jfurtado141@gmail.com', 'Hello World!', 'welcome', {
+            name: 'Joao',
+            login_url: 'http://appboilerplate.com/login',
+            username: 'joaouser',
+            trial_start_date: '2019-11-09',
+            trial_end_date: '2019-11-29',
+            trial_length: 30,
+            support_email: serverConfig_1.serverConfig.email.supportEmail,
+            action_url: 'https://someactionurl.com'
+        });
         return res.status(201).send({
             user,
             token

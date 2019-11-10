@@ -346,8 +346,8 @@
         "signature": "62cd1ca7e3295296c494d21493b2514f45f75d6837e61911aecdb2434f605aa0"
       },
       "./src/constants/serverConfig.ts": {
-        "version": "0569f10718af336ef7faab9b9f875371bd212d8fb13f32189d416736c0330a9b",
-        "signature": "d6d0b2a5497bf945a69b4409112eaceacc15f2af70a9680503a05a314050704b"
+        "version": "a029853938c7dd160516ee593dd2b005743a62e5677a34d08eaf4ec7c2cb92d3",
+        "signature": "fc2e35ae0d9446392ff4b43e34a875d00470dad99dcfcadf678871cdc12a8712"
       },
       "./src/lang/global.lang.ts": {
         "version": "19f74aae830e166661a7c0288ef3c79c5440ce99f63ae0eb8ea303540c17ca11",
@@ -458,15 +458,15 @@
         "signature": "c4aa043e77a847629a298e6182d4bae576f6c6e2f309f3ae11c58ed79b0dab64"
       },
       "./src/emails/emailManager.ts": {
-        "version": "e357fb4bba4d89fbf3f108122c3808900e7e99180521daa9818cd22b7905c2e3",
-        "signature": "9f975947228ddba58bec07fc95e46d6aeea025a57af60172e9b090f871978454"
+        "version": "0709c6a573bdf9b660bd0708b59b887ccdb73036f5599b654fd3607303e0ea46",
+        "signature": "e221a7237c137283fda00eb397cb0b96a4eaa6a120e7b5c8b9e60aca2ba20620"
       },
       "./src/emails/account.email.ts": {
-        "version": "b64e6568eba4e4f7d5674cf01bdfdf1f4b578b90ee2e283afd9b110eefecc691",
+        "version": "a43864e412d271a1d4be6f4d75b72f01e25fc48ddf004d2350b003569503430c",
         "signature": "3b68f984cbddf9810eef5c19b4a2b3c7b5b7ce2d05ef467680d93ad1bfaa6f06"
       },
       "./src/resources/User/user.routes.ts": {
-        "version": "7e91d70b6a5a13275c0cccc3b2fdfcb27a5c189879f3240ce310f8587d84ae21",
+        "version": "5b98aaffbd8fd2cbef712aabee97e5061b554b9572cfeb278e52f6c0377cf922",
         "signature": "8c8ea754c669ad8c1fd4c1dcbfa611ebfd5497455396256ab0141e96103f835a"
       },
       "./src/index.ts": {
@@ -1666,63 +1666,7 @@
       "./src/resources/Task/task.model.ts": [
         "./node_modules/@types/mongoose/index.d.ts"
       ],
-      "./node_modules/@types/normalize-package-data/index.d.ts": [
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/@types/strip-bom/index.d.ts": [
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/@types/strip-json-comments/index.d.ts": [
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./src/emails/account.email.ts": [
-        "./src/emails/emailManager.ts"
-      ],
       "./node_modules/@sendgrid/helpers/classes/attachment.d.ts": [
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/@sendgrid/helpers/classes/index.d.ts": [
-        "./node_modules/@sendgrid/helpers/classes/attachment.d.ts",
-        "./node_modules/@sendgrid/helpers/classes/email-address.d.ts",
-        "./node_modules/@sendgrid/helpers/classes/mail.d.ts",
-        "./node_modules/@sendgrid/helpers/classes/personalization.d.ts",
-        "./node_modules/@sendgrid/helpers/classes/response-error.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/@sendgrid/mail/src/mail.d.ts": [
-        "./node_modules/@sendgrid/client/index.d.ts",
-        "./node_modules/@sendgrid/client/src/response.d.ts",
-        "./node_modules/@sendgrid/helpers/classes/index.d.ts",
-        "./node_modules/@sendgrid/helpers/classes/mail.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/@sendgrid/mail/index.d.ts": [
-        "./node_modules/@sendgrid/mail/src/mail.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/@sendgrid/client/src/client.d.ts": [
-        "./node_modules/@sendgrid/helpers/classes/index.d.ts",
-        "./node_modules/@sendgrid/client/src/request.d.ts",
-        "./node_modules/@sendgrid/client/src/response.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/@sendgrid/client/index.d.ts": [
-        "./node_modules/@sendgrid/client/src/client.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/@sendgrid/helpers/classes/mail.d.ts": [
-        "./node_modules/@sendgrid/helpers/classes/attachment.d.ts",
-        "./node_modules/@sendgrid/helpers/classes/email-address.d.ts",
-        "./node_modules/@sendgrid/helpers/classes/personalization.d.ts",
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1735,11 +1679,38 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "./node_modules/@sendgrid/helpers/classes/mail.d.ts": [
+        "./node_modules/@sendgrid/helpers/classes/attachment.d.ts",
+        "./node_modules/@sendgrid/helpers/classes/email-address.d.ts",
+        "./node_modules/@sendgrid/helpers/classes/personalization.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "./node_modules/@sendgrid/helpers/classes/response-error.d.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "./node_modules/@sendgrid/helpers/classes/index.d.ts": [
+        "./node_modules/@sendgrid/helpers/classes/attachment.d.ts",
+        "./node_modules/@sendgrid/helpers/classes/email-address.d.ts",
+        "./node_modules/@sendgrid/helpers/classes/mail.d.ts",
+        "./node_modules/@sendgrid/helpers/classes/personalization.d.ts",
+        "./node_modules/@sendgrid/helpers/classes/response-error.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "./node_modules/@types/caseless/index.d.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/form-data/index.d.ts": [
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/ts3.2/index.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/@types/tough-cookie/index.d.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1758,24 +1729,53 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "./node_modules/@sendgrid/client/src/response.d.ts": [
-        "./node_modules/@types/request/index.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "./node_modules/@sendgrid/client/src/request.d.ts": [
         "./node_modules/@types/request/index.d.ts",
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "./node_modules/form-data/index.d.ts": [
-        "./node_modules/@types/node/stream.d.ts",
-        "./node_modules/@types/node/http.d.ts",
-        "./node_modules/@types/node/ts3.2/index.d.ts",
+      "./node_modules/@sendgrid/client/src/response.d.ts": [
+        "./node_modules/@types/request/index.d.ts",
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "./node_modules/@types/tough-cookie/index.d.ts": [
+      "./node_modules/@sendgrid/client/src/client.d.ts": [
+        "./node_modules/@sendgrid/helpers/classes/index.d.ts",
+        "./node_modules/@sendgrid/client/src/request.d.ts",
+        "./node_modules/@sendgrid/client/src/response.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/@sendgrid/client/index.d.ts": [
+        "./node_modules/@sendgrid/client/src/client.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/@sendgrid/mail/src/mail.d.ts": [
+        "./node_modules/@sendgrid/client/index.d.ts",
+        "./node_modules/@sendgrid/client/src/response.d.ts",
+        "./node_modules/@sendgrid/helpers/classes/index.d.ts",
+        "./node_modules/@sendgrid/helpers/classes/mail.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/@sendgrid/mail/index.d.ts": [
+        "./node_modules/@sendgrid/mail/src/mail.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./src/emails/account.email.ts": [
+        "./src/emails/emailManager.ts"
+      ],
+      "./node_modules/@types/normalize-package-data/index.d.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/@types/strip-bom/index.d.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/@types/strip-json-comments/index.d.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ]
@@ -1868,40 +1868,40 @@
       "./node_modules/@types/mongodb/index.d.ts",
       "./node_modules/@types/mongoose/index.d.ts",
       "./src/lang/global.lang.ts",
+      "./src/utils/TextHelper.ts",
       "./src/middlewares/global.middleware.ts",
       "./node_modules/@types/jsonwebtoken/index.d.ts",
       "./src/types/global.ts",
       "./src/utils/RouterHelper.ts",
       "./src/resources/Task/task.model.ts",
       "./src/resources/Task/task.routes.ts",
-      "./src/resources/Task/task.lang.ts",
-      "./src/resources/User/user.lang.ts",
-      "./node_modules/@types/normalize-package-data/index.d.ts",
-      "./node_modules/@types/strip-bom/index.d.ts",
-      "./node_modules/@types/strip-json-comments/index.d.ts",
-      "./src/constants/serverConfig.ts",
-      "./src/middlewares/auth.middleware.ts",
-      "./src/resources/User/user.model.ts",
-      "./src/utils/LanguageHelper.ts",
-      "./src/utils/TextHelper.ts",
       "./node_modules/@sendgrid/helpers/classes/attachment.d.ts",
       "./node_modules/@sendgrid/helpers/classes/email-address.d.ts",
       "./node_modules/@sendgrid/helpers/classes/personalization.d.ts",
+      "./node_modules/@sendgrid/helpers/classes/mail.d.ts",
       "./node_modules/@sendgrid/helpers/classes/response-error.d.ts",
+      "./node_modules/@sendgrid/helpers/classes/index.d.ts",
       "./node_modules/@types/caseless/index.d.ts",
-      "./node_modules/@types/request/index.d.ts",
       "./node_modules/form-data/index.d.ts",
       "./node_modules/@types/tough-cookie/index.d.ts",
-      "./node_modules/@sendgrid/helpers/classes/mail.d.ts",
-      "./node_modules/@sendgrid/helpers/classes/index.d.ts",
+      "./node_modules/@types/request/index.d.ts",
       "./node_modules/@sendgrid/client/src/request.d.ts",
       "./node_modules/@sendgrid/client/src/response.d.ts",
       "./node_modules/@sendgrid/client/src/client.d.ts",
       "./node_modules/@sendgrid/client/index.d.ts",
       "./node_modules/@sendgrid/mail/src/mail.d.ts",
       "./node_modules/@sendgrid/mail/index.d.ts",
-      "./src/emails/emailManager.ts",
+      "./src/resources/Task/task.lang.ts",
+      "./src/resources/User/user.lang.ts",
+      "./node_modules/@types/normalize-package-data/index.d.ts",
+      "./node_modules/@types/strip-bom/index.d.ts",
+      "./node_modules/@types/strip-json-comments/index.d.ts",
+      "./src/constants/serverConfig.ts",
       "./src/emails/account.email.ts",
+      "./src/emails/emailManager.ts",
+      "./src/middlewares/auth.middleware.ts",
+      "./src/resources/User/user.model.ts",
+      "./src/utils/LanguageHelper.ts",
       "./src/resources/User/user.routes.ts",
       "./src/index.ts"
     ]

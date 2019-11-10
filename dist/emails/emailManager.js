@@ -7,15 +7,27 @@ const mail_1 = __importDefault(require("@sendgrid/mail"));
 const fs_1 = require("fs");
 const serverConfig_1 = require("../constants/serverConfig");
 const TextHelper_1 = require("../utils/TextHelper");
+var EmailType;
+(function (EmailType) {
+    EmailType["Html"] = "Html";
+    EmailType["Text"] = "Text";
+})(EmailType = exports.EmailType || (exports.EmailType = {}));
 class EmailManager {
     constructor() {
-        this.apiKey = serverConfig_1.serverConfig.email.sendGridAPIKey;
+        this._apiKey = serverConfig_1.serverConfig.email.sendGridAPIKey;
         this.sendGrid = mail_1.default;
-        this.sendGrid.setApiKey(this.apiKey);
+        this.sendGrid.setApiKey(this._apiKey);
     }
-    loadTemplate(template, customVars) {
-        const html = fs_1.readFileSync(`${serverConfig_1.serverConfig.email.templatesFolder}/${template}/content.html`, 'utf-8').toString();
-        return this.replaceTemplateCustomVars(html, customVars);
+    loadTemplate(type, template, customVars) {
+        let extension;
+        if (type === EmailType.Html) {
+            extension = '.html';
+        }
+        else if (type === EmailType.Text) {
+            extension = '.txt';
+        }
+        const data = fs_1.readFileSync(`${serverConfig_1.serverConfig.email.templatesFolder}/${template}/content${extension}`, 'utf-8').toString();
+        return this.replaceTemplateCustomVars(data, customVars);
     }
     replaceTemplateCustomVars(html, customVars) {
         const keys = Object.keys(customVars);
