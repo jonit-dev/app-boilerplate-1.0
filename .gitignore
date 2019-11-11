@@ -3,4 +3,7 @@ node_modules
 serverConfig.dev.jsonsendgrid.env
 
 
-src/constants/serverConfig.ts
+src/constants/serverConfig.dev.ts
+src/constants/serverConfig.prod.ts
+src/constants/end.ts
+sendgrid.env
