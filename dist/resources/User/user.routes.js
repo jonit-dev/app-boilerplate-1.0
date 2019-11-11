@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const multer_1 = __importDefault(require("multer"));
 const sharp_1 = __importDefault(require("sharp"));
-const serverConfig_1 = require("../../constants/serverConfig");
+const env_1 = require("../../constants/env");
 const account_email_1 = require("../../emails/account.email");
 const auth_middleware_1 = require("../../middlewares/auth.middleware");
 const LanguageHelper_1 = require("../../utils/LanguageHelper");
@@ -70,7 +70,7 @@ userRouter.post('/users', (req, res) => __awaiter(void 0, void 0, void 0, functi
             trial_start_date: '2019-11-09',
             trial_end_date: '2019-11-29',
             trial_length: 30,
-            support_email: serverConfig_1.serverConfig.email.supportEmail,
+            support_email: env_1.serverConfig.email.supportEmail,
             action_url: 'https://someactionurl.com'
         });
         return res.status(201).send({

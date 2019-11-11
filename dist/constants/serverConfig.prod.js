@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const env_1 = require("./env");
-exports.devServerConfig = {
+exports.prodServerConfig = {
     app: {
         name: env_1.appName,
         port: 3000,
-        url: 'http://localhost:3000/',
+        url: 'https://yourwebsite.com:3000/',
         mongodbConnectionUrl: 'mongodb://mongo:27017/app'
     },
     email: {
         supportEmail: env_1.supportEmail,
-        sendGridAPIKey: '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',
+        sendGridAPIKey: 'SENDGRIDKEYHERE',
         templatesFolder: './src/emails/templates',
         globalTemplateVars: {
             'Product Name': env_1.appName,

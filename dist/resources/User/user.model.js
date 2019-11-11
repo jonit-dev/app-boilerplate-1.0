@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const mongoose_1 = require("mongoose");
-const serverConfig_1 = require("../../constants/serverConfig");
+const env_1 = require("../../constants/env");
 const LanguageHelper_1 = require("../../utils/LanguageHelper");
 // Statics ========================================
 const userSchema = new mongoose_1.Schema({
@@ -56,7 +56,7 @@ userSchema.statics.hashPassword = (password) => __awaiter(void 0, void 0, void 0
 userSchema.methods.generateAuthToken = function () {
     return __awaiter(this, void 0, void 0, function* () {
         const user = this;
-        const token = jsonwebtoken_1.default.sign({ _id: user._id.toString() }, serverConfig_1.serverConfig.jwtSecret);
+        const token = jsonwebtoken_1.default.sign({ _id: user._id.toString() }, env_1.serverConfig.jwtSecret);
         // we can also pass an optional configuration object
         // const token = jwt.sign({ _id: user._id.toString() }, serverConfig.jwtSecret), { expiresIn: '7 days'});
         user.tokens = [...user.tokens, { token }];

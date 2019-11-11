@@ -13,13 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const serverConfig_1 = require("../constants/serverConfig");
+const env_1 = require("../constants/env");
 const user_model_1 = require("../resources/User/user.model");
 const LanguageHelper_1 = require("../utils/LanguageHelper");
 const userAuthMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const token = req.header('Authorization').replace('Bearer ', ''); // remove Bearer string
-        const decoded = jsonwebtoken_1.default.verify(token, serverConfig_1.serverConfig.jwtSecret);
+        const decoded = jsonwebtoken_1.default.verify(token, env_1.serverConfig.jwtSecret);
         // find an user with the correct id (passed through the token), that has the particular token stored.
         const user = yield user_model_1.User.findOne({
             _id: decoded._id,

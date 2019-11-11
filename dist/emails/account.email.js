@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const serverConfig_1 = require("../constants/serverConfig");
+const env_1 = require("../constants/env");
 const emailManager_1 = require("./emailManager");
 class AccountEmailManager extends emailManager_1.EmailManager {
     newAccount(to, subject, template, customVars) {
@@ -9,7 +9,7 @@ class AccountEmailManager extends emailManager_1.EmailManager {
         const textEmail = this.loadTemplate(emailManager_1.EmailType.Text, template, customVars);
         this.sendGrid.send({
             to,
-            from: serverConfig_1.serverConfig.email.supportEmail,
+            from: env_1.serverConfig.email.supportEmail,
             subject,
             html: htmlEmail,
             text: textEmail
