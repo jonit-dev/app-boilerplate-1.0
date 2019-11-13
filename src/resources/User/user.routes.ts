@@ -7,6 +7,7 @@ import { AccountEmailManager } from '../../emails/account.email';
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
 import { LanguageHelper } from '../../utils/LanguageHelper';
 import { RouterHelper } from '../../utils/RouterHelper';
+import { TextHelper } from '../../utils/TextHelper';
 import { User } from './user.model';
 
 // @ts-ignore
@@ -21,13 +22,21 @@ const userRouter = new Router();
 // Authentication ========================================
 
 // User => Login
-userRouter.post('/users/login', async (req, res) => {
-  const { email, password } = req.body;
 
-  console.log(`logging user: ${email}`);
+interface ILoginData {
+  email: string;
+  password: string;
+}
+
+userRouter.post("/users/login", async (req, res) => {
+  const { email, password }: ILoginData = req.body;
+
+  const preparedEmail = TextHelper.stringPrepare(email);
+
+  console.log(`logging user: ${preparedEmail}`);
 
   try {
-    const user = await User.findByCredentials(email, password);
+    const user = await User.findByCredentials(preparedEmail, password);
     const token = await user.generateAuthToken();
 
     return res.status(200).send({
@@ -43,14 +52,16 @@ userRouter.post('/users/login', async (req, res) => {
 });
 
 // User => Sign Up
-userRouter.post('/users', async (req, res) => {
-  const { name, email, password, age } = req.body;
+userRouter.post("/users", async (req, res) => {
+  const { name, email, password } = req.body;
+
+  //force lowercase and trim
+  const preparedEmail = TextHelper.stringPrepare(email);
 
   const user = new User({
     name,
-    email,
-    password,
-    age
+    preparedEmail,
+    password
   });
 
   try {
@@ -64,18 +75,18 @@ userRouter.post('/users', async (req, res) => {
 
     // sample email
     accountEmailManager.newAccount(
-      'jfurtado141@gmail.com',
-      'Hello World!',
-      'welcome',
+      "jfurtado141@gmail.com",
+      "Hello World!",
+      "welcome",
       {
-        name: 'Joao',
-        login_url: 'http://appboilerplate.com/login',
-        username: 'joaouser',
-        trial_start_date: '2019-11-09',
-        trial_end_date: '2019-11-29',
+        name: "Joao",
+        login_url: "http://appboilerplate.com/login",
+        username: "joaouser",
+        trial_start_date: "2019-11-09",
+        trial_end_date: "2019-11-29",
         trial_length: 30,
         support_email: serverConfig.email.supportEmail,
-        action_url: 'https://someactionurl.com'
+        action_url: "https://someactionurl.com"
       }
     );
 
@@ -85,8 +96,8 @@ userRouter.post('/users', async (req, res) => {
     });
   } catch (error) {
     res.status(400).send({
-      status: 'error',
-      message: LanguageHelper.getLanguageString('user', 'userCreationError'),
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userCreationError"),
       details: error.message
     });
   }
@@ -99,7 +110,7 @@ userRouter.post('/users', async (req, res) => {
 // Authentication routes ========================================
 
 // User ==> Logout
-userRouter.post('/users/logout', userAuthMiddleware, async (req, res) => {
+userRouter.post("/users/logout", userAuthMiddleware, async (req, res) => {
   const { user } = req;
   const reqToken = req.token;
 
@@ -112,13 +123,13 @@ userRouter.post('/users/logout', userAuthMiddleware, async (req, res) => {
     await user.save(); // save user model to update records
 
     return res.status(200).send({
-      status: 'success',
-      message: LanguageHelper.getLanguageString('user', 'userLogoutSuccess')
+      status: "success",
+      message: LanguageHelper.getLanguageString("user", "userLogoutSuccess")
     });
   } catch (error) {
     return res.status(400).send({
-      status: 'error',
-      message: LanguageHelper.getLanguageString('user', 'userLogoutError'),
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userLogoutError"),
       details: error.message
     });
   }
@@ -126,7 +137,7 @@ userRouter.post('/users/logout', userAuthMiddleware, async (req, res) => {
 
 // User ==> Logout all connected devices
 
-userRouter.post('/users/logout/all', userAuthMiddleware, async (req, res) => {
+userRouter.post("/users/logout/all", userAuthMiddleware, async (req, res) => {
   const { user } = req;
 
   try {
@@ -135,14 +146,14 @@ userRouter.post('/users/logout/all', userAuthMiddleware, async (req, res) => {
     await user.save();
 
     return res.status(200).send({
-      status: 'success',
-      message: LanguageHelper.getLanguageString('user', 'userLogoutAllSuccess')
+      status: "success",
+      message: LanguageHelper.getLanguageString("user", "userLogoutAllSuccess")
     });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      status: 'error',
-      message: LanguageHelper.getLanguageString('user', 'userLogoutAllError'),
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userLogoutAllError"),
       details: error.message
     });
   }
@@ -166,10 +177,10 @@ const upload = multer({
       return cb(
         new Error(
           LanguageHelper.getLanguageString(
-            'user',
-            'userErrorFileUploadFormat',
+            "user",
+            "userErrorFileUploadFormat",
             {
-              format: 'png or jpg'
+              format: "png or jpg"
             }
           )
         )
@@ -182,10 +193,10 @@ const upload = multer({
 
 // !upload-key should match postman's form-data key. set key as 'file' instead of text
 userRouter.post(
-  '/profile/avatar',
-  [userAuthMiddleware, upload.single('avatar')],
+  "/profile/avatar",
+  [userAuthMiddleware, upload.single("avatar")],
   async (req, res) => {
-    console.log('uploading your file...');
+    console.log("uploading your file...");
 
     // here we're saving the file directly in our database
     const { user } = req;
@@ -205,16 +216,16 @@ userRouter.post(
     await user.save();
 
     return res.status(200).send({
-      status: 'success',
-      message: LanguageHelper.getLanguageString('user', 'userAvatarUploaded')
+      status: "success",
+      message: LanguageHelper.getLanguageString("user", "userAvatarUploaded")
     });
   },
   (error, req, res, next) => {
     return res.status(500).send({
-      status: 'error',
+      status: "error",
       message: LanguageHelper.getLanguageString(
-        'user',
-        'userAvatarErrorUpload'
+        "user",
+        "userAvatarErrorUpload"
       ),
       details: error.message
     });
@@ -225,21 +236,21 @@ userRouter.post(
 
 // User => Serve avatar picture ========================================
 
-userRouter.get('/user/:id/profile', async (req, res) => {
+userRouter.get("/user/:id/profile", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
 
     if (!user || !user.avatar) {
       return res.status(500).send({
-        status: 'error',
+        status: "error",
         message: LanguageHelper.getLanguageString(
-          'user',
-          'userAvatarUploadEmpty'
+          "user",
+          "userAvatarUploadEmpty"
         )
       });
     }
 
-    res.set('Content-Type', 'image/png');
+    res.set("Content-Type", "image/png");
 
     return res.send(user.avatar);
   } catch (error) {
@@ -249,7 +260,7 @@ userRouter.get('/user/:id/profile', async (req, res) => {
 
 // User => Delete avatar picture ========================================
 
-userRouter.delete('/users/profile/me', userAuthMiddleware, async (req, res) => {
+userRouter.delete("/users/profile/me", userAuthMiddleware, async (req, res) => {
   try {
     const { user } = req;
 
@@ -257,18 +268,18 @@ userRouter.delete('/users/profile/me', userAuthMiddleware, async (req, res) => {
     user.save();
 
     return res.status(200).send({
-      status: 'success',
+      status: "success",
       message: LanguageHelper.getLanguageString(
-        'user',
-        'userAvatarUploadDeleted'
+        "user",
+        "userAvatarUploadDeleted"
       )
     });
   } catch (error) {
     res.status(400).send({
-      status: 'error',
+      status: "error",
       message: LanguageHelper.getLanguageString(
-        'user',
-        'userAvatarUploadDeletedError'
+        "user",
+        "userAvatarUploadDeletedError"
       ),
       details: error.message
     });
@@ -277,7 +288,7 @@ userRouter.delete('/users/profile/me', userAuthMiddleware, async (req, res) => {
 
 // User ==> Delete your own account
 
-userRouter.delete('/users/me', userAuthMiddleware, async (req, res) => {
+userRouter.delete("/users/me", userAuthMiddleware, async (req, res) => {
   const { user } = req;
 
   try {
@@ -287,14 +298,14 @@ userRouter.delete('/users/me', userAuthMiddleware, async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      status: 'error',
-      message: LanguageHelper.getLanguageString('user', 'userDeleteError'),
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userDeleteError"),
       details: error.message
     });
   }
 });
 
-userRouter.get('/users/profile', userAuthMiddleware, async (req, res) => {
+userRouter.get("/users/profile", userAuthMiddleware, async (req, res) => {
   const { user } = req;
 
   try {
@@ -303,25 +314,25 @@ userRouter.get('/users/profile', userAuthMiddleware, async (req, res) => {
     }); // req.user is coming from the authMiddleware
   } catch (error) {
     return res.status(500).send({
-      status: 'error',
-      message: LanguageHelper.getLanguageString('user', 'userProfileGetError'),
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userProfileGetError"),
       details: error.message
     });
   }
 });
 
-userRouter.patch('/users/me', userAuthMiddleware, async (req, res) => {
+userRouter.patch("/users/me", userAuthMiddleware, async (req, res) => {
   const { user } = req;
   const updates = Object.keys(req.body);
 
   if (
-    !RouterHelper.isAllowedKey(req.body, ['name', 'email', 'password', 'age'])
+    !RouterHelper.isAllowedKey(req.body, ["name", "email", "password", "age"])
   ) {
     return res.status(400).send({
-      status: 'error',
+      status: "error",
       message: LanguageHelper.getLanguageString(
-        'user',
-        'userPatchForbiddenKeys'
+        "user",
+        "userPatchForbiddenKeys"
       )
     });
   }
@@ -341,8 +352,8 @@ userRouter.patch('/users/me', userAuthMiddleware, async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(400).send({
-      status: 'error',
-      message: LanguageHelper.getLanguageString('user', 'userFailedUpdate'),
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userFailedUpdate"),
       details: error.message
     });
   }

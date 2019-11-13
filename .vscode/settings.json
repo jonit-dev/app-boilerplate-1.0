@@ -1,5 +1,4 @@
 {
   "workbench.colorTheme": "Activate SCARLET protocol (beta)",
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "prettier.singleQuote": true
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -36,18 +36,20 @@ export interface IUserModel extends Model<IUser> {
 const userSchema: Schema = new Schema(
   {
     name: {
-      type: String
+      type: String,
+      trim: true
     },
     password: {
-      type: String
+      type: String,
+      trim: true
     },
     email: {
       type: String,
-      unique: true
+      unique: true,
+      lowercase: true,
+      trim: true
     },
-    age: {
-      type: Number
-    },
+
     tokens: [
       // this will allow multi device sign in (different devices with different tokens)
       {
@@ -113,7 +115,7 @@ userSchema.statics.findByCredentials = async (
 
   if (!user) {
     throw new Error(
-      LanguageHelper.getLanguageString('user', 'userNotFoundOnLogin')
+      LanguageHelper.getLanguageString("user", "userNotFoundOnLogin")
     );
   }
 
@@ -122,7 +124,7 @@ userSchema.statics.findByCredentials = async (
 
   if (!isMatch) {
     throw new Error(
-      LanguageHelper.getLanguageString('user', 'userWrongPassword')
+      LanguageHelper.getLanguageString("user", "userWrongPassword")
     );
   }
 
@@ -133,7 +135,7 @@ userSchema.statics.findByCredentials = async (
 |  >>> MODEL MIDDLEWARES
 *##############################################################*/
 
-userSchema.pre('save', async function(next) {
+userSchema.pre("save", async function(next) {
   const user: any = this;
 
   // console.log('user :: middleware => Running pre "save" code');
@@ -141,7 +143,7 @@ userSchema.pre('save', async function(next) {
   // this is the document being saved
 
   // check if password was modified (updated or created)
-  if (user.isModified('password')) {
+  if (user.isModified("password")) {
     user.password = await userSchema.statics.hashPassword(user.password);
   }
 
@@ -150,6 +152,6 @@ userSchema.pre('save', async function(next) {
 
 // model ========================================
 
-const User: IUserModel = model<IUser, IUserModel>('User', userSchema);
+const User: IUserModel = model<IUser, IUserModel>("User", userSchema);
 
 export { User };

@@ -29,6 +29,8 @@ app.use(express.json()); // << THIS IS REQUIRED TO EXPRESS PARSING JSON DATA
 |  >>> MIDDLEWARES
 *##############################################################*/
 
+app.use(GlobalMiddleware.enableCors);
+
 if (serverConfig.maintenanceMode) {
   app.use(GlobalMiddleware.maintenanceMode);
 }
@@ -52,9 +54,9 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-app.on('error', err => {
+app.on("error", err => {
   // @ts-ignore
-  if (err.code === 'EADDRINUSE') {
+  if (err.code === "EADDRINUSE") {
     exec(`killall node`);
   }
 });
