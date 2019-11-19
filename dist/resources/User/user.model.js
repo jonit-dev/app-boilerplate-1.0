@@ -20,17 +20,18 @@ const LanguageHelper_1 = require("../../utils/LanguageHelper");
 // Statics ========================================
 const userSchema = new mongoose_1.Schema({
     name: {
-        type: String
+        type: String,
+        trim: true
     },
     password: {
-        type: String
+        type: String,
+        trim: true
     },
     email: {
         type: String,
-        unique: true
-    },
-    age: {
-        type: Number
+        unique: true,
+        lowercase: true,
+        trim: true
     },
     tokens: [
         // this will allow multi device sign in (different devices with different tokens)
@@ -77,30 +78,30 @@ userSchema.methods.toJSON = function () {
 userSchema.statics.findByCredentials = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield User.findOne({ email });
     if (!user) {
-        throw new Error(LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userNotFoundOnLogin'));
+        throw new Error(LanguageHelper_1.LanguageHelper.getLanguageString("user", "userNotFoundOnLogin"));
     }
     // if our provided password is equal to the stored password
     const isMatch = yield bcryptjs_1.default.compare(password, user.password);
     if (!isMatch) {
-        throw new Error(LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userWrongPassword'));
+        throw new Error(LanguageHelper_1.LanguageHelper.getLanguageString("user", "userWrongPassword"));
     }
     return user; // return the user if everything is ok
 });
 /*#############################################################|
 |  >>> MODEL MIDDLEWARES
 *##############################################################*/
-userSchema.pre('save', function (next) {
+userSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         const user = this;
         // console.log('user :: middleware => Running pre "save" code');
         // this is the document being saved
         // check if password was modified (updated or created)
-        if (user.isModified('password')) {
+        if (user.isModified("password")) {
             user.password = yield userSchema.statics.hashPassword(user.password);
         }
         next(); // proceed...
     });
 });
 // model ========================================
-const User = mongoose_1.model('User', userSchema);
+const User = mongoose_1.model("User", userSchema);
 exports.User = User;

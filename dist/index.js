@@ -26,6 +26,7 @@ app.use(express_1.default.json()); // << THIS IS REQUIRED TO EXPRESS PARSING JSO
 /*#############################################################|
 |  >>> MIDDLEWARES
 *##############################################################*/
+app.use(global_middleware_1.GlobalMiddleware.enableCors);
 if (env_1.serverConfig.maintenanceMode) {
     app.use(global_middleware_1.GlobalMiddleware.maintenanceMode);
 }
@@ -41,9 +42,9 @@ app.listen(port, () => {
     // tslint:disable-next-line: no-console
     console.log(`Server is running on port ${port}`);
 });
-app.on('error', err => {
+app.on("error", err => {
     // @ts-ignore
-    if (err.code === 'EADDRINUSE') {
+    if (err.code === "EADDRINUSE") {
         child_process_1.exec(`killall node`);
     }
 });

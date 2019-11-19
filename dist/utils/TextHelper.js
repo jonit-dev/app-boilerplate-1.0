@@ -2,10 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class TextHelper {
     static escapeRegExp(str) {
-        return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1');
+        return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
     }
     static replaceAll(str, find, replace) {
-        return str.replace(new RegExp(TextHelper.escapeRegExp(find), 'g'), replace);
+        return str.replace(new RegExp(TextHelper.escapeRegExp(find), "g"), replace);
+    }
+    static stringPrepare(str) {
+        return str.toLowerCase().trim();
     }
 }
 exports.TextHelper = TextHelper;

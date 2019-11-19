@@ -20,21 +20,17 @@ const account_email_1 = require("../../emails/account.email");
 const auth_middleware_1 = require("../../middlewares/auth.middleware");
 const LanguageHelper_1 = require("../../utils/LanguageHelper");
 const RouterHelper_1 = require("../../utils/RouterHelper");
+const TextHelper_1 = require("../../utils/TextHelper");
 const user_model_1 = require("./user.model");
 // @ts-ignore
 const userRouter = new express_1.Router();
 exports.userRouter = userRouter;
-// load auth middleware for adding into specific routes!
-/*#############################################################|
-|  >>> PUBLIC ROUTES
-*##############################################################*/
-// Authentication ========================================
-// User => Login
-userRouter.post('/users/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.post("/users/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
-    console.log(`logging user: ${email}`);
+    const preparedEmail = TextHelper_1.TextHelper.stringPrepare(email);
+    console.log(`logging user: ${preparedEmail}`);
     try {
-        const user = yield user_model_1.User.findByCredentials(email, password);
+        const user = yield user_model_1.User.findByCredentials(preparedEmail, password);
         const token = yield user.generateAuthToken();
         return res.status(200).send({
             user,
@@ -49,13 +45,14 @@ userRouter.post('/users/login', (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 }));
 // User => Sign Up
-userRouter.post('/users', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, email, password, age } = req.body;
+userRouter.post("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { name, email, password } = req.body;
+    //force lowercase and trim
+    const preparedEmail = TextHelper_1.TextHelper.stringPrepare(email);
     const user = new user_model_1.User({
         name,
-        email,
-        password,
-        age
+        preparedEmail,
+        password
     });
     try {
         yield user.save();
@@ -63,15 +60,15 @@ userRouter.post('/users', (req, res) => __awaiter(void 0, void 0, void 0, functi
         console.log(`User created: ${user.email}`);
         const accountEmailManager = new account_email_1.AccountEmailManager();
         // sample email
-        accountEmailManager.newAccount('jfurtado141@gmail.com', 'Hello World!', 'welcome', {
-            name: 'Joao',
-            login_url: 'http://appboilerplate.com/login',
-            username: 'joaouser',
-            trial_start_date: '2019-11-09',
-            trial_end_date: '2019-11-29',
+        accountEmailManager.newAccount("jfurtado141@gmail.com", "Hello World!", "welcome", {
+            name: "Joao",
+            login_url: "http://appboilerplate.com/login",
+            username: "joaouser",
+            trial_start_date: "2019-11-09",
+            trial_end_date: "2019-11-29",
             trial_length: 30,
             support_email: env_1.serverConfig.email.supportEmail,
-            action_url: 'https://someactionurl.com'
+            action_url: "https://someactionurl.com"
         });
         return res.status(201).send({
             user,
@@ -80,8 +77,8 @@ userRouter.post('/users', (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
     catch (error) {
         res.status(400).send({
-            status: 'error',
-            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userCreationError'),
+            status: "error",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userCreationError"),
             details: error.message
         });
     }
@@ -91,7 +88,7 @@ userRouter.post('/users', (req, res) => __awaiter(void 0, void 0, void 0, functi
 *##############################################################*/
 // Authentication routes ========================================
 // User ==> Logout
-userRouter.post('/users/logout', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.post("/users/logout", auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req;
     const reqToken = req.token;
     try {
@@ -100,34 +97,34 @@ userRouter.post('/users/logout', auth_middleware_1.userAuthMiddleware, (req, res
         console.log(`Logging out user: ${user.email}`);
         yield user.save(); // save user model to update records
         return res.status(200).send({
-            status: 'success',
-            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userLogoutSuccess')
+            status: "success",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userLogoutSuccess")
         });
     }
     catch (error) {
         return res.status(400).send({
-            status: 'error',
-            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userLogoutError'),
+            status: "error",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userLogoutError"),
             details: error.message
         });
     }
 }));
 // User ==> Logout all connected devices
-userRouter.post('/users/logout/all', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.post("/users/logout/all", auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req;
     try {
         user.tokens = [];
         yield user.save();
         return res.status(200).send({
-            status: 'success',
-            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userLogoutAllSuccess')
+            status: "success",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userLogoutAllSuccess")
         });
     }
     catch (error) {
         console.log(error);
         return res.status(500).send({
-            status: 'error',
-            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userLogoutAllError'),
+            status: "error",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userLogoutAllError"),
             details: error.message
         });
     }
@@ -143,16 +140,16 @@ const upload = multer_1.default({
         console.log(`received file ${file.originalname}`);
         if (!file.originalname.match(/\.(png|jpeg|jpg)$/)) {
             // reject file callback
-            return cb(new Error(LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userErrorFileUploadFormat', {
-                format: 'png or jpg'
+            return cb(new Error(LanguageHelper_1.LanguageHelper.getLanguageString("user", "userErrorFileUploadFormat", {
+                format: "png or jpg"
             })));
         }
         cb(undefined, true); // acccept file callback
     }
 });
 // !upload-key should match postman's form-data key. set key as 'file' instead of text
-userRouter.post('/profile/avatar', [auth_middleware_1.userAuthMiddleware, upload.single('avatar')], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('uploading your file...');
+userRouter.post("/profile/avatar", [auth_middleware_1.userAuthMiddleware, upload.single("avatar")], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("uploading your file...");
     // here we're saving the file directly in our database
     const { user } = req;
     const { buffer } = req.file;
@@ -167,28 +164,28 @@ userRouter.post('/profile/avatar', [auth_middleware_1.userAuthMiddleware, upload
     user.avatar = editedImageBuffer;
     yield user.save();
     return res.status(200).send({
-        status: 'success',
-        message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userAvatarUploaded')
+        status: "success",
+        message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userAvatarUploaded")
     });
 }), (error, req, res, next) => {
     return res.status(500).send({
-        status: 'error',
-        message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userAvatarErrorUpload'),
+        status: "error",
+        message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userAvatarErrorUpload"),
         details: error.message
     });
 });
 // CRUD routes ========================================
 // User => Serve avatar picture ========================================
-userRouter.get('/user/:id/profile', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.get("/user/:id/profile", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield user_model_1.User.findById(req.params.id);
         if (!user || !user.avatar) {
             return res.status(500).send({
-                status: 'error',
-                message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userAvatarUploadEmpty')
+                status: "error",
+                message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userAvatarUploadEmpty")
             });
         }
-        res.set('Content-Type', 'image/png');
+        res.set("Content-Type", "image/png");
         return res.send(user.avatar);
     }
     catch (error) {
@@ -196,26 +193,26 @@ userRouter.get('/user/:id/profile', (req, res) => __awaiter(void 0, void 0, void
     }
 }));
 // User => Delete avatar picture ========================================
-userRouter.delete('/users/profile/me', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.delete("/users/profile/me", auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { user } = req;
         user.avatar = undefined;
         user.save();
         return res.status(200).send({
-            status: 'success',
-            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userAvatarUploadDeleted')
+            status: "success",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userAvatarUploadDeleted")
         });
     }
     catch (error) {
         res.status(400).send({
-            status: 'error',
-            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userAvatarUploadDeletedError'),
+            status: "error",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userAvatarUploadDeletedError"),
             details: error.message
         });
     }
 }));
 // User ==> Delete your own account
-userRouter.delete('/users/me', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.delete("/users/me", auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req;
     try {
         yield user.remove();
@@ -224,13 +221,13 @@ userRouter.delete('/users/me', auth_middleware_1.userAuthMiddleware, (req, res) 
     catch (error) {
         console.log(error);
         return res.status(500).send({
-            status: 'error',
-            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userDeleteError'),
+            status: "error",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userDeleteError"),
             details: error.message
         });
     }
 }));
-userRouter.get('/users/profile', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.get("/users/profile", auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req;
     try {
         return res.status(200).send({
@@ -239,19 +236,19 @@ userRouter.get('/users/profile', auth_middleware_1.userAuthMiddleware, (req, res
     }
     catch (error) {
         return res.status(500).send({
-            status: 'error',
-            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userProfileGetError'),
+            status: "error",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userProfileGetError"),
             details: error.message
         });
     }
 }));
-userRouter.patch('/users/me', auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.patch("/users/me", auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req;
     const updates = Object.keys(req.body);
-    if (!RouterHelper_1.RouterHelper.isAllowedKey(req.body, ['name', 'email', 'password', 'age'])) {
+    if (!RouterHelper_1.RouterHelper.isAllowedKey(req.body, ["name", "email", "password", "age"])) {
         return res.status(400).send({
-            status: 'error',
-            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userPatchForbiddenKeys')
+            status: "error",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userPatchForbiddenKeys")
         });
     }
     try {
@@ -269,8 +266,8 @@ userRouter.patch('/users/me', auth_middleware_1.userAuthMiddleware, (req, res) =
     catch (error) {
         console.log(error);
         return res.status(400).send({
-            status: 'error',
-            message: LanguageHelper_1.LanguageHelper.getLanguageString('user', 'userFailedUpdate'),
+            status: "error",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userFailedUpdate"),
             details: error.message
         });
     }

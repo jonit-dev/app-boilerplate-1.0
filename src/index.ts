@@ -29,7 +29,7 @@ app.use(express.json()); // << THIS IS REQUIRED TO EXPRESS PARSING JSON DATA
 |  >>> MIDDLEWARES
 *##############################################################*/
 
-app.use(GlobalMiddleware.enableCors);
+// app.use(GlobalMiddleware.enableCors);
 
 if (serverConfig.maintenanceMode) {
   app.use(GlobalMiddleware.maintenanceMode);

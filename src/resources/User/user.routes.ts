@@ -53,18 +53,30 @@ userRouter.post("/users/login", async (req, res) => {
 
 // User => Sign Up
 userRouter.post("/users", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, passwordConfirmation } = req.body;
 
-  //force lowercase and trim
-  const preparedEmail = TextHelper.stringPrepare(email);
-
-  const user = new User({
-    name,
-    preparedEmail,
-    password
-  });
+  console.log(req.body);
 
   try {
+    if (password !== passwordConfirmation) {
+      return res.status(400).send({
+        status: "error",
+        message: LanguageHelper.getLanguageString(
+          "user",
+          "userPasswordConfirmationDontMatch"
+        )
+      });
+    }
+
+    // force lowercase and trim
+    const preparedEmail = TextHelper.stringPrepare(email);
+
+    const user = new User({
+      name,
+      email: preparedEmail,
+      password
+    });
+
     await user.save();
 
     const token = await user.generateAuthToken();

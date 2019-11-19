@@ -17,6 +17,7 @@ export class GlobalMiddleware {
   };
 
   public static enableCors = function(req, res, next) {
+    // TODO: fix - not working as desired
     res.header("Access-Control-Allow-Origin", "http://localhost"); // update to match the domain you will make the request from
     res.header(
       "Access-Control-Allow-Headers",
