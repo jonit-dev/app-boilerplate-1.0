@@ -10,5 +10,5 @@ var EnvType;
 })(EnvType = exports.EnvType || (exports.EnvType = {}));
 exports.APP_NAME = "App Boilerplate";
 exports.SUPPORT_EMAIL = "email@gmail.com";
-exports.ENV = EnvType.Production; // Select which environment to use here (dev | prod)
+exports.ENV = EnvType.Development; // Select which environment to use here
 exports.serverConfig = exports.ENV === EnvType.Development ? serverConfig_dev_1.devServerConfig : serverConfig_prod_1.prodServerConfig;
