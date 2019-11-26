@@ -26,10 +26,10 @@ exports.strings = {
         eng: "Your password does not match with its confirmation"
     },
     userNotFoundOnLogin: {
-        eng: "Error while trying to login. User not found."
+        eng: "Unable to login. User not found."
     },
     userWrongPassword: {
-        eng: "Error while trying to login. Please check your credential details"
+        eng: "Unable to login. Please check your credential details"
     },
     usersNotFound: {
         eng: "No users found."

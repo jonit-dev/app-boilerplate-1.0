@@ -1,8 +1,15 @@
 import { devServerConfig } from './serverConfig.dev';
 import { prodServerConfig } from './serverConfig.prod';
 
-export const appName = 'App Boilerplate';
-export const supportEmail = 'email@gmail.com';
-export const env = 'dev'; // Select which environment to use here (dev | prod)
+export enum EnvType {
+  Development = "Development",
+  Production = "Production",
+  Staging = "Staging"
+}
 
-export const serverConfig = env === 'dev' ? devServerConfig : prodServerConfig;
+export const APP_NAME = "App Boilerplate";
+export const SUPPORT_EMAIL = "email@gmail.com";
+export const ENV: string = EnvType.Development; // Select which environment to use here
+
+export const serverConfig =
+  ENV === EnvType.Development ? devServerConfig : prodServerConfig;

@@ -1,6 +1,6 @@
 import Mailchimp from 'mailchimp-api-v3';
 
-import { serverConfig } from '../constants/env';
+import { ENV, EnvType, serverConfig } from '../constants/env';
 
 export interface ILists {
   default: string;
@@ -20,23 +20,37 @@ export class MarketingEmailManager {
 
   public async subscribe(
     email: string,
-    callback: () => any,
+    callback?: () => any,
     listId: string = this.lists.default
   ) {
-    console.log(
-      `adding new lead (${email}) to e-mail list (${listId}) under apiKey ${this._mailchimpApiKey}`
-    );
+    switch (ENV) {
+      case EnvType.Staging:
+      case EnvType.Development:
+        console.log(
+          `Skipping adding new lead (${email}) to e-mail list (${listId}) under apiKey ${this._mailchimpApiKey}. Function only available in production`
+        );
+        break;
+      case EnvType.Production:
+        console.log(
+          `adding new lead (${email}) to e-mail list (${listId}) under apiKey ${this._mailchimpApiKey}`
+        );
 
-    const payload = {
-      members: [
-        {
-          email_address: email,
-          email_type: "text",
-          status: "subscribed"
-        }
-      ]
-    };
+        const payload = {
+          members: [
+            {
+              email_address: email,
+              email_type: "text",
+              status: "subscribed"
+            }
+          ]
+        };
 
-    await this.mailchimp.post(`/lists/${listId}`, payload, () => callback());
+        await this.mailchimp.post(`/lists/${listId}`, payload, () => {
+          if (callback) {
+            callback();
+          }
+        });
+        break;
+    }
   }
 }

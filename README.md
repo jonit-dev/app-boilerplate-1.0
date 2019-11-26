@@ -32,8 +32,7 @@ export const serverConfig = {
       'Company Name, LLC': 'App Boilerplate Inc',
       'Company Address': '1234, Street Rd. Suite 1234'
     }
-  },
-  env: 'dev',
+  }
   maintenanceMode: false,
   language: 'eng',
   jwtSecret: 'yourJWTTOKEN'

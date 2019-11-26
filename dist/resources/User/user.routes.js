@@ -17,6 +17,7 @@ const multer_1 = __importDefault(require("multer"));
 const sharp_1 = __importDefault(require("sharp"));
 const env_1 = require("../../constants/env");
 const account_email_1 = require("../../emails/account.email");
+const MarketingEmailManager_1 = require("../../emails/MarketingEmailManager");
 const auth_middleware_1 = require("../../middlewares/auth.middleware");
 const LanguageHelper_1 = require("../../utils/LanguageHelper");
 const RouterHelper_1 = require("../../utils/RouterHelper");
@@ -38,7 +39,6 @@ userRouter.post("/users/login", (req, res) => __awaiter(void 0, void 0, void 0, 
         });
     }
     catch (error) {
-        console.log(`ERROR: ${error}`);
         res.status(400).send({
             error: error.toString()
         });
@@ -66,8 +66,8 @@ userRouter.post("/users", (req, res) => __awaiter(void 0, void 0, void 0, functi
         const token = yield user.generateAuthToken();
         console.log(`User created: ${user.email}`);
         const accountEmailManager = new account_email_1.AccountEmailManager();
-        // sample email
-        accountEmailManager.newAccount("jfurtado141@gmail.com", "Hello World!", "welcome", {
+        // Send transactional email
+        accountEmailManager.newAccount(user.email, `Welcome to ${env_1.serverConfig.app.name}`, "welcome", {
             name: "Joao",
             login_url: "http://appboilerplate.com/login",
             username: "joaouser",
@@ -77,6 +77,15 @@ userRouter.post("/users", (req, res) => __awaiter(void 0, void 0, void 0, functi
             support_email: env_1.serverConfig.email.supportEmail,
             action_url: "https://someactionurl.com"
         });
+        // register user on mailchimp
+        const marketingEmailManager = new MarketingEmailManager_1.MarketingEmailManager();
+        try {
+            yield marketingEmailManager.subscribe(user.email);
+        }
+        catch (error) {
+            console.error(error);
+            console.log("Failed to add new subscriber...");
+        }
         return res.status(201).send({
             user,
             token

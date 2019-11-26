@@ -2,7 +2,7 @@ import { exec } from 'child_process';
 import express from 'express';
 import mongoose from 'mongoose';
 
-import { serverConfig } from './constants/env';
+import { ENV, serverConfig } from './constants/env';
 import { GlobalMiddleware } from './middlewares/global.middleware';
 import { taskRouter } from './resources/Task/task.routes';
 import { userRouter } from './resources/User/user.routes';
@@ -51,7 +51,7 @@ app.use(taskRouter);
 
 app.listen(port, () => {
   // tslint:disable-next-line: no-console
-  console.log(`Server is running on port ${port}`);
+  console.log(`*** Server is running on port ${port} || ${ENV} ***`);
 });
 
 app.on("error", err => {

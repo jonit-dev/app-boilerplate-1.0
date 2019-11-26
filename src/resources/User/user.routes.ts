@@ -85,10 +85,11 @@ userRouter.post("/users", async (req, res) => {
 
     const accountEmailManager = new AccountEmailManager();
 
-    // sample email
+    // Send transactional email
+
     accountEmailManager.newAccount(
-      "jfurtado141@gmail.com",
-      "Hello World!",
+      user.email,
+      `Welcome to ${serverConfig.app.name}`,
       "welcome",
       {
         name: "Joao",
@@ -101,6 +102,17 @@ userRouter.post("/users", async (req, res) => {
         action_url: "https://someactionurl.com"
       }
     );
+
+    // register user on mailchimp
+
+    const marketingEmailManager = new MarketingEmailManager();
+
+    try {
+      await marketingEmailManager.subscribe(user.email);
+    } catch (error) {
+      console.error(error);
+      console.log("Failed to add new subscriber...");
+    }
 
     return res.status(201).send({
       user,
@@ -118,27 +130,6 @@ userRouter.post("/users", async (req, res) => {
 /*#############################################################|
 |  >>> PROTECTED ROUTES
 *##############################################################*/
-
-// Mailchimp test =====================
-
-userRouter.get("/mailchimp", userAuthMiddleware, async (req, res) => {
-  const marketingEmailManager = new MarketingEmailManager();
-
-  try {
-    await marketingEmailManager.subscribe("jfurtado141@gmail.com", () => {
-      return res.status(200).send({
-        status: "success",
-        message: "new lead added"
-      });
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(400).send({
-      status: "error",
-      message: "failed to add new subscriber"
-    });
-  }
-});
 
 // Authentication routes ========================================
 

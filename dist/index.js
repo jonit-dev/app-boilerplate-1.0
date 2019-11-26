@@ -40,7 +40,7 @@ app.use(user_routes_1.userRouter);
 app.use(task_routes_1.taskRouter);
 app.listen(port, () => {
     // tslint:disable-next-line: no-console
-    console.log(`Server is running on port ${port}`);
+    console.log(`*** Server is running on port ${port} || ${env_1.ENV} ***`);
 });
 app.on("error", err => {
     // @ts-ignore

@@ -1,4 +1,4 @@
-import { serverConfig } from '../constants/env';
+import { ENV, EnvType, serverConfig } from '../constants/env';
 import { EmailType, TransactionalEmailManager } from './TransactionalEmailManager';
 
 export class AccountEmailManager extends TransactionalEmailManager {
@@ -8,17 +8,35 @@ export class AccountEmailManager extends TransactionalEmailManager {
     template: string,
     customVars: object
   ): void {
-    console.log("Sending new account email...");
+    switch (ENV) {
+      case EnvType.Development:
+      case EnvType.Staging:
+        console.log(
+          "Skipping sending new account email... Option only available in production."
+        );
+        break;
 
-    const htmlEmail = this.loadTemplate(EmailType.Html, template, customVars);
-    const textEmail = this.loadTemplate(EmailType.Text, template, customVars);
+      case EnvType.Production:
+        console.log("Sending new account email...");
+        const htmlEmail = this.loadTemplate(
+          EmailType.Html,
+          template,
+          customVars
+        );
+        const textEmail = this.loadTemplate(
+          EmailType.Text,
+          template,
+          customVars
+        );
 
-    this.sendGrid.send({
-      to,
-      from: serverConfig.email.supportEmail,
-      subject,
-      html: htmlEmail,
-      text: textEmail
-    });
+        this.sendGrid.send({
+          to,
+          from: serverConfig.email.supportEmail,
+          subject,
+          html: htmlEmail,
+          text: textEmail
+        });
+        break;
+    }
   }
 }
