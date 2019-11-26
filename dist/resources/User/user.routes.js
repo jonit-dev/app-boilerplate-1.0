@@ -46,15 +46,22 @@ userRouter.post("/users/login", (req, res) => __awaiter(void 0, void 0, void 0, 
 }));
 // User => Sign Up
 userRouter.post("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, email, password } = req.body;
-    //force lowercase and trim
-    const preparedEmail = TextHelper_1.TextHelper.stringPrepare(email);
-    const user = new user_model_1.User({
-        name,
-        preparedEmail,
-        password
-    });
+    const { name, email, password, passwordConfirmation } = req.body;
+    console.log(req.body);
     try {
+        if (password !== passwordConfirmation) {
+            return res.status(400).send({
+                status: "error",
+                message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userPasswordConfirmationDontMatch")
+            });
+        }
+        // force lowercase and trim
+        const preparedEmail = TextHelper_1.TextHelper.stringPrepare(email);
+        const user = new user_model_1.User({
+            name,
+            email: preparedEmail,
+            password
+        });
         yield user.save();
         const token = yield user.generateAuthToken();
         console.log(`User created: ${user.email}`);

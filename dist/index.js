@@ -26,7 +26,7 @@ app.use(express_1.default.json()); // << THIS IS REQUIRED TO EXPRESS PARSING JSO
 /*#############################################################|
 |  >>> MIDDLEWARES
 *##############################################################*/
-app.use(global_middleware_1.GlobalMiddleware.enableCors);
+// app.use(GlobalMiddleware.enableCors);
 if (env_1.serverConfig.maintenanceMode) {
     app.use(global_middleware_1.GlobalMiddleware.maintenanceMode);
 }

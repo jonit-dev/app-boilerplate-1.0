@@ -5,11 +5,11 @@ import { serverConfig } from '../constants/env';
 import { TextHelper } from '../utils/TextHelper';
 
 export enum EmailType {
-  Html = 'Html',
-  Text = 'Text'
+  Html = "Html",
+  Text = "Text"
 }
 
-export class EmailManager {
+export class TransactionalEmailManager {
   private _apiKey: string;
   public sendGrid: any;
 
@@ -23,14 +23,14 @@ export class EmailManager {
     let extension;
 
     if (type === EmailType.Html) {
-      extension = '.html';
+      extension = ".html";
     } else if (type === EmailType.Text) {
-      extension = '.txt';
+      extension = ".txt";
     }
 
     const data = readFileSync(
       `${serverConfig.email.templatesFolder}/${template}/content${extension}`,
-      'utf-8'
+      "utf-8"
     ).toString();
 
     return this.replaceTemplateCustomVars(data, customVars);

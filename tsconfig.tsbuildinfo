@@ -370,7 +370,7 @@
         "signature": "230b1fde7c459d24755c0dc8ff1d5c1405f4691db9103b2a01d45ee8cd4563a7"
       },
       "./src/middlewares/global.middleware.ts": {
-        "version": "e7a94d11007aaa0470142ae1ad7aedd40b22204015a95868ec72601ef7d89ed7",
+        "version": "77faba180462c760b80f267a1e4f9459da0fca8457a68420eca199601f227356",
         "signature": "5646266ebb90016ebeb406e99a254aa6b7778167b143d05fb7e140cbe8831da9"
       },
       "./node_modules/@types/jsonwebtoken/index.d.ts": {
@@ -474,11 +474,11 @@
         "signature": "3b68f984cbddf9810eef5c19b4a2b3c7b5b7ce2d05ef467680d93ad1bfaa6f06"
       },
       "./src/resources/User/user.routes.ts": {
-        "version": "bd3acd39c7bb84208186bba44b88ac09b6c8e6e26196ae96e76d7310bd257331",
+        "version": "641955cc4b519509b36e9ed55a4ed73c897268d96a9d7b602eed4a0b169e0ca1",
         "signature": "8c8ea754c669ad8c1fd4c1dcbfa611ebfd5497455396256ab0141e96103f835a"
       },
       "./src/index.ts": {
-        "version": "29776a38b5a082fb81c6d66d51fc90b20b12254795a8181fe007a6c7b28531b9",
+        "version": "f43e510efc5be8f69125e23b97306c735c5cbb370503146882918492dc1348a1",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
       },
       "./src/resources/Task/task.lang.ts": {
@@ -486,8 +486,8 @@
         "signature": "27162da05b60e4d25abe5861deeeeb5f274beff77f2768213910025e60a54d38"
       },
       "./src/resources/User/user.lang.ts": {
-        "version": "721a6fcdcb93209f4bf11238fb45855202225a5bc644028e162492069b2ccea2",
-        "signature": "1b137d4cc5604584cd3641791caa16e987426ea5d2971e7bdf2287ef469d74cd"
+        "version": "c3586c0e051b9f112d2c2f7ed2b34470baadc588ea2ffb9f1cb021b862ee59db",
+        "signature": "b0c63f5daa69af627707a260d3b011db1c8bbacf74dcadbdbaadd974ca80ddbc"
       },
       "./node_modules/@types/normalize-package-data/index.d.ts": {
         "version": "c9ad058b2cc9ce6dc2ed92960d6d009e8c04bef46d3f5312283debca6869f613",
@@ -1892,7 +1892,10 @@
       "./src/constants/serverConfig.prod.ts",
       "./src/constants/env.ts",
       "./src/lang/global.lang.ts",
+      "./src/utils/TextHelper.ts",
+      "./src/utils/LanguageHelper.ts",
       "./node_modules/@types/jsonwebtoken/index.d.ts",
+      "./src/resources/User/user.model.ts",
       "./src/middlewares/auth.middleware.ts",
       "./src/types/global.ts",
       "./src/utils/RouterHelper.ts",
@@ -1914,19 +1917,16 @@
       "./node_modules/@sendgrid/client/index.d.ts",
       "./node_modules/@sendgrid/mail/src/mail.d.ts",
       "./node_modules/@sendgrid/mail/index.d.ts",
+      "./src/emails/emailManager.ts",
       "./src/emails/account.email.ts",
       "./src/resources/Task/task.lang.ts",
-      "./src/resources/User/user.lang.ts",
       "./node_modules/@types/normalize-package-data/index.d.ts",
       "./node_modules/@types/strip-bom/index.d.ts",
       "./node_modules/@types/strip-json-comments/index.d.ts",
-      "./src/utils/TextHelper.ts",
-      "./src/resources/User/user.routes.ts",
-      "./src/emails/emailManager.ts",
-      "./src/utils/LanguageHelper.ts",
       "./src/middlewares/global.middleware.ts",
+      "./src/resources/User/user.routes.ts",
       "./src/index.ts",
-      "./src/resources/User/user.model.ts"
+      "./src/resources/User/user.lang.ts"
     ]
   },
   "version": "3.7.2"

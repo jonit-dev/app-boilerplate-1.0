@@ -4,6 +4,7 @@ import sharp from 'sharp';
 
 import { serverConfig } from '../../constants/env';
 import { AccountEmailManager } from '../../emails/account.email';
+import { MarketingEmailManager } from '../../emails/MarketingEmailManager';
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
 import { LanguageHelper } from '../../utils/LanguageHelper';
 import { RouterHelper } from '../../utils/RouterHelper';
@@ -44,7 +45,6 @@ userRouter.post("/users/login", async (req, res) => {
       token
     });
   } catch (error) {
-    console.log(`ERROR: ${error}`);
     res.status(400).send({
       error: error.toString()
     });
@@ -118,6 +118,27 @@ userRouter.post("/users", async (req, res) => {
 /*#############################################################|
 |  >>> PROTECTED ROUTES
 *##############################################################*/
+
+// Mailchimp test =====================
+
+userRouter.get("/mailchimp", userAuthMiddleware, async (req, res) => {
+  const marketingEmailManager = new MarketingEmailManager();
+
+  try {
+    await marketingEmailManager.subscribe("jfurtado141@gmail.com", () => {
+      return res.status(200).send({
+        status: "success",
+        message: "new lead added"
+      });
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(400).send({
+      status: "error",
+      message: "failed to add new subscriber"
+    });
+  }
+});
 
 // Authentication routes ========================================
 
