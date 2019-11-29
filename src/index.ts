@@ -3,6 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import { ENV, serverConfig } from './constants/env';
+import { MainCron } from './cron_jobs/main.cron';
 import { GlobalMiddleware } from './middlewares/global.middleware';
 import { taskRouter } from './resources/Task/task.routes';
 import { userRouter } from './resources/User/user.routes';
@@ -24,6 +25,8 @@ const app = express();
 const port = process.env.PORT || serverConfig.app.port;
 
 app.use(express.json()); // << THIS IS REQUIRED TO EXPRESS PARSING JSON DATA
+
+MainCron.sampleCron();
 
 /*#############################################################|
 |  >>> MIDDLEWARES
