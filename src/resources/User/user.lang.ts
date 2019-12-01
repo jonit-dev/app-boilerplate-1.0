@@ -69,5 +69,21 @@ export const strings = {
   },
   userAvatarUploadEmpty: {
     eng: "This user does not have an avatar"
+  },
+  userPushNotificationSaveError: {
+    eng:
+      "An error occurred while trying to save your push notification token. Please, try again"
+  },
+  userPushNotificationSaveSuccess: {
+    eng: "Your push notification was saved successfully"
+  },
+  userPushNotificationSaveAlreadySaved: {
+    eng: "Your push notification token is already saved. Skipping..."
+  },
+  userPushNotificationSubmitted: {
+    eng: "User push notifications submitted!"
+  },
+  userPushNotificationSubmissionError: {
+    eng: "An error occurred while trying to submit your push notification."
   }
 };

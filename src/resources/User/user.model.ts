@@ -49,6 +49,10 @@ const userSchema: Schema = new Schema(
       lowercase: true,
       trim: true
     },
+    pushToken: {
+      type: String,
+      unique: true
+    },
 
     tokens: [
       // this will allow multi device sign in (different devices with different tokens)

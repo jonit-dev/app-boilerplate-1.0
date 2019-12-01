@@ -7,8 +7,10 @@ import { AccountEmailManager } from '../../emails/account.email';
 import { MarketingEmailManager } from '../../emails/MarketingEmailManager';
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
 import { LanguageHelper } from '../../utils/LanguageHelper';
+import { PushNotificationHelper } from '../../utils/PushNotificationHelper';
 import { RouterHelper } from '../../utils/RouterHelper';
 import { TextHelper } from '../../utils/TextHelper';
+import { Log } from '../Log/log.model';
 import { User } from './user.model';
 
 // @ts-ignore
@@ -28,6 +30,22 @@ interface ILoginData {
   email: string;
   password: string;
 }
+
+userRouter.get("/users/log/test", userAuthMiddleware, async (req, res) => {
+  const { user } = req;
+
+  const log = new Log({
+    action: "Test action",
+    emitter: user._id,
+    target: user._id
+  });
+  await log.save();
+
+  return res.status(200).send({
+    status: "success",
+    message: "Log saved"
+  });
+});
 
 userRouter.post("/users/login", async (req, res) => {
   const { email, password }: ILoginData = req.body;
@@ -130,6 +148,75 @@ userRouter.post("/users", async (req, res) => {
 /*#############################################################|
 |  >>> PROTECTED ROUTES
 *##############################################################*/
+
+// Push notification ========================================
+
+userRouter.get(
+  "/users/push-notification/test",
+  userAuthMiddleware,
+  async (req, res) => {
+    const { user } = req;
+
+    try {
+      PushNotificationHelper.sendPush([user.pushToken], {
+        sound: "default",
+        body: "This is a test notification",
+        data: { withSome: "data" }
+      });
+
+      return res.status(200).send({
+        status: "success",
+        message: LanguageHelper.getLanguageString(
+          "user",
+          "userPushNotificationSubmitted"
+        )
+      });
+    } catch (error) {
+      console.error(error);
+
+      return res.status(400).send({
+        status: "error",
+        message: LanguageHelper.getLanguageString(
+          "user",
+          "userPushNotificationSubmissionError"
+        ),
+        details: error.message
+      });
+    }
+  }
+);
+
+userRouter.post(
+  "/users/push-notification",
+  userAuthMiddleware,
+  async (req, res) => {
+    const { user } = req;
+    const { pushToken } = req.body;
+
+    try {
+      user.pushToken = pushToken;
+      await user.save();
+
+      return res.status(200).send({
+        status: "success",
+        message: LanguageHelper.getLanguageString(
+          "user",
+          "userPushNotificationSaveSuccess"
+        )
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(400).send({
+        status: "error",
+        message: LanguageHelper.getLanguageString(
+          "user",
+          "userPushNotificationSaveError"
+        ),
+        details: error.message
+      });
+    }
+  }
+);
 
 // Authentication routes ========================================
 
