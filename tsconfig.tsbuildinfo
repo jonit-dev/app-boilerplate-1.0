@@ -494,7 +494,7 @@
         "signature": "75c288f55286361fe276c788b434f01895fd9227e0ac8de0cb0792d1f950cb3d"
       },
       "./src/resources/User/user.routes.ts": {
-        "version": "52d03453e9975257c97decaa19b6bbbff0b0ab942f16e659d581cf128977a237",
+        "version": "2d38e5cf7df2226069fba76891290ad588aac9a3fa698e70754852e460cfa95f",
         "signature": "8c8ea754c669ad8c1fd4c1dcbfa611ebfd5497455396256ab0141e96103f835a"
       },
       "./src/index.ts": {
@@ -1849,6 +1849,15 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "./node_modules/expo-server-sdk/build/ExpoClient.d.ts": [
+        "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/ts3.2/index.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./src/resources/Log/log.model.ts": [
+        "./node_modules/@types/mongoose/index.d.ts"
+      ],
       "./node_modules/@types/normalize-package-data/index.d.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
@@ -1860,15 +1869,6 @@
       "./node_modules/@types/strip-json-comments/index.d.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/expo-server-sdk/build/ExpoClient.d.ts": [
-        "./node_modules/@types/node/http.d.ts",
-        "./node_modules/@types/node/ts3.2/index.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./src/resources/Log/log.model.ts": [
-        "./node_modules/@types/mongoose/index.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -1966,6 +1966,7 @@
       "./src/utils/LanguageHelper.ts",
       "./src/middlewares/global.middleware.ts",
       "./node_modules/@types/jsonwebtoken/index.d.ts",
+      "./src/resources/User/user.model.ts",
       "./src/middlewares/auth.middleware.ts",
       "./src/types/global.ts",
       "./src/utils/RouterHelper.ts",
@@ -1991,18 +1992,17 @@
       "./src/emails/account.email.ts",
       "./node_modules/mailchimp-api-v3/index.d.ts",
       "./src/emails/MarketingEmailManager.ts",
-      "./src/resources/Task/task.lang.ts",
-      "./node_modules/@types/normalize-package-data/index.d.ts",
-      "./node_modules/@types/strip-bom/index.d.ts",
-      "./node_modules/@types/strip-json-comments/index.d.ts",
-      "./src/resources/User/user.model.ts",
       "./node_modules/expo-server-sdk/build/ExpoClient.d.ts",
       "./src/utils/PushNotificationHelper.ts",
-      "./src/resources/User/user.routes.ts",
       "./src/resources/Log/log.model.ts",
       "./src/index.ts",
       "./src/cron_jobs/main.cron.ts",
-      "./src/resources/User/user.lang.ts"
+      "./src/resources/Task/task.lang.ts",
+      "./src/resources/User/user.lang.ts",
+      "./node_modules/@types/normalize-package-data/index.d.ts",
+      "./node_modules/@types/strip-bom/index.d.ts",
+      "./node_modules/@types/strip-json-comments/index.d.ts",
+      "./src/resources/User/user.routes.ts"
     ]
   },
   "version": "3.7.2"

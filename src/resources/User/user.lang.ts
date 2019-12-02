@@ -85,5 +85,14 @@ export const strings = {
   },
   userPushNotificationSubmissionError: {
     eng: "An error occurred while trying to submit your push notification."
+  },
+  userCurrentPasswordIncorrect: {
+    eng: "Your current password is incorrect."
+  },
+  userNewPasswordsDoesntMatch: {
+    eng: "Your new passwords does not match."
+  },
+  userPasswordChangedSuccess: {
+    eng: "Your password was changed successfully!"
   }
 };
