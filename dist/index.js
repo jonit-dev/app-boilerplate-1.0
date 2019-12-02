@@ -23,6 +23,8 @@ mongoose_1.default.connect(env_1.serverConfig.app.mongodbConnectionUrl, {
 const app = express_1.default();
 const port = process.env.PORT || env_1.serverConfig.app.port;
 app.use(express_1.default.json()); // << THIS IS REQUIRED TO EXPRESS PARSING JSON DATA
+// CRON JOBS ========================================
+// MainCron.sampleCron();
 /*#############################################################|
 |  >>> MIDDLEWARES
 *##############################################################*/

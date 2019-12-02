@@ -20,12 +20,27 @@ const account_email_1 = require("../../emails/account.email");
 const MarketingEmailManager_1 = require("../../emails/MarketingEmailManager");
 const auth_middleware_1 = require("../../middlewares/auth.middleware");
 const LanguageHelper_1 = require("../../utils/LanguageHelper");
+const PushNotificationHelper_1 = require("../../utils/PushNotificationHelper");
 const RouterHelper_1 = require("../../utils/RouterHelper");
 const TextHelper_1 = require("../../utils/TextHelper");
+const log_model_1 = require("../Log/log.model");
 const user_model_1 = require("./user.model");
 // @ts-ignore
 const userRouter = new express_1.Router();
 exports.userRouter = userRouter;
+userRouter.get("/users/log/test", auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { user } = req;
+    const log = new log_model_1.Log({
+        action: "Test action",
+        emitter: user._id,
+        target: user._id
+    });
+    yield log.save();
+    return res.status(200).send({
+        status: "success",
+        message: "Log saved"
+    });
+}));
 userRouter.post("/users/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     const preparedEmail = TextHelper_1.TextHelper.stringPrepare(email);
@@ -102,6 +117,49 @@ userRouter.post("/users", (req, res) => __awaiter(void 0, void 0, void 0, functi
 /*#############################################################|
 |  >>> PROTECTED ROUTES
 *##############################################################*/
+// Push notification ========================================
+userRouter.get("/users/push-notification/test", auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { user } = req;
+    try {
+        PushNotificationHelper_1.PushNotificationHelper.sendPush([user.pushToken], {
+            sound: "default",
+            body: "This is a test notification",
+            data: { withSome: "data" }
+        });
+        return res.status(200).send({
+            status: "success",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userPushNotificationSubmitted")
+        });
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(400).send({
+            status: "error",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userPushNotificationSubmissionError"),
+            details: error.message
+        });
+    }
+}));
+userRouter.post("/users/push-notification", auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { user } = req;
+    const { pushToken } = req.body;
+    try {
+        user.pushToken = pushToken;
+        yield user.save();
+        return res.status(200).send({
+            status: "success",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userPushNotificationSaveSuccess")
+        });
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(400).send({
+            status: "error",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userPushNotificationSaveError"),
+            details: error.message
+        });
+    }
+}));
 // Authentication routes ========================================
 // User ==> Logout
 userRouter.post("/users/logout", auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {

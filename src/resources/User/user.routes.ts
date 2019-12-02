@@ -418,10 +418,12 @@ userRouter.delete("/users/me", userAuthMiddleware, async (req, res) => {
 
 userRouter.get("/users/profile", userAuthMiddleware, async (req, res) => {
   const { user } = req;
+  const reqToken = req.token;
 
   try {
     return res.status(200).send({
-      user
+      user,
+      token: reqToken
     }); // req.user is coming from the authMiddleware
   } catch (error) {
     return res.status(500).send({
