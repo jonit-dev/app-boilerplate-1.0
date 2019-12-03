@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const express_1 = require("express");
 const multer_1 = __importDefault(require("multer"));
 const sharp_1 = __importDefault(require("sharp"));
@@ -28,6 +29,7 @@ const user_model_1 = require("./user.model");
 // @ts-ignore
 const userRouter = new express_1.Router();
 exports.userRouter = userRouter;
+// User => Logger ========================================
 userRouter.get("/users/log/test", auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req;
     const log = new log_model_1.Log({
@@ -317,6 +319,33 @@ userRouter.get("/users/profile", auth_middleware_1.userAuthMiddleware, (req, res
             details: error.message
         });
     }
+}));
+userRouter.post("/users/change-password", auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { user } = req;
+    const { currentPassword, newPassword, repeatNewPassword } = req.body;
+    console.log(req.body);
+    // check if received password is equal our current stored password
+    const isMatch = yield bcryptjs_1.default.compare(currentPassword, user.password);
+    if (!isMatch) {
+        return res.status(400).send({
+            status: "error",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userCurrentPasswordIncorrect")
+        });
+    }
+    // Check if new passwords matches
+    if (newPassword !== repeatNewPassword) {
+        return res.status(400).send({
+            status: "error",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userNewPasswordsDoesntMatch")
+        });
+    }
+    // Update user password and send confirmation message
+    user.password = newPassword;
+    yield user.save();
+    return res.status(200).send({
+        status: "success",
+        message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userPasswordChangedSuccess")
+    });
 }));
 userRouter.patch("/users/me", auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req;

@@ -437,57 +437,65 @@ userRouter.get("/users/profile", userAuthMiddleware, async (req, res) => {
   }
 });
 
-userRouter.post(
-  "/users/change-password",
-  userAuthMiddleware,
-  async (req, res) => {
-    const { user } = req;
+userRouter.post("/users/change-password", async (req, res) => {
+  const { email, currentPassword, newPassword, repeatNewPassword } = req.body;
+  let user;
 
-    const { currentPassword, newPassword, repeatNewPassword } = req.body;
+  const preparedEmail = TextHelper.stringPrepare(email);
 
-    console.log(req.body);
-
-    // check if received password is equal our current stored password
-
-    const isMatch = await bcrypt.compare(currentPassword, user.password);
-
-    if (!isMatch) {
-      return res.status(400).send({
-        status: "error",
-        message: LanguageHelper.getLanguageString(
-          "user",
-          "userCurrentPasswordIncorrect"
-        )
-      });
-    }
-
-    // Check if new passwords matches
-
-    if (newPassword !== repeatNewPassword) {
-      return res.status(400).send({
-        status: "error",
-        message: LanguageHelper.getLanguageString(
-          "user",
-          "userNewPasswordsDoesntMatch"
-        )
-      });
-    }
-
-    // Update user password and send confirmation message
-
-    user.password = newPassword;
-
-    await user.save();
-
-    return res.status(200).send({
-      status: "success",
+  try {
+    user = await User.findByCredentials(preparedEmail, currentPassword);
+  } catch (error) {
+    console.error(error);
+    return res.status(400).send({
+      status: "error",
       message: LanguageHelper.getLanguageString(
         "user",
-        "userPasswordChangedSuccess"
+        "userInvalidCredentials"
       )
     });
   }
-);
+
+  // check if received password is equal our current stored password
+
+  const isMatch = await bcrypt.compare(currentPassword, user.password);
+
+  if (!isMatch) {
+    return res.status(400).send({
+      status: "error",
+      message: LanguageHelper.getLanguageString(
+        "user",
+        "userCurrentPasswordIncorrect"
+      )
+    });
+  }
+
+  // Check if new passwords matches
+
+  if (newPassword !== repeatNewPassword) {
+    return res.status(400).send({
+      status: "error",
+      message: LanguageHelper.getLanguageString(
+        "user",
+        "userNewPasswordsDoesntMatch"
+      )
+    });
+  }
+
+  // Update user password and send confirmation message
+
+  user.password = newPassword;
+
+  await user.save();
+
+  return res.status(200).send({
+    status: "success",
+    message: LanguageHelper.getLanguageString(
+      "user",
+      "userPasswordChangedSuccess"
+    )
+  });
+});
 
 userRouter.patch("/users/me", userAuthMiddleware, async (req, res) => {
   const { user } = req;
