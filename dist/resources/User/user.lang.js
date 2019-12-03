@@ -93,5 +93,8 @@ exports.strings = {
     },
     userPasswordChangedSuccess: {
         eng: "Your password was changed successfully!"
+    },
+    userInvalidCredentials: {
+        eng: "Invalid credentials. Check your e-mail and password"
     }
 };

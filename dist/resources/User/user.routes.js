@@ -320,10 +320,20 @@ userRouter.get("/users/profile", auth_middleware_1.userAuthMiddleware, (req, res
         });
     }
 }));
-userRouter.post("/users/change-password", auth_middleware_1.userAuthMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { user } = req;
-    const { currentPassword, newPassword, repeatNewPassword } = req.body;
-    console.log(req.body);
+userRouter.post("/users/change-password", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, currentPassword, newPassword, repeatNewPassword } = req.body;
+    let user;
+    const preparedEmail = TextHelper_1.TextHelper.stringPrepare(email);
+    try {
+        user = yield user_model_1.User.findByCredentials(preparedEmail, currentPassword);
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(400).send({
+            status: "error",
+            message: LanguageHelper_1.LanguageHelper.getLanguageString("user", "userInvalidCredentials")
+        });
+    }
     // check if received password is equal our current stored password
     const isMatch = yield bcryptjs_1.default.compare(currentPassword, user.password);
     if (!isMatch) {

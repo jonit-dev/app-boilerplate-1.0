@@ -494,7 +494,7 @@
         "signature": "75c288f55286361fe276c788b434f01895fd9227e0ac8de0cb0792d1f950cb3d"
       },
       "./src/resources/User/user.routes.ts": {
-        "version": "94c082cd7febc44f95ca985d025219a735c7a81cb28c5e687741a45c29764fbf",
+        "version": "8179dbcfac25037b153cde72041a561a4794643242a4dfb64bb94419b555b551",
         "signature": "8c8ea754c669ad8c1fd4c1dcbfa611ebfd5497455396256ab0141e96103f835a"
       },
       "./src/index.ts": {
@@ -510,8 +510,8 @@
         "signature": "27162da05b60e4d25abe5861deeeeb5f274beff77f2768213910025e60a54d38"
       },
       "./src/resources/User/user.lang.ts": {
-        "version": "9fc9248b608c5d42724f8d4f195ec6250af614496f4c35c550aad7f62fd12553",
-        "signature": "fad7519bc4f6f03361da65955b0a26f4c5715fc65dfa0b05c35441eb4968d298"
+        "version": "57b89259163762769f326a56a3ad7724a9e14499803c1261655acffa5fbca8e4",
+        "signature": "02808f11b83a11192e93ef2748e9ab649c331560456aa6cdcb37b917577d989c"
       },
       "./node_modules/@types/normalize-package-data/index.d.ts": {
         "version": "c9ad058b2cc9ce6dc2ed92960d6d009e8c04bef46d3f5312283debca6869f613",
