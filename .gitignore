@@ -5,5 +5,7 @@ serverConfig.dev.jsonsendgrid.env
 
 src/constants/serverConfig.dev.ts
 src/constants/serverConfig.prod.ts
+src/constants/serverConfig.stag.ts
 src/constants/end.ts
 sendgrid.env
+dist

@@ -1,6 +1,7 @@
 import Mailchimp from 'mailchimp-api-v3';
 
-import { ENV, EnvType, serverConfig } from '../constants/env';
+import { ENV, serverConfig } from '../constants/env';
+import { EnvType } from '../constants/server.constants';
 
 export interface ILists {
   default: string;

@@ -1,9 +1,9 @@
-import { ENV, serverConfig } from '../constants/env';
-import { EnvType } from '../constants/server.constants';
+import { ENV } from '../constants/env';
+import { EnvType, SUPPORT_EMAIL } from '../constants/server.constants';
 import { EmailType, TransactionalEmailManager } from './TransactionalEmailManager';
 
-export class AccountEmailManager extends TransactionalEmailManager {
-  public newAccount(
+export class GenericEmailManager extends TransactionalEmailManager {
+  public sendEmail(
     to: string,
     subject: string,
     template: string,
@@ -18,7 +18,13 @@ export class AccountEmailManager extends TransactionalEmailManager {
         break;
 
       case EnvType.Production:
-        console.log("Sending new account email...");
+        console.log(`Sending email to ${to} - ${subject}`);
+        // console.log({
+        //   to,
+        //   subject,
+        //   template,
+        //   customVars
+        // });
         const htmlEmail = this.loadTemplate(
           EmailType.Html,
           template,
@@ -32,11 +38,12 @@ export class AccountEmailManager extends TransactionalEmailManager {
 
         this.sendGrid.send({
           to,
-          from: serverConfig.email.supportEmail,
+          from: SUPPORT_EMAIL,
           subject,
           html: htmlEmail,
           text: textEmail
         });
+
         break;
     }
   }

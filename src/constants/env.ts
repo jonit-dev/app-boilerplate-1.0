@@ -1,15 +1,23 @@
+import { EnvType } from './server.constants';
 import { devServerConfig } from './serverConfig.dev';
 import { prodServerConfig } from './serverConfig.prod';
+import { stagServerConfig } from './serverConfig.stag';
 
-export enum EnvType {
-  Development = "Development",
-  Production = "Production",
-  Staging = "Staging"
+// This file is responsible which environment configuration to use
+
+let serverConfig: any;
+export const ENV: string = EnvType.Production; // Select which environment to use here
+
+switch (ENV) {
+  case EnvType.Development:
+    serverConfig = devServerConfig;
+    break;
+  case EnvType.Production:
+    serverConfig = prodServerConfig;
+    break;
+  case EnvType.Staging:
+    serverConfig = stagServerConfig;
+    break;
 }
 
-export const APP_NAME = "App Boilerplate";
-export const SUPPORT_EMAIL = "email@gmail.com";
-export const ENV: string = EnvType.Development; // Select which environment to use here
-
-export const serverConfig =
-  ENV === EnvType.Development ? devServerConfig : prodServerConfig;
+export { serverConfig };

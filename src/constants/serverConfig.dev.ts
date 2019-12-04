@@ -1,4 +1,4 @@
-import { APP_NAME, SUPPORT_EMAIL } from './env';
+import { APP_NAME, SUPPORT_EMAIL } from './server.constants';
 
 export const devServerConfig = {
   app: {

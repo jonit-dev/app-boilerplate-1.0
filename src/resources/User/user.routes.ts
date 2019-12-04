@@ -1,12 +1,16 @@
 import bcrypt from 'bcryptjs';
 import { Router } from 'express';
+import { readFileSync } from 'fs';
 import multer from 'multer';
+import randomstring from 'randomstring';
 import sharp from 'sharp';
 
 import { serverConfig } from '../../constants/env';
 import { AccountEmailManager } from '../../emails/account.email';
+import { GenericEmailManager } from '../../emails/generic.email';
 import { MarketingEmailManager } from '../../emails/MarketingEmailManager';
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
+import { EncryptionHelper } from '../../utils/EncryptionHelper';
 import { LanguageHelper } from '../../utils/LanguageHelper';
 import { PushNotificationHelper } from '../../utils/PushNotificationHelper';
 import { RouterHelper } from '../../utils/RouterHelper';
@@ -70,6 +74,92 @@ userRouter.post("/users/login", async (req, res) => {
       error: error.toString()
     });
   }
+});
+
+// User => Reset password ========================================
+
+// This is the route that the user will submit a post request from the App with his e-mail, receiving a password reset link that should be clicked
+userRouter.post("/users/reset-password", async (req, res) => {
+  const { email } = req.body;
+
+  const encryptionHelper = new EncryptionHelper();
+
+  // generate encrypted email
+  const encryptedEmail = encryptionHelper.encrypt(email);
+
+  const randomPassword = randomstring.generate({
+    length: 12,
+    charset: "alphanumeric"
+  });
+
+  const encryptedPassword = encryptionHelper.encrypt(randomPassword);
+
+  const user: any = await User.findOne({
+    email
+  });
+
+  if (!user) {
+    return res.status(401).send({
+      status: "error",
+      message: "User not found!"
+    });
+  }
+
+  // if user is found, let's send him an email with a reset password link
+
+  const genericEmailManager = new GenericEmailManager();
+
+  genericEmailManager.sendEmail(
+    user.email,
+    `${TextHelper.capitalizeFirstLetter(user.name)}, reset your password`,
+    "password-reset",
+    {
+      name: TextHelper.capitalizeFirstLetter(user.name),
+      action_url: `${serverConfig.app.url}/users/reset-password/link?ecem=${encryptedEmail}&p=${encryptedPassword}`,
+      new_password: randomPassword
+    }
+  );
+
+  return res.status(200).send({
+    status: "success",
+    message: LanguageHelper.getLanguageString(
+      "user",
+      "userForgotPasswordResetLink"
+    )
+  });
+});
+
+// This is the route that actually changes the user's password to a random one
+userRouter.get("/users/reset-password/link", async (req, res) => {
+  const { ecem, p } = req.query;
+
+  const encryptionHelper = new EncryptionHelper();
+  const email = encryptionHelper.decrypt(ecem);
+  const newPassword = encryptionHelper.decrypt(p);
+
+  console.log(`User ${email} changed its password`);
+
+  const user = await User.findOne({
+    email
+  });
+
+  if (!user) {
+    return res.status(401).send({
+      status: "error",
+      message: "User not found!"
+    });
+  }
+
+  user.password = newPassword;
+
+  await user.save();
+
+  const data = readFileSync(
+    `${serverConfig.email.templatesFolder}/password-reset-confirmation/content.html`,
+    "utf-8"
+  ).toString();
+
+  return res.status(200).send(data);
 });
 
 // User => Sign Up

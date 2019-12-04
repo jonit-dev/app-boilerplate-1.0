@@ -1,10 +1,10 @@
-import { APP_NAME, SUPPORT_EMAIL } from './env';
+import { APP_NAME, SUPPORT_EMAIL } from './server.constants';
 
 export const prodServerConfig = {
   app: {
     name: APP_NAME,
     port: 3000,
-    url: "https://yourwebsite.com:3000/",
+    url: "https://yourwebsite.com/",
     mongodbConnectionUrl: "mongodb://mongo:27017/app"
   },
   email: {
@@ -12,7 +12,7 @@ export const prodServerConfig = {
     mailchimpAPIKey: "bad3b9754ab37c1329a284621d9bc307-us4",
     mailchimpDefaultList: "816cff1b6d", // https://mailchimp.com/pt/help/find-audience-id/
     sendGridAPIKey:
-      "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",
+      "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",
     templatesFolder: "./src/emails/templates",
     globalTemplateVars: {
       "Product Name": APP_NAME,
