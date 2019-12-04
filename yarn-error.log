@@ -1,11 +1,11 @@
 Arguments: 
-  /usr/local/bin/node /usr/share/yarn/bin/yarn.js add node-cron
+  /usr/local/bin/node /usr/share/yarn/bin/yarn.js add randomstring
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/jonit/Java/jdk1.8.0_221/bin:/home/jonit/Android/Sdk/tools:/home/jonit/Android/Sdk/platform-tools:/home/jonit/Android/Sdk/build-tools:/home/jonit/Android/Sdk/platforms:/home/jonit/Java/jdk1.8.0_221/bin:/home/jonit/Android/Sdk/tools:/home/jonit/Android/Sdk/platform-tools:/home/jonit/Android/Sdk/build-tools:/home/jonit/Android/Sdk/platforms
 
 Yarn version: 
-  1.19.1
+  1.19.2
 
 Node version: 
   10.16.0
@@ -40,14 +40,19 @@ npm manifest:
     "dependencies": {
       "@sendgrid/mail": "^6.4.0",
       "bcryptjs": "^2.4.3",
+      "crypto": "^1.0.1",
+      "expo-server-sdk": "^3.4.0",
       "express": "^4.17.1",
+      "fs": "^0.0.1-security",
       "husky": "^3.0.9",
       "jsonwebtoken": "^8.5.1",
       "mailchimp-api-v3": "^1.13.1",
       "mongodb": "^3.3.1",
       "mongoose": "^5.7.8",
       "multer": "^1.4.2",
+      "node-cron": "^2.0.3",
       "nodemon": "^1.19.4",
+      "randomstring": "^1.1.5",
       "sharp": "^0.23.2",
       "ts-node": "^8.4.1",
       "validator": "^11.1.0"
@@ -355,6 +360,11 @@ Lockfile:
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-1.1.1.tgz#9a5f699051b1e7073328f2a008968b64ea2955d2"
     integrity sha1-ml9pkFGx5wczKPKgCJaLZOopVdI=
+  
+  array-uniq@1.0.2:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/array-uniq/-/array-uniq-1.0.2.tgz#5fcc373920775723cfd64d65c64bef53bf9eba6d"
+    integrity sha1-X8w3OSB3VyPP1k1lxkvvU7+eum0=
   
   array-unique@^0.3.2:
     version "0.3.2"
@@ -830,6 +840,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-1.0.0.tgz#a230f64f568310e1498009940790ec99545bca7e"
     integrity sha1-ojD2T1aDEOFJgAmUB5DsmVRbyn4=
   
+  crypto@^1.0.1:
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/crypto/-/crypto-1.0.1.tgz#2af1b7cad8175d24c8a1b0778255794a21803037"
+    integrity sha512-VxBKmeNcqQdiUQUW2Tzq0t377b54N2bMtXO/qiLa+6eRRmmC4qT3D4OnTGoT/U6O9aklQ/jTwbOtRMTTY8G0Ig==
+  
   currently-unhandled@^0.4.1:
     version "0.4.1"
     resolved "https://registry.yarnpkg.com/currently-unhandled/-/currently-unhandled-0.4.1.tgz#988df33feab191ef799a61369dd76c17adf957ea"
@@ -1092,6 +1107,14 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/expand-template/-/expand-template-2.0.3.tgz#6e14b3fcee0f3a6340ecb57d2e8918692052a47c"
     integrity sha512-XYfuKMvj4O35f/pOXLObndIRvyQ+/+6AhODh+OKWj9S9498pHHn/IMszH+gt0fBCRWMNfk1ZSp5x3AifmnI2vg==
   
+  expo-server-sdk@^3.4.0:
+    version "3.4.0"
+    resolved "https://registry.yarnpkg.com/expo-server-sdk/-/expo-server-sdk-3.4.0.tgz#07c46e57ddfa29c5d8da702586eef1b61b9ada75"
+    integrity sha512-Ss+XC8BpRiRZ32PglBQ88oIrUv6MXeGaZjLshZ6fDXaHaMIvTbw7euEOGFOAbwb92Ldv6tDSVKspYnU0bAjvTA==
+    dependencies:
+      node-fetch "^2.3.0"
+      promise-limit "^2.7.0"
+  
   express@^4.17.1:
     version "4.17.1"
     resolved "https://registry.yarnpkg.com/express/-/express-4.17.1.tgz#4491fc38605cf51f8629d39c2b5d026f98a4c134"
@@ -1296,6 +1319,11 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
     integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
+  
+  fs@^0.0.1-security:
+    version "0.0.1-security"
+    resolved "https://registry.yarnpkg.com/fs/-/fs-0.0.1-security.tgz#8a7bd37186b6dddf3813f23858b57ecaaf5e41d4"
+    integrity sha1-invTcYa23d84E/I4WLV+yq9eQdQ=
   
   fsevents@^1.2.7:
     version "1.2.9"
@@ -2346,6 +2374,19 @@ Lockfile:
     dependencies:
       semver "^5.4.1"
   
+  node-cron@^2.0.3:
+    version "2.0.3"
+    resolved "https://registry.yarnpkg.com/node-cron/-/node-cron-2.0.3.tgz#b9649784d0d6c00758410eef22fa54a10e3f602d"
+    integrity sha512-eJI+QitXlwcgiZwNNSRbqsjeZMp5shyajMR81RZCqeW0ZDEj4zU9tpd4nTh/1JsBiKbF8d08FCewiipDmVIYjg==
+    dependencies:
+      opencollective-postinstall "^2.0.0"
+      tz-offset "0.0.1"
+  
+  node-fetch@^2.3.0:
+    version "2.6.0"
+    resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
+    integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
+  
   node-notifier@^5.4.0:
     version "5.4.3"
     resolved "https://registry.yarnpkg.com/node-notifier/-/node-notifier-5.4.3.tgz#cb72daf94c93904098e28b9c590fd866e464bd50"
@@ -2513,7 +2554,7 @@ Lockfile:
     dependencies:
       wrappy "1"
   
-  opencollective-postinstall@^2.0.2:
+  opencollective-postinstall@^2.0.0, opencollective-postinstall@^2.0.2:
     version "2.0.2"
     resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.2.tgz#5657f1bede69b6e33a45939b061eb53d3c6c3a89"
     integrity sha512-pVOEP16TrAO2/fjej1IdOyupJY8KDUM1CvsaScRbw6oddvpQoOfGk4ywha0HKKVAD6RkW4x6Q+tNBwhf3Bgpuw==
@@ -2733,6 +2774,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
     integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
   
+  promise-limit@^2.7.0:
+    version "2.7.0"
+    resolved "https://registry.yarnpkg.com/promise-limit/-/promise-limit-2.7.0.tgz#eb5737c33342a030eaeaecea9b3d3a93cb592b26"
+    integrity sha512-7nJ6v5lnJsXwGprnGXga4wx6d1POjvi5Qmf1ivTRxTjH4Z/9Czja/UCMLVmB9N93GeWOU93XaFaEt6jbuoagNw==
+  
   proxy-addr@~2.0.5:
     version "2.0.5"
     resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.5.tgz#34cbd64a2d81f4b1fd21e76f9f06c8a45299ee34"
@@ -2783,6 +2829,13 @@ Lockfile:
     version "6.5.2"
     resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
     integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
+  
+  randomstring@^1.1.5:
+    version "1.1.5"
+    resolved "https://registry.yarnpkg.com/randomstring/-/randomstring-1.1.5.tgz#6df0628f75cbd5932930d9fe3ab4e956a18518c3"
+    integrity sha1-bfBij3XL1ZMpMNn+OrTpVqGFGMM=
+    dependencies:
+      array-uniq "1.0.2"
   
   range-parser@~1.2.1:
     version "1.2.1"
@@ -3636,6 +3689,11 @@ Lockfile:
     version "3.7.2"
     resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.2.tgz#27e489b95fa5909445e9fef5ee48d81697ad18fb"
     integrity sha512-ml7V7JfiN2Xwvcer+XAf2csGO1bPBdRbFCkYBczNZggrBZ9c7G3riSUeJmqEU5uOtXNPMhE3n+R4FA/3YOAWOQ==
+  
+  tz-offset@0.0.1:
+    version "0.0.1"
+    resolved "https://registry.yarnpkg.com/tz-offset/-/tz-offset-0.0.1.tgz#fef920257024d3583ed9072a767721a18bdb8a76"
+    integrity sha512-kMBmblijHJXyOpKzgDhKx9INYU4u4E1RPMB0HqmKSgWG8vEcf3exEfLh4FFfzd3xdQOw9EuIy/cP0akY6rHopQ==
   
   undefsafe@^2.0.2:
     version "2.0.2"
