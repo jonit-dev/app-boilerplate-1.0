@@ -50,8 +50,7 @@ const userSchema: Schema = new Schema(
       trim: true
     },
     pushToken: {
-      type: String,
-      unique: true
+      type: String
     },
 
     tokens: [

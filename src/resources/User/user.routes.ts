@@ -99,7 +99,7 @@ userRouter.post("/users/reset-password", async (req, res) => {
   });
 
   if (!user) {
-    return res.status(401).send({
+    return res.status(400).send({
       status: "error",
       message: "User not found!"
     });
@@ -165,8 +165,6 @@ userRouter.get("/users/reset-password/link", async (req, res) => {
 // User => Sign Up
 userRouter.post("/users", async (req, res) => {
   const { name, email, password, passwordConfirmation } = req.body;
-
-  console.log(req.body);
 
   try {
     if (password !== passwordConfirmation) {
