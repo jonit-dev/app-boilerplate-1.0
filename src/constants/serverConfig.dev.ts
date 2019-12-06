@@ -19,6 +19,13 @@ export const devServerConfig = {
       "Sender Name": "Joao",
       "Company Name, LLC": "App Boilerplate Inc",
       "Company Address": "1234, Street Rd. Suite 1234"
+    },
+    oAuth: {
+      gmail: {
+        clientID:
+          "868221073357-7oh0r0i2a2ggd0dt390d94q38vlp39vs.apps.googleusercontent.com",
+        clientSecret: "-eTeflp7pP8PieK077dGP8rm"
+      }
     }
   },
 

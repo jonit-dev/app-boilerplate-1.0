@@ -25,6 +25,7 @@
     "expo-server-sdk": "^3.4.0",
     "express": "^4.17.1",
     "fs": "^0.0.1-security",
+    "google-auth-library": "^5.6.1",
     "husky": "^3.0.9",
     "jsonwebtoken": "^8.5.1",
     "mailchimp-api-v3": "^1.13.1",

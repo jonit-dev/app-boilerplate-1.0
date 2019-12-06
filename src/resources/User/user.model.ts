@@ -4,19 +4,30 @@ import { Binary } from 'mongodb';
 import { Document, Model, model, Schema } from 'mongoose';
 
 import { serverConfig } from '../../constants/env';
+import { SUPPORT_EMAIL } from '../../constants/server.constants';
+import { AccountEmailManager } from '../../emails/account.email';
+import { MarketingEmailManager } from '../../emails/MarketingEmailManager';
 import { LanguageHelper } from '../../utils/LanguageHelper';
+import { TextHelper } from '../../utils/TextHelper';
 
 /*#############################################################|
 |  >>> MODEL FUNCTIONS (static, methods)
 *##############################################################*/
 
+export enum AuthType {
+  EmailPassword = "EmailPassword",
+  GoogleOAuth = "GoogleOAuth",
+  FacebookOAuth = "FacebookOAuth"
+}
+
 export interface IUserDocument extends Document {
   name: string;
   password: string;
+  authType: { type: string; default: AuthType.EmailPassword };
   email: string;
-  age: Number;
   tokens: Object[];
   avatar: Binary;
+  avatarUrl: string;
 }
 
 // methods
@@ -24,6 +35,7 @@ export interface IUser extends IUserDocument {
   hashPassword: (string) => string;
   generateAuthToken: () => string;
   toJSON: () => Object;
+  registerUser: () => { token: string };
 }
 
 // static methods
@@ -52,6 +64,7 @@ const userSchema: Schema = new Schema(
     pushToken: {
       type: String
     },
+    authType: { type: String, default: AuthType.EmailPassword },
 
     tokens: [
       // this will allow multi device sign in (different devices with different tokens)
@@ -80,6 +93,46 @@ userSchema.statics.hashPassword = async (password: string): Promise<string> => {
 // methods create a normal method (instance needs to be declared). Statics functions, otherwise, doesn't need to be declared. It can be accessed directly through the model
 
 // here we use function() instead of an arrow function because we need access to "this", that's not present on the later.
+
+userSchema.methods.registerUser = async function() {
+  const user = this;
+
+  const token = await user.generateAuthToken();
+
+  console.log(`User created: ${user.email}`);
+
+  const accountEmailManager = new AccountEmailManager();
+
+  // Send transactional email
+
+  accountEmailManager.newAccount(
+    user.email,
+    `Welcome to ${serverConfig.app.name}`,
+    "welcome",
+    {
+      name: TextHelper.capitalizeFirstLetter(user.name),
+      login_url: serverConfig.app.url,
+      username: user.email,
+      support_email: SUPPORT_EMAIL,
+      action_url: serverConfig.app.url
+    }
+  );
+
+  // register user on mailchimp
+
+  const marketingEmailManager = new MarketingEmailManager();
+
+  try {
+    await marketingEmailManager.subscribe(user.email);
+  } catch (error) {
+    console.error(error);
+    console.log("Failed to add new subscriber...");
+  }
+
+  return {
+    token
+  };
+};
 
 userSchema.methods.generateAuthToken = async function() {
   const user = this;

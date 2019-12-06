@@ -1,22 +1,20 @@
 import bcrypt from 'bcryptjs';
 import { Router } from 'express';
 import { readFileSync } from 'fs';
+import { OAuth2Client } from 'google-auth-library';
 import multer from 'multer';
 import randomstring from 'randomstring';
 import sharp from 'sharp';
 
 import { serverConfig } from '../../constants/env';
-import { AccountEmailManager } from '../../emails/account.email';
 import { GenericEmailManager } from '../../emails/generic.email';
-import { MarketingEmailManager } from '../../emails/MarketingEmailManager';
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
 import { EncryptionHelper } from '../../utils/EncryptionHelper';
 import { LanguageHelper } from '../../utils/LanguageHelper';
-import { PushNotificationHelper } from '../../utils/PushNotificationHelper';
 import { RouterHelper } from '../../utils/RouterHelper';
 import { TextHelper } from '../../utils/TextHelper';
 import { Log } from '../Log/log.model';
-import { User } from './user.model';
+import { AuthType, User } from './user.model';
 
 // @ts-ignore
 const userRouter = new Router();
@@ -28,13 +26,6 @@ const userRouter = new Router();
 *##############################################################*/
 
 // Authentication ========================================
-
-// User => Login
-
-interface ILoginData {
-  email: string;
-  password: string;
-}
 
 // User => Logger ========================================
 
@@ -53,6 +44,13 @@ userRouter.get("/users/log/test", userAuthMiddleware, async (req, res) => {
     message: "Log saved"
   });
 });
+
+// User => Login (default email/password route)
+
+interface ILoginData {
+  email: string;
+  password: string;
+}
 
 userRouter.post("/users/login", async (req, res) => {
   const { email, password }: ILoginData = req.body;
@@ -74,6 +72,72 @@ userRouter.post("/users/login", async (req, res) => {
       error: error.toString()
     });
   }
+});
+
+// User => Google OAuth login
+userRouter.post("/users/login/google-oauth", async (req, res) => {
+  const { idToken, appClientId } = req.body;
+
+  console.log("Received new info...");
+  console.log(idToken);
+  console.log(appClientId);
+
+  const client = new OAuth2Client();
+
+  const verify = async () => {
+    const ticket = await client.verifyIdToken({
+      idToken,
+      audience: appClientId
+    });
+    const payload: any = ticket.getPayload();
+
+    const userid = payload.sub;
+    // If request specified a G Suite domain:
+    // const domain = payload['hd'];
+
+    // Check if user does not exists. If it already exists, just return token.
+    const foundUser = await User.findOne({
+      email: payload.email
+    });
+
+    if (!foundUser) {
+      // if it doesnt exist in our database, create new one.
+
+      console.log("User not found... creating new one!");
+
+      const user = new User({
+        name: payload.name,
+        avatarUrl: payload.picture,
+        authType: AuthType.GoogleOAuth,
+        email: payload.email
+      });
+
+      console.log(payload);
+
+      await user.save();
+
+      const { token } = await user.registerUser();
+
+      return res.status(201).send({
+        user,
+        token
+      });
+    } else {
+      // if he does exist, let's just login...
+
+      console.log("User was found, sending back current info!");
+
+      const token = await foundUser.generateAuthToken();
+
+      return res.status(200).send({
+        user: foundUser,
+        token
+      });
+    }
+  };
+  verify().catch(console.error);
+
+  // Validate idToken
 });
 
 // User => Reset password ========================================
@@ -188,40 +252,7 @@ userRouter.post("/users", async (req, res) => {
 
     await user.save();
 
-    const token = await user.generateAuthToken();
-
-    console.log(`User created: ${user.email}`);
-
-    const accountEmailManager = new AccountEmailManager();
-
-    // Send transactional email
-
-    accountEmailManager.newAccount(
-      user.email,
-      `Welcome to ${serverConfig.app.name}`,
-      "welcome",
-      {
-        name: "Joao",
-        login_url: "http://appboilerplate.com/login",
-        username: "joaouser",
-        trial_start_date: "2019-11-09",
-        trial_end_date: "2019-11-29",
-        trial_length: 30,
-        support_email: serverConfig.email.supportEmail,
-        action_url: "https://someactionurl.com"
-      }
-    );
-
-    // register user on mailchimp
-
-    const marketingEmailManager = new MarketingEmailManager();
-
-    try {
-      await marketingEmailManager.subscribe(user.email);
-    } catch (error) {
-      console.error(error);
-      console.log("Failed to add new subscriber...");
-    }
+    const { token } = user.registerUser();
 
     return res.status(201).send({
       user,
@@ -240,42 +271,44 @@ userRouter.post("/users", async (req, res) => {
 |  >>> PROTECTED ROUTES
 *##############################################################*/
 
-// Push notification ========================================
+// Push notification => test ========================================
 
-userRouter.get(
-  "/users/push-notification/test",
-  userAuthMiddleware,
-  async (req, res) => {
-    const { user } = req;
+// userRouter.get(
+//   "/users/push-notification/test",
+//   userAuthMiddleware,
+//   async (req, res) => {
+//     const { user } = req;
 
-    try {
-      PushNotificationHelper.sendPush([user.pushToken], {
-        sound: "default",
-        body: "This is a test notification",
-        data: { withSome: "data" }
-      });
+//     try {
+//       PushNotificationHelper.sendPush([user.pushToken], {
+//         sound: "default",
+//         body: "This is a test notification",
+//         data: { withSome: "data" }
+//       });
 
-      return res.status(200).send({
-        status: "success",
-        message: LanguageHelper.getLanguageString(
-          "user",
-          "userPushNotificationSubmitted"
-        )
-      });
-    } catch (error) {
-      console.error(error);
+//       return res.status(200).send({
+//         status: "success",
+//         message: LanguageHelper.getLanguageString(
+//           "user",
+//           "userPushNotificationSubmitted"
+//         )
+//       });
+//     } catch (error) {
+//       console.error(error);
 
-      return res.status(400).send({
-        status: "error",
-        message: LanguageHelper.getLanguageString(
-          "user",
-          "userPushNotificationSubmissionError"
-        ),
-        details: error.message
-      });
-    }
-  }
-);
+//       return res.status(400).send({
+//         status: "error",
+//         message: LanguageHelper.getLanguageString(
+//           "user",
+//           "userPushNotificationSubmissionError"
+//         ),
+//         details: error.message
+//       });
+//     }
+//   }
+// );
+
+// Push notification => save push token ========================================
 
 userRouter.post(
   "/users/push-notification",
