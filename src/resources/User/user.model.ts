@@ -51,6 +51,12 @@ const userSchema: Schema = new Schema(
       type: String,
       trim: true
     },
+    givenName: {
+      type: String
+    },
+    familyName: {
+      type: String
+    },
     password: {
       type: String,
       trim: true
@@ -77,6 +83,9 @@ const userSchema: Schema = new Schema(
     ],
     avatar: {
       type: Buffer
+    },
+    avatarUrl: {
+      type: String
     }
   },
   {

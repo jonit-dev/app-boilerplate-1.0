@@ -107,6 +107,8 @@ userRouter.post("/users/login/google-oauth", async (req, res) => {
 
       const user = new User({
         name: payload.name,
+        givenName: payload.given_name,
+        familyName: payload.family_name,
         avatarUrl: payload.picture,
         authType: AuthType.GoogleOAuth,
         email: payload.email
