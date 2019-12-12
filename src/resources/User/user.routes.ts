@@ -254,7 +254,7 @@ userRouter.post("/users", async (req, res) => {
 
     await user.save();
 
-    const { token } = user.registerUser();
+    const { token } = await user.registerUser();
 
     return res.status(201).send({
       user,

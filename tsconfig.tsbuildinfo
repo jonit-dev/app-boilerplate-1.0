@@ -466,7 +466,7 @@
         "signature": "19a32a64cd9144cb54ff213d3fcabb774277809503a51108a7a964405fef4def"
       },
       "./src/resources/User/user.model.ts": {
-        "version": "d3a7ac98fa783ca462277fe3ace6fe5a8a222082fcd85c8c9fd3fd9f2286be30",
+        "version": "7d798c7744e75fcae4b5b896b18dd83ee14fe96bdee65df906d6e25433ff2987",
         "signature": "c5b0bcfac17bc8b21ff21f9656315d24860c33aba2142fb8d941114e1e5197aa"
       },
       "./src/middlewares/auth.middleware.ts": {
@@ -582,7 +582,7 @@
         "signature": "75c288f55286361fe276c788b434f01895fd9227e0ac8de0cb0792d1f950cb3d"
       },
       "./src/resources/User/user.routes.ts": {
-        "version": "d7685506a68ad3063ff580500be87060ab86750ac6d172863372406333eda7d8",
+        "version": "da6bb4fbf3553b6faa0f25ae1d3a01735003c229a9404acc13872463aaa9164f",
         "signature": "8c8ea754c669ad8c1fd4c1dcbfa611ebfd5497455396256ab0141e96103f835a"
       },
       "./src/index.ts": {
@@ -2112,6 +2112,142 @@
       "./src/resources/Task/task.model.ts": [
         "./node_modules/@types/mongoose/index.d.ts"
       ],
+      "./node_modules/event-target-shim/index.d.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/abort-controller/dist/abort-controller.d.ts": [
+        "./node_modules/event-target-shim/index.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/gaxios/build/src/common.d.ts": [
+        "./node_modules/abort-controller/dist/abort-controller.d.ts",
+        "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/url.d.ts",
+        "./node_modules/@types/node/ts3.2/index.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/gaxios/build/src/gaxios.d.ts": [
+        "./node_modules/gaxios/build/src/common.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/gaxios/build/src/index.d.ts": [
+        "./node_modules/gaxios/build/src/common.d.ts",
+        "./node_modules/gaxios/build/src/gaxios.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/google-auth-library/build/src/transporters.d.ts": [
+        "./node_modules/gaxios/build/src/index.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/google-auth-library/build/src/crypto/crypto.d.ts": [
+        "./node_modules/@types/node/ts3.2/index.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/google-auth-library/build/src/auth/credentials.d.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/google-auth-library/build/src/auth/authclient.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/gaxios/build/src/index.d.ts",
+        "./node_modules/google-auth-library/build/src/transporters.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
+        "./node_modules/@types/node/ts3.2/index.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/google-auth-library/build/src/auth/loginticket.d.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts": [
+        "./node_modules/gaxios/build/src/index.d.ts",
+        "./node_modules/google-auth-library/build/src/crypto/crypto.d.ts",
+        "./node_modules/google-auth-library/build/src/transporters.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/authclient.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/loginticket.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/google-auth-library/build/src/auth/computeclient.d.ts": [
+        "./node_modules/gaxios/build/src/index.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/google-auth-library/build/src/auth/envDetect.d.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/gtoken/build/src/index.d.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/google-auth-library/build/src/auth/jwtclient.d.ts": [
+        "./node_modules/gtoken/build/src/index.d.ts",
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts",
+        "./node_modules/@types/node/ts3.2/index.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/google-auth-library/build/src/auth/refreshclient.d.ts": [
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts",
+        "./node_modules/@types/node/ts3.2/index.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/google-auth-library/build/src/auth/googleauth.d.ts": [
+        "./node_modules/gaxios/build/src/index.d.ts",
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/google-auth-library/build/src/transporters.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/computeclient.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/envDetect.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/jwtclient.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/refreshclient.d.ts",
+        "./node_modules/@types/node/ts3.2/index.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/google-auth-library/build/src/auth/iam.d.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/google-auth-library/build/src/auth/jwtaccess.d.ts": [
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts",
+        "./node_modules/@types/node/ts3.2/index.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/google-auth-library/build/src/index.d.ts": [
+        "./node_modules/google-auth-library/build/src/auth/googleauth.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/computeclient.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/envDetect.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/iam.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/jwtaccess.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/jwtclient.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts",
+        "./node_modules/google-auth-library/build/src/auth/refreshclient.d.ts",
+        "./node_modules/google-auth-library/build/src/transporters.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "./src/emails/generic.email.ts": [
         "./src/emails/TransactionalEmailManager.ts"
       ],
@@ -2133,142 +2269,6 @@
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "./node_modules/@types/strip-json-comments/index.d.ts": [
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/event-target-shim/index.d.ts": [
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/abort-controller/dist/abort-controller.d.ts": [
-        "./node_modules/event-target-shim/index.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/gaxios/build/src/common.d.ts": [
-        "./node_modules/abort-controller/dist/abort-controller.d.ts",
-        "./node_modules/@types/node/http.d.ts",
-        "./node_modules/@types/node/url.d.ts",
-        "./node_modules/@types/node/ts3.2/index.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/gaxios/build/src/index.d.ts": [
-        "./node_modules/gaxios/build/src/common.d.ts",
-        "./node_modules/gaxios/build/src/gaxios.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/google-auth-library/build/src/auth/googleauth.d.ts": [
-        "./node_modules/gaxios/build/src/index.d.ts",
-        "./node_modules/@types/node/stream.d.ts",
-        "./node_modules/google-auth-library/build/src/transporters.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/computeclient.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/envDetect.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/jwtclient.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/refreshclient.d.ts",
-        "./node_modules/@types/node/ts3.2/index.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/google-auth-library/build/src/index.d.ts": [
-        "./node_modules/google-auth-library/build/src/auth/googleauth.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/computeclient.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/envDetect.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/iam.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/jwtaccess.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/jwtclient.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/refreshclient.d.ts",
-        "./node_modules/google-auth-library/build/src/transporters.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/google-auth-library/build/src/auth/computeclient.d.ts": [
-        "./node_modules/gaxios/build/src/index.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts": [
-        "./node_modules/gaxios/build/src/index.d.ts",
-        "./node_modules/google-auth-library/build/src/crypto/crypto.d.ts",
-        "./node_modules/google-auth-library/build/src/transporters.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/authclient.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/loginticket.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/google-auth-library/build/src/auth/jwtaccess.d.ts": [
-        "./node_modules/@types/node/stream.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts",
-        "./node_modules/@types/node/ts3.2/index.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/google-auth-library/build/src/auth/refreshclient.d.ts": [
-        "./node_modules/@types/node/stream.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts",
-        "./node_modules/@types/node/ts3.2/index.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/google-auth-library/build/src/auth/jwtclient.d.ts": [
-        "./node_modules/gtoken/build/src/index.d.ts",
-        "./node_modules/@types/node/stream.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts",
-        "./node_modules/@types/node/ts3.2/index.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/google-auth-library/build/src/auth/authclient.d.ts": [
-        "./node_modules/@types/node/events.d.ts",
-        "./node_modules/gaxios/build/src/index.d.ts",
-        "./node_modules/google-auth-library/build/src/transporters.d.ts",
-        "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
-        "./node_modules/@types/node/ts3.2/index.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/google-auth-library/build/src/transporters.d.ts": [
-        "./node_modules/gaxios/build/src/index.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/gaxios/build/src/gaxios.d.ts": [
-        "./node_modules/gaxios/build/src/common.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/google-auth-library/build/src/crypto/crypto.d.ts": [
-        "./node_modules/@types/node/ts3.2/index.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/google-auth-library/build/src/auth/credentials.d.ts": [
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/google-auth-library/build/src/auth/loginticket.d.ts": [
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/google-auth-library/build/src/auth/envDetect.d.ts": [
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/gtoken/build/src/index.d.ts": [
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/google-auth-library/build/src/auth/iam.d.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ]
@@ -2361,8 +2361,10 @@
       "./node_modules/@types/mongodb/index.d.ts",
       "./node_modules/@types/mongoose/index.d.ts",
       "./src/constants/server.constants.ts",
+      "./src/constants/serverConfig.dev.ts",
       "./src/constants/serverConfig.prod.ts",
       "./src/constants/serverConfig.stag.ts",
+      "./src/constants/env.ts",
       "./src/lang/global.lang.ts",
       "./src/utils/TextHelper.ts",
       "./src/utils/LanguageHelper.ts",
@@ -2388,13 +2390,35 @@
       "./src/emails/account.email.ts",
       "./node_modules/mailchimp-api-v3/index.d.ts",
       "./src/emails/MarketingEmailManager.ts",
+      "./src/middlewares/auth.middleware.ts",
       "./src/types/global.ts",
       "./src/utils/RouterHelper.ts",
       "./src/resources/Task/task.model.ts",
       "./src/resources/Task/task.routes.ts",
+      "./node_modules/event-target-shim/index.d.ts",
+      "./node_modules/abort-controller/dist/abort-controller.d.ts",
+      "./node_modules/gaxios/build/src/common.d.ts",
+      "./node_modules/gaxios/build/src/gaxios.d.ts",
+      "./node_modules/gaxios/build/src/index.d.ts",
+      "./node_modules/google-auth-library/build/src/transporters.d.ts",
+      "./node_modules/google-auth-library/build/src/crypto/crypto.d.ts",
+      "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
+      "./node_modules/google-auth-library/build/src/auth/authclient.d.ts",
+      "./node_modules/google-auth-library/build/src/auth/loginticket.d.ts",
+      "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts",
+      "./node_modules/google-auth-library/build/src/auth/computeclient.d.ts",
+      "./node_modules/google-auth-library/build/src/auth/envDetect.d.ts",
+      "./node_modules/gtoken/build/src/index.d.ts",
+      "./node_modules/google-auth-library/build/src/auth/jwtclient.d.ts",
+      "./node_modules/google-auth-library/build/src/auth/refreshclient.d.ts",
+      "./node_modules/google-auth-library/build/src/auth/googleauth.d.ts",
+      "./node_modules/google-auth-library/build/src/auth/iam.d.ts",
+      "./node_modules/google-auth-library/build/src/auth/jwtaccess.d.ts",
+      "./node_modules/google-auth-library/build/src/index.d.ts",
       "./src/emails/generic.email.ts",
       "./src/utils/EncryptionHelper.ts",
       "./src/resources/Log/log.model.ts",
+      "./src/index.ts",
       "./src/cron_jobs/main.cron.ts",
       "./src/resources/Task/task.lang.ts",
       "./src/resources/User/user.lang.ts",
@@ -2403,32 +2427,8 @@
       "./node_modules/@types/normalize-package-data/index.d.ts",
       "./node_modules/@types/strip-bom/index.d.ts",
       "./node_modules/@types/strip-json-comments/index.d.ts",
-      "./src/constants/serverConfig.dev.ts",
-      "./src/constants/env.ts",
       "./src/resources/User/user.model.ts",
-      "./src/middlewares/auth.middleware.ts",
-      "./node_modules/event-target-shim/index.d.ts",
-      "./node_modules/abort-controller/dist/abort-controller.d.ts",
-      "./node_modules/gaxios/build/src/common.d.ts",
-      "./node_modules/gaxios/build/src/index.d.ts",
-      "./node_modules/gaxios/build/src/gaxios.d.ts",
-      "./node_modules/google-auth-library/build/src/crypto/crypto.d.ts",
-      "./node_modules/google-auth-library/build/src/auth/credentials.d.ts",
-      "./node_modules/google-auth-library/build/src/auth/loginticket.d.ts",
-      "./node_modules/google-auth-library/build/src/auth/envDetect.d.ts",
-      "./node_modules/gtoken/build/src/index.d.ts",
-      "./node_modules/google-auth-library/build/src/auth/iam.d.ts",
-      "./node_modules/google-auth-library/build/src/transporters.d.ts",
-      "./node_modules/google-auth-library/build/src/auth/authclient.d.ts",
-      "./node_modules/google-auth-library/build/src/auth/oauth2client.d.ts",
-      "./node_modules/google-auth-library/build/src/auth/computeclient.d.ts",
-      "./node_modules/google-auth-library/build/src/auth/jwtclient.d.ts",
-      "./node_modules/google-auth-library/build/src/auth/refreshclient.d.ts",
-      "./node_modules/google-auth-library/build/src/auth/googleauth.d.ts",
-      "./node_modules/google-auth-library/build/src/auth/jwtaccess.d.ts",
-      "./node_modules/google-auth-library/build/src/index.d.ts",
-      "./src/resources/User/user.routes.ts",
-      "./src/index.ts"
+      "./src/resources/User/user.routes.ts"
     ]
   },
   "version": "3.7.2"
