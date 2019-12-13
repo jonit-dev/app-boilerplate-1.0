@@ -1,3 +1,4 @@
+import axios from 'axios';
 import bcrypt from 'bcryptjs';
 import { Router } from 'express';
 import { readFileSync } from 'fs';
@@ -78,9 +79,9 @@ userRouter.post("/users/login", async (req, res) => {
 userRouter.post("/users/login/google-oauth", async (req, res) => {
   const { idToken, appClientId } = req.body;
 
-  console.log("Received new info...");
-  console.log(idToken);
-  console.log(appClientId);
+  // console.log("Received new info...");
+  // console.log(idToken);
+  // console.log(appClientId);
 
   const client = new OAuth2Client();
 
@@ -91,7 +92,7 @@ userRouter.post("/users/login/google-oauth", async (req, res) => {
     });
     const payload: any = ticket.getPayload();
 
-    const userid = payload.sub;
+    // const userid = payload.sub;
     // If request specified a G Suite domain:
     // const domain = payload['hd'];
 
@@ -105,18 +106,31 @@ userRouter.post("/users/login/google-oauth", async (req, res) => {
 
       console.log("User not found... creating new one!");
 
-      const user = new User({
-        name: payload.name,
-        givenName: payload.given_name,
-        familyName: payload.family_name,
-        avatarUrl: payload.picture,
-        authType: AuthType.GoogleOAuth,
-        email: payload.email
-      });
+      let user;
 
-      console.log(payload);
+      try {
+        user = new User({
+          name: payload.name,
+          givenName: payload.given_name,
+          familyName: payload.family_name,
+          avatarUrl: payload.picture,
+          authType: AuthType.GoogleOAuth,
+          email: payload.email
+        });
 
-      await user.save();
+        console.log(payload);
+
+        await user.save();
+      } catch (error) {
+        return res.status(400).send({
+          status: "error",
+          message: LanguageHelper.getLanguageString(
+            "user",
+            "userFailedLoginOAuth"
+          ),
+          details: error.message
+        });
+      }
 
       const { token } = await user.registerUser();
 
@@ -137,9 +151,88 @@ userRouter.post("/users/login/google-oauth", async (req, res) => {
       });
     }
   };
-  verify().catch(console.error);
+  verify().catch(error => {
+    return res.status(400).send({
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userFailedLoginOAuth"),
+      details: error.message
+    });
+  });
 
   // Validate idToken
+});
+// User => Facebook OAuth login
+userRouter.post("/users/login/facebook-oauth", async (req, res) => {
+  const { accessToken } = req.body;
+
+  console.log("Received new info...");
+  console.log(accessToken);
+
+  // do a request do get user information based on this access token provided
+
+  const response = await axios.get(
+    `https://graph.facebook.com/me?fields=id,email,first_name,last_name,name,name_format,picture,short_name&access_token=${accessToken}`
+  );
+
+  const payload = response.data;
+
+  console.log(payload);
+
+  const foundUser = await User.findOne({
+    facebookId: payload.id,
+    email: payload.email
+  });
+
+  // Check if user does not exists. If it already exists, just return token.
+
+  if (!foundUser) {
+    // if it doesnt exist in our database (through facebook auth only!), create new one.
+
+    console.log("User not found... creating new one!");
+
+    let user;
+
+    try {
+      user = new User({
+        facebookId: payload.id,
+        name: payload.name,
+        givenName: payload.first_name,
+        familyName: payload.last_name,
+        avatarUrl: payload.picture.data.url,
+        authType: AuthType.FacebookOAuth,
+        email: payload.email
+      });
+
+      await user.save();
+    } catch (error) {
+      return res.status(400).send({
+        status: "error",
+        message: LanguageHelper.getLanguageString(
+          "user",
+          "userFailedLoginOAuth"
+        ),
+        details: error.message
+      });
+    }
+
+    const { token } = await user.registerUser();
+
+    return res.status(201).send({
+      user,
+      token
+    });
+  } else {
+    // if he does exist, let's just login...
+
+    console.log("User was found, sending back current info!");
+
+    const token = await foundUser.generateAuthToken();
+
+    return res.status(200).send({
+      user: foundUser,
+      token
+    });
+  }
 });
 
 // User => Reset password ========================================

@@ -582,7 +582,7 @@
         "signature": "75c288f55286361fe276c788b434f01895fd9227e0ac8de0cb0792d1f950cb3d"
       },
       "./src/resources/User/user.routes.ts": {
-        "version": "da6bb4fbf3553b6faa0f25ae1d3a01735003c229a9404acc13872463aaa9164f",
+        "version": "257abc4b394011eef21457742eb51729fde8e29d05352796c2afdc25d8708ecb",
         "signature": "8c8ea754c669ad8c1fd4c1dcbfa611ebfd5497455396256ab0141e96103f835a"
       },
       "./src/index.ts": {
@@ -2390,6 +2390,7 @@
       "./src/emails/account.email.ts",
       "./node_modules/mailchimp-api-v3/index.d.ts",
       "./src/emails/MarketingEmailManager.ts",
+      "./src/resources/User/user.model.ts",
       "./src/middlewares/auth.middleware.ts",
       "./src/types/global.ts",
       "./src/utils/RouterHelper.ts",
@@ -2427,7 +2428,6 @@
       "./node_modules/@types/normalize-package-data/index.d.ts",
       "./node_modules/@types/strip-bom/index.d.ts",
       "./node_modules/@types/strip-json-comments/index.d.ts",
-      "./src/resources/User/user.model.ts",
       "./src/resources/User/user.routes.ts"
     ]
   },

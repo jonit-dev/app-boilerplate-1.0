@@ -72,6 +72,10 @@ const userSchema: Schema = new Schema(
     },
     authType: { type: String, default: AuthType.EmailPassword },
 
+    facebookId: {
+      type: String
+    },
+
     tokens: [
       // this will allow multi device sign in (different devices with different tokens)
       {
