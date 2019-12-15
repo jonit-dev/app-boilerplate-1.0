@@ -1,0 +1,37 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:latest",
+    "tslint:react",
+    "tslint-config-prettier"
+  ],
+  "jsRules": {},
+  "rules": {
+    "no-console": false,
+    "no-trailing-whitespace": [
+      true,
+      "always"
+    ],
+    "only-arrow-functions": false,
+    "variable-name": false,
+    "prefer-const": [
+      true,
+      {
+        "destructuring": "any"
+      }
+    ],
+    "ban-types": false,
+    "semicolon": [
+      false
+    ],
+    "object-literal-sort-keys": false,
+    "no-this-assignment": false,
+    "no-empty-interface": true,
+    "interface-name": true,
+    "radix": false,
+    "no-default-export": true,
+    "no-unused-variable": false,
+    "member-ordering": false
+  },
+  "rulesDirectory": []
+}

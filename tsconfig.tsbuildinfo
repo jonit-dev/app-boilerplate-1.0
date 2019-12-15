@@ -466,7 +466,7 @@
         "signature": "19a32a64cd9144cb54ff213d3fcabb774277809503a51108a7a964405fef4def"
       },
       "./src/resources/User/user.model.ts": {
-        "version": "7d798c7744e75fcae4b5b896b18dd83ee14fe96bdee65df906d6e25433ff2987",
+        "version": "e24b26edbdcf59e5971a537e9cc7613b2a2db2974c63d3625227095a0ed5ae70",
         "signature": "c5b0bcfac17bc8b21ff21f9656315d24860c33aba2142fb8d941114e1e5197aa"
       },
       "./src/middlewares/auth.middleware.ts": {
@@ -488,6 +488,10 @@
       "./src/resources/Task/task.routes.ts": {
         "version": "0eb88ee35e49ee642c0ba652dde690e759e7ea3945970c8d1853de8c69f8e8bf",
         "signature": "dbf1a16454e8b56064b3ba7afc3a4cfc70a85e55bb2ba06a03e224c4bb709283"
+      },
+      "./node_modules/axios/index.d.ts": {
+        "version": "9b3812f5ae5c9c8c9daf7107e1041f4ad9d19aebd12b738a81f22a1ac1f5e371",
+        "signature": "9b3812f5ae5c9c8c9daf7107e1041f4ad9d19aebd12b738a81f22a1ac1f5e371"
       },
       "./node_modules/event-target-shim/index.d.ts": {
         "version": "2859adaa4f2db3d4f0fc37ad86f056045341496b58fba0dbc16a222f9d5d55b1",
@@ -582,7 +586,7 @@
         "signature": "75c288f55286361fe276c788b434f01895fd9227e0ac8de0cb0792d1f950cb3d"
       },
       "./src/resources/User/user.routes.ts": {
-        "version": "257abc4b394011eef21457742eb51729fde8e29d05352796c2afdc25d8708ecb",
+        "version": "548dbebccb560213fa2266c888278a7332965bf2718dfcd9afccb276ea96b9a7",
         "signature": "8c8ea754c669ad8c1fd4c1dcbfa611ebfd5497455396256ab0141e96103f835a"
       },
       "./src/index.ts": {
@@ -598,8 +602,8 @@
         "signature": "27162da05b60e4d25abe5861deeeeb5f274beff77f2768213910025e60a54d38"
       },
       "./src/resources/User/user.lang.ts": {
-        "version": "0ceb1c6a2b0a9e15b045f6775c49d709a2fc884f8752bc58abacd466c0aea6dc",
-        "signature": "58a0d6d1c9d1fe8d8539bec43d26b91c35bf69be07a743d7ba0104e71af32eaa"
+        "version": "5279bc4f1a6ac63e921e587fb1d3fa3de2ab6c534aa278364cf166058c941cc2",
+        "signature": "f4e2077e6ed46b954254b6bdf30e4af1a1036e07ccca57ba61bceb6c836e2be2"
       },
       "./node_modules/expo-server-sdk/build/ExpoClient.d.ts": {
         "version": "cae600b1078a8d7af80f8df20a6aeb0f4e963e8055bd40435056df6a6fd51bcf",
@@ -1317,6 +1321,10 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "./node_modules/axios/index.d.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "./node_modules/event-target-shim/index.d.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
@@ -1472,6 +1480,7 @@
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "./src/resources/User/user.routes.ts": [
+        "./node_modules/axios/index.d.ts",
         "./node_modules/@types/express/index.d.ts",
         "./node_modules/@types/node/fs.d.ts",
         "./node_modules/google-auth-library/build/src/index.d.ts",
@@ -2271,6 +2280,10 @@
       "./node_modules/@types/strip-json-comments/index.d.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./node_modules/axios/index.d.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -2390,7 +2403,6 @@
       "./src/emails/account.email.ts",
       "./node_modules/mailchimp-api-v3/index.d.ts",
       "./src/emails/MarketingEmailManager.ts",
-      "./src/resources/User/user.model.ts",
       "./src/middlewares/auth.middleware.ts",
       "./src/types/global.ts",
       "./src/utils/RouterHelper.ts",
@@ -2422,13 +2434,15 @@
       "./src/index.ts",
       "./src/cron_jobs/main.cron.ts",
       "./src/resources/Task/task.lang.ts",
-      "./src/resources/User/user.lang.ts",
       "./node_modules/expo-server-sdk/build/ExpoClient.d.ts",
       "./src/utils/PushNotificationHelper.ts",
       "./node_modules/@types/normalize-package-data/index.d.ts",
       "./node_modules/@types/strip-bom/index.d.ts",
       "./node_modules/@types/strip-json-comments/index.d.ts",
-      "./src/resources/User/user.routes.ts"
+      "./src/resources/User/user.model.ts",
+      "./node_modules/axios/index.d.ts",
+      "./src/resources/User/user.routes.ts",
+      "./src/resources/User/user.lang.ts"
     ]
   },
   "version": "3.7.2"
