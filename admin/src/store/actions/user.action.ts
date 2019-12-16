@@ -92,3 +92,34 @@ export const userLogin = (
     console.error(error);
   }
 };
+
+export const userRegister = (
+  registerCredentials: IRegisterCredentials
+) => async (dispatch: any) => {
+  try {
+    const response: any = await APIHelper.request(
+      RequestTypes.POST,
+      "/users",
+      registerCredentials,
+      false
+    );
+
+    if (response.status === 201) {
+      // success
+      const user = response.data.user;
+
+      await dispatch(
+        userLogin({
+          email: user.email,
+          password: registerCredentials.password
+        })
+      );
+    } else {
+      const error = response.data;
+
+      alert(error.message);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};

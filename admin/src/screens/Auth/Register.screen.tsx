@@ -3,32 +3,36 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { Copyright } from '../../components/Copyright';
-import { userLogin } from '../../store/actions/user.action';
+import { userRegister } from '../../store/actions/user.action';
+import { Copyright } from "../../components/Copyright";
 
-export const LoginScreen = () => {
+ 
+export const RegisterScreen = () => {
   const classes = useStyles();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const dispatch = useDispatch();
 
-  const onLogin = async () => {
+  const onRegister = async () => {
     console.log("logging in user");
     await dispatch(
-      userLogin({
+      userRegister({
+        name,
         email,
-        password
+        password,
+        passwordConfirmation
       })
     );
   };
@@ -41,9 +45,21 @@ export const LoginScreen = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Create your Account
         </Typography>
         <form className={classes.form} noValidate>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Name"
+            name="name"
+            autoFocus
+            value={name}
+            onChange={e => setName(e.target.value)}
+          />
           <TextField
             variant="outlined"
             margin="normal"
@@ -53,7 +69,6 @@ export const LoginScreen = () => {
             label="Email Address"
             name="email"
             autoComplete="email"
-            autoFocus
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
@@ -70,6 +85,18 @@ export const LoginScreen = () => {
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="passwordConfirmation"
+            label="passwordConfirmation"
+            type="password"
+            id="passwordConfirmation"
+            value={passwordConfirmation}
+            onChange={e => setPasswordConfirmation(e.target.value)}
+          />
           {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
@@ -82,27 +109,15 @@ export const LoginScreen = () => {
             className={classes.submit}
             onClick={e => {
               e.preventDefault();
-              onLogin();
+              onRegister();
             }}
           >
-            Sign In
+            Create your Account
           </Button>
-          <Grid container>
-            <Grid item xs>
-              {/* <Link href="#" variant="body2">
-                Forgot password?
-              </Link> */}
-            </Grid>
-            <Grid item>
-              <Link href="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
       <Box mt={8}>
-        <Copyright />
+        <Copyright/>
       </Box>
     </Container>
   );
