@@ -586,11 +586,11 @@
         "signature": "75c288f55286361fe276c788b434f01895fd9227e0ac8de0cb0792d1f950cb3d"
       },
       "./src/resources/User/user.routes.ts": {
-        "version": "548dbebccb560213fa2266c888278a7332965bf2718dfcd9afccb276ea96b9a7",
+        "version": "2fa96dbad7927996b87972e28d700a292b87c34016db3688de9522ffbebfbcf3",
         "signature": "8c8ea754c669ad8c1fd4c1dcbfa611ebfd5497455396256ab0141e96103f835a"
       },
       "./src/index.ts": {
-        "version": "b0690ceaffc05e411448ece00ea57264f8956e156c9a52063cfc765623460a5b",
+        "version": "fb25de7ea13f1c47989660d16e565d368f1eb945d8cd2113d2a8baea18db85c5",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
       },
       "./src/cron_jobs/main.cron.ts": {
@@ -2121,6 +2121,10 @@
       "./src/resources/Task/task.model.ts": [
         "./node_modules/@types/mongoose/index.d.ts"
       ],
+      "./node_modules/axios/index.d.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "./node_modules/event-target-shim/index.d.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
@@ -2280,10 +2284,6 @@
       "./node_modules/@types/strip-json-comments/index.d.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/axios/index.d.ts": [
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -2403,11 +2403,13 @@
       "./src/emails/account.email.ts",
       "./node_modules/mailchimp-api-v3/index.d.ts",
       "./src/emails/MarketingEmailManager.ts",
+      "./src/resources/User/user.model.ts",
       "./src/middlewares/auth.middleware.ts",
       "./src/types/global.ts",
       "./src/utils/RouterHelper.ts",
       "./src/resources/Task/task.model.ts",
       "./src/resources/Task/task.routes.ts",
+      "./node_modules/axios/index.d.ts",
       "./node_modules/event-target-shim/index.d.ts",
       "./node_modules/abort-controller/dist/abort-controller.d.ts",
       "./node_modules/gaxios/build/src/common.d.ts",
@@ -2431,18 +2433,16 @@
       "./src/emails/generic.email.ts",
       "./src/utils/EncryptionHelper.ts",
       "./src/resources/Log/log.model.ts",
-      "./src/index.ts",
       "./src/cron_jobs/main.cron.ts",
       "./src/resources/Task/task.lang.ts",
+      "./src/resources/User/user.lang.ts",
       "./node_modules/expo-server-sdk/build/ExpoClient.d.ts",
       "./src/utils/PushNotificationHelper.ts",
       "./node_modules/@types/normalize-package-data/index.d.ts",
       "./node_modules/@types/strip-bom/index.d.ts",
       "./node_modules/@types/strip-json-comments/index.d.ts",
-      "./src/resources/User/user.model.ts",
-      "./node_modules/axios/index.d.ts",
       "./src/resources/User/user.routes.ts",
-      "./src/resources/User/user.lang.ts"
+      "./src/index.ts"
     ]
   },
   "version": "3.7.2"
