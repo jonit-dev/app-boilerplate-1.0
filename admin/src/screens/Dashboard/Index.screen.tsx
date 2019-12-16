@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DefaultScreen } from '../components/Screen/DefaultScreen';
+import { DefaultScreen } from '../../components/Screen/DefaultScreen';
 
 export const IndexScreen = () => {
   return (

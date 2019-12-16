@@ -1,21 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, compose, createStore } from 'redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import reducers from './store/reducers/index.reducers';
-
-// @ts-ignore
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, composeEnhancers(applyMiddleware()));
+import { persistor, store } from './store/persistor.store';
 
 serviceWorker.unregister();
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
 
   document.querySelector("#root")

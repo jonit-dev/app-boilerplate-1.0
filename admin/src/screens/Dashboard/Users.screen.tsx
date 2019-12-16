@@ -8,9 +8,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import React, { useEffect } from 'react';
 
-import { DefaultScreen } from '../components/Screen/DefaultScreen';
-import { APIHelper } from '../helpers/APIHelper';
-import { RequestTypes } from '../typescript/Request.types';
+import { DefaultScreen } from '../../components/Screen/DefaultScreen';
+import { APIHelper } from '../../helpers/APIHelper';
+import { RequestTypes } from '../../typescript/Request.types';
 
 export const UsersScreen = () => {
   const classes = useStyles();
