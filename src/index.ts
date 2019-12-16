@@ -1,4 +1,5 @@
 import { exec } from 'child_process';
+import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
 
@@ -22,6 +23,8 @@ mongoose.connect(serverConfig.app.mongodbConnectionUrl, {
 
 const app = express();
 const port = process.env.PORT || serverConfig.app.port;
+
+app.use(cors())
 
 app.use(express.json()); // << THIS IS REQUIRED TO EXPRESS PARSING JSON DATA
 

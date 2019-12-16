@@ -751,4 +751,16 @@ userRouter.patch("/users/me", userAuthMiddleware, async (req, res) => {
   }
 });
 
+userRouter.get('/test', async (req, res) => {
+
+  return res.status(200).send({
+    status: 'Success',
+    message: 'Request processed!'
+  })
+
+
+})
+
+
+
 export { userRouter };

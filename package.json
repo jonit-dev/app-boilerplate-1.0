@@ -22,6 +22,7 @@
     "@sendgrid/mail": "^6.4.0",
     "axios": "^0.19.0",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "expo-server-sdk": "^3.4.0",
     "express": "^4.17.1",
