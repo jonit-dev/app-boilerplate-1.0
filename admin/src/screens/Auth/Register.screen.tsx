@@ -9,12 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 
+import { Copyright } from '../../components/Copyright';
 import { userRegister } from '../../store/actions/user.action';
-import { Copyright } from "../../components/Copyright";
 
- 
 export const RegisterScreen = () => {
   const classes = useStyles();
 
@@ -117,7 +115,7 @@ export const RegisterScreen = () => {
         </form>
       </div>
       <Box mt={8}>
-        <Copyright/>
+        <Copyright />
       </Box>
     </Container>
   );
