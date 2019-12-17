@@ -105,6 +105,9 @@ export const strings = {
     eng: "Invalid credentials. Check your e-mail and password"
   },
   userForgotPasswordResetLink: {
-    eng: `Your password reset request was sent to your provided e-mail address. If you don't receive it, take a look at the spam folder.`
+    eng: 'Your password reset request was sent to your provided e-mail address. If you don\'t receive it, take a look at the spam folder.'
+  },
+  userTypeUnauthorized: {
+    eng: 'User unauthorized to access this information.'
   }
 };

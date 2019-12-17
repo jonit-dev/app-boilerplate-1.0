@@ -10,12 +10,14 @@ import sharp from 'sharp';
 import { serverConfig } from '../../constants/env';
 import { GenericEmailManager } from '../../emails/generic.email';
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
+import { UserMiddleware } from '../../middlewares/user.middleware';
 import { EncryptionHelper } from '../../utils/EncryptionHelper';
 import { LanguageHelper } from '../../utils/LanguageHelper';
 import { RouterHelper } from '../../utils/RouterHelper';
 import { TextHelper } from '../../utils/TextHelper';
 import { Log } from '../Log/log.model';
-import { AuthType, User } from './user.model';
+import { AuthType, User, UserType } from './user.model';
+
 
 // @ts-ignore
 const userRouter = new Router();
@@ -760,6 +762,26 @@ userRouter.get('/test', async (req, res) => {
 
 
 })
+
+/*#############################################################|
+|  >>> ADMIN ONLY ROUTES
+*##############################################################*/
+
+userRouter.get('/users', [userAuthMiddleware, (req, res, next) => {
+  UserMiddleware.restrictUserType(UserType.Admin, req, res, next)
+}], async (req, res) => {
+
+
+  const users = await User.find({});
+
+  return res.status(200).send(
+    users
+  )
+
+
+
+})
+
 
 
 

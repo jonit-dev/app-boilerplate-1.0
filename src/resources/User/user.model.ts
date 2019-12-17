@@ -20,8 +20,15 @@ export enum AuthType {
   FacebookOAuth = "FacebookOAuth"
 }
 
+export enum UserType {
+  Default = "Default",
+  Staff = "Staff",
+  Admin = "Admin"
+}
+
 export interface IUserDocument extends Document {
   name: string;
+  type: string;
   password: string;
   authType: { type: string; default: AuthType.EmailPassword };
   email: string;
@@ -50,6 +57,10 @@ const userSchema: Schema = new Schema(
     name: {
       type: String,
       trim: true
+    },
+    type: {
+      type: String,
+      default: UserType.Default
     },
     givenName: {
       type: String
@@ -107,7 +118,7 @@ userSchema.statics.hashPassword = async (password: string): Promise<string> => {
 
 // here we use function() instead of an arrow function because we need access to "this", that's not present on the later.
 
-userSchema.methods.registerUser = async function() {
+userSchema.methods.registerUser = async function () {
   const user = this;
 
   const token = await user.generateAuthToken();
@@ -147,7 +158,7 @@ userSchema.methods.registerUser = async function() {
   };
 };
 
-userSchema.methods.generateAuthToken = async function() {
+userSchema.methods.generateAuthToken = async function () {
   const user = this;
   const token = jwt.sign({ _id: user._id.toString() }, serverConfig.jwtSecret);
 
@@ -163,7 +174,7 @@ userSchema.methods.generateAuthToken = async function() {
 
 // this will be fired whenever our model is converted to JSON!!
 
-userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
   // this code will delete keys that shouldn't be displayed publicly
 
   const user = this;
@@ -204,7 +215,7 @@ userSchema.statics.findByCredentials = async (
 |  >>> MODEL MIDDLEWARES
 *##############################################################*/
 
-userSchema.pre("save", async function(next) {
+userSchema.pre("save", async function (next) {
   const user: any = this;
 
   // console.log('user :: middleware => Running pre "save" code');

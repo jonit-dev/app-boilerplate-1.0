@@ -1,21 +1,10 @@
-import jwt from 'jsonwebtoken';
-
-import { serverConfig } from '../constants/env';
-import { User } from '../resources/User/user.model';
 import { LanguageHelper } from '../utils/LanguageHelper';
+import { MiddlewareHelper } from '../utils/MiddlewareHelper';
 
 const userAuthMiddleware = async (req, res, next) => {
   try {
-    const token = req.header('Authorization').replace('Bearer ', ''); // remove Bearer string
 
-    const decoded: any = jwt.verify(token, serverConfig.jwtSecret);
-
-    // find an user with the correct id (passed through the token), that has the particular token stored.
-
-    const user = await User.findOne({
-      _id: decoded._id,
-      'tokens.token': token
-    });
+    const { user, token } = await MiddlewareHelper.getUserFromRequest(req);
 
     if (!user) {
       return res.status(401).send({
