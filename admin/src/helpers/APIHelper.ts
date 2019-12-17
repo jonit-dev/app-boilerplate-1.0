@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { appEnv } from '../constants/Env.constant';
+import { persistor } from '../store/persistor.store';
 
 export class APIHelper {
   public static request = async (
@@ -13,13 +14,14 @@ export class APIHelper {
     timeout = 5000
   ) => {
     let AUTH_HEADERS;
+
     try {
       if (useAuth) {
-        // const token = await AsyncStorage.getItem("token");
-        // AUTH_HEADERS = {
-        //   Authorization: `Bearer ${token}`,
-        //   "Content-type": "application/json"
-        // };
+        const token = await localStorage.getItem("token");
+        AUTH_HEADERS = {
+          Authorization: `Bearer ${token}`,
+          "Content-type": "application/json"
+        };
       }
 
       const GUEST_HEADERS = {
@@ -57,6 +59,9 @@ export class APIHelper {
       // If user is not authenticated...
       // 401 = Unauthorized status
       if (response.status === 401) {
+        await persistor.purge();
+        await localStorage.clear();
+        window.location.href = "/";
       }
 
       clearTimeout(timeoutCallback);

@@ -1,4 +1,5 @@
 import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -17,7 +18,10 @@ import GroupIcon from '@material-ui/icons/Group';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import React, { ReactNode } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import { userLogout } from '../store/actions/user.action';
 
 const drawerWidth = 240;
 
@@ -31,12 +35,18 @@ export const Header = (props: IProps) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  const dispatch = useDispatch();
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const onLogout = async () => {
+    await dispatch(userLogout());
   };
 
   const renderDrawerOptions = () => {
@@ -85,6 +95,13 @@ export const Header = (props: IProps) => {
           <Typography variant="h6" noWrap>
             {props.title}
           </Typography>
+          <Button
+            color="inherit"
+            className={classes.logoutButton}
+            onClick={() => onLogout()}
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -125,11 +142,16 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex"
     },
+    logoutButton: {
+      marginLeft: "auto"
+    },
     appBar: {
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
-      })
+      }),
+      borderWidth: 1,
+      borderColor: "hotpink"
     },
     appBarShift: {
       width: `calc(100% - ${drawerWidth}px)`,

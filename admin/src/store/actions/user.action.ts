@@ -1,6 +1,7 @@
 import { APIHelper } from '../../helpers/APIHelper';
 import { RequestTypes } from '../../typescript/Request.types';
-import { USER_LOGIN } from '../reducers/user.reducer';
+import { persistor } from '../persistor.store';
+import { USER_LOGIN, USER_LOGOUT, USER_REFRESH_INFO } from '../reducers/user.reducer';
 
 export enum AuthType {
   EmailPassword = "EmailPassword",
@@ -121,5 +122,40 @@ export const userRegister = (
     }
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const userLogout = () => async dispatch => {
+  console.log("Logging out user");
+
+  await persistor.purge();
+
+  await localStorage.clear();
+
+  await dispatch({ type: USER_LOGOUT });
+
+  window.location.href = "/";
+};
+
+export const userGetProfileInfo = () => async dispatch => {
+  console.log("getting profile info...");
+  const response = await APIHelper.request(
+    RequestTypes.GET,
+    "/users/profile",
+    {},
+    true
+  );
+
+  if (response) {
+    if (response.data.user) {
+      console.log("User profile info refreshed!");
+      dispatch({
+        type: USER_REFRESH_INFO,
+        payload: {
+          user: response.data.user,
+          token: response.data.token
+        }
+      });
+    }
   }
 };
