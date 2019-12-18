@@ -30,7 +30,7 @@
     "radix": false,
     "no-default-export": true,
     "no-unused-variable": false,
-    "member-ordering": false
+    "member-ordering": false,
   },
   "rulesDirectory": []
 }

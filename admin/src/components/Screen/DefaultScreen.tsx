@@ -3,6 +3,9 @@ import Paper from '@material-ui/core/Paper';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
+import { useSelector } from 'react-redux';
+
+import { Loading } from '../Loading';
 
 interface IProps {
   title: string;
@@ -11,6 +14,7 @@ interface IProps {
 
 export const DefaultScreen = (props: IProps) => {
   const classes = useStyles();
+  const isLoading = useSelector<any, any>(state => state.uiReducer.isLoading);
 
   return (
     <Paper className={classes.root}>
@@ -20,11 +24,14 @@ export const DefaultScreen = (props: IProps) => {
       <Divider />
       <br />
       <br />
-      {props.children}
+      {isLoading.status && isLoading.key === "default" ? (
+        <Loading />
+      ) : (
+        props.children
+      )}
     </Paper>
   );
 };
-export default DefaultScreen;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -7,18 +7,27 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { DefaultScreen } from '../../components/Screen/DefaultScreen';
 import { APIHelper } from '../../helpers/APIHelper';
+import { setLoading } from '../../store/actions/ui.actions';
 import { RequestTypes } from '../../typescript/Request.types';
+
+import EditIcon from '@material-ui/icons/Edit';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export const UsersScreen = () => {
   const classes = useStyles();
 
   const [users, setUsers] = useState([]);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchUsers = async () => {
+      await dispatch(setLoading(true));
       const response = await APIHelper.request(
         RequestTypes.GET,
         "/users",
@@ -29,9 +38,12 @@ export const UsersScreen = () => {
       if (response) {
         setUsers(response.data);
       }
+
+      await dispatch(setLoading(false));
     };
     fetchUsers();
-  }, []);
+  }, [dispatch]);
+
 
   const renderRows = () => {
     if (users) {
@@ -42,6 +54,16 @@ export const UsersScreen = () => {
               {user.name}
             </TableCell>
             <TableCell align="right">{user.email}</TableCell>
+            <TableCell align="right">
+              
+              <div>
+                <EditIcon color={'primary'}/>
+                <AddCircleIcon color={'primary'}/>
+                <DeleteIcon color={'primary'}/>  
+              </div>
+              
+
+            </TableCell>
           </TableRow>
         );
       });
