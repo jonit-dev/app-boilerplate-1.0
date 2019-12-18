@@ -6,17 +6,17 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { DefaultTable } from '../../components/Form/DefaultTable';
 import { DefaultScreen } from '../../components/Screen/DefaultScreen';
 import { APIHelper } from '../../helpers/APIHelper';
 import { setLoading } from '../../store/actions/ui.actions';
 import { RequestTypes } from '../../typescript/Request.types';
-
-import EditIcon from '@material-ui/icons/Edit';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 export const UsersScreen = () => {
   const classes = useStyles();
@@ -36,6 +36,7 @@ export const UsersScreen = () => {
       );
 
       if (response) {
+        console.log(response.data);
         setUsers(response.data);
       }
 
@@ -43,7 +44,6 @@ export const UsersScreen = () => {
     };
     fetchUsers();
   }, [dispatch]);
-
 
   const renderRows = () => {
     if (users) {
@@ -55,14 +55,11 @@ export const UsersScreen = () => {
             </TableCell>
             <TableCell align="right">{user.email}</TableCell>
             <TableCell align="right">
-              
-              <div>
-                <EditIcon color={'primary'}/>
-                <AddCircleIcon color={'primary'}/>
-                <DeleteIcon color={'primary'}/>  
+              <div className={classes.actionContainer}>
+                <EditIcon color={"primary"} />
+                <AddCircleIcon color={"primary"} />
+                <DeleteIcon color={"primary"} />
               </div>
-              
-
             </TableCell>
           </TableRow>
         );
@@ -89,6 +86,15 @@ export const UsersScreen = () => {
           <TableBody>{renderRows()}</TableBody>
         </Table>
       </TableContainer>
+
+      <DefaultTable
+        resource={"user"}
+   
+        data={users}
+        editCallback={() => null}
+        addCallback={() => null}
+        deleteCallback={() => null}
+      />
     </DefaultScreen>
   );
 };
@@ -101,6 +107,13 @@ const useStyles = makeStyles({
     fontWeight: "bold"
   },
   tableContainer: {
-    // maxWidth: 650
+    maxWidth: 650
+  },
+  actionContainer: {
+    display: "flex",
+    flex: 1,
+    maxWidth: 80,
+    justifyContent: "space-around",
+    marginLeft: "auto"
   }
 });
