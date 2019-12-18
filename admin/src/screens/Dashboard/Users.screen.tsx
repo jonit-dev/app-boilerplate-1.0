@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { DefaultScreen } from '../../components/Screen/DefaultScreen';
 import { APIHelper } from '../../helpers/APIHelper';
@@ -15,30 +15,37 @@ import { RequestTypes } from '../../typescript/Request.types';
 export const UsersScreen = () => {
   const classes = useStyles();
 
+  const [users, setUsers] = useState([]);
+
   useEffect(() => {
     const fetchUsers = async () => {
       const response = await APIHelper.request(
         RequestTypes.GET,
-        "/test",
+        "/users",
         {},
-        false
+        true
       );
 
-      console.log(response);
+      if (response) {
+        setUsers(response.data);
+      }
     };
     fetchUsers();
   }, []);
 
   const renderRows = () => {
-    // {rows.map(row => (
-    //   <TableRow key={row.name}>
-    //     <TableCell component="th" scope="row">
-    //       {row.name}
-    //     </TableCell>
-    //     <TableCell align="right">{row.calories}</TableCell>
-    //     <TableCell align="right">{row.fat}</TableCell>
-    //   </TableRow>
-    // ))}
+    if (users) {
+      return users.map((user: any) => {
+        return (
+          <TableRow key={user.name}>
+            <TableCell component="th" scope="row">
+              {user.name}
+            </TableCell>
+            <TableCell align="right">{user.email}</TableCell>
+          </TableRow>
+        );
+      });
+    }
     return null;
   };
 

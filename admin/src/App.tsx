@@ -1,8 +1,8 @@
 import './App.css';
 
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
+import { Route, Switch } from 'react-router-dom';
+import {Router} from 'react-router-dom'
 import { Header } from './components/Header';
 import history from './router/history';
 import { LoginScreen } from './screens/Auth/Login.screen';
@@ -47,9 +47,9 @@ const App: React.FC = () => {
   }
 
   return (
-    <BrowserRouter history={history}>
+    <Router history={history}>
       {renderRoutes()}
-    </BrowserRouter>
+    </Router>
   );
 };
 

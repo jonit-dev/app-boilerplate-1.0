@@ -80,8 +80,6 @@ export const userLogin = (
       if (response.data.token) {
         // refresh push token
 
-        const user = response.data.user;
-
         await dispatch({ type: USER_LOGIN, payload: response.data });
 
         // TODO: navigate
