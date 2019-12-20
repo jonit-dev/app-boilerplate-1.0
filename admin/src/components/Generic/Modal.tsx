@@ -30,7 +30,7 @@ export const DefaultModal = ({ modalKey, title, content }: IProps) => {
     } else {
       setOpen(false);
     }
-  }, [modal]);
+  }, [modalKey,modal]);
 
   const onBackdropClick = async () => {
     //close modal

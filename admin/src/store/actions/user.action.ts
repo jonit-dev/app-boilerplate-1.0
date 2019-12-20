@@ -1,7 +1,7 @@
 import { APIHelper } from '../../helpers/APIHelper';
 import { RequestTypes } from '../../typescript/Request.types';
 import { persistor } from '../persistor.store';
-import { USER_LOGIN, USER_LOGOUT, USER_REFRESH_INFO, USERS_GET } from '../reducers/user.reducer';
+import { USER_LOGIN, USER_LOGOUT, USER_REFRESH_INFO, USERS_DELETE, USERS_EDIT, USERS_GET } from '../reducers/user.reducer';
 
 export enum AuthType {
   EmailPassword = "EmailPassword",
@@ -104,8 +104,32 @@ export const editUser = (userId: string, payload) => async (dispatch: any) => {
     if (response.data.status === "error") {
       alert(response.data.message);
     }
-    await dispatch(getUsers()); // update our current list of users
-    
+    await dispatch({
+      type: USERS_EDIT,
+      payload: {
+        editUserId: userId,
+        editUser: response.data
+      }
+    }); // update our current list of users
+  }
+};
+
+export const deleteUser = (userId: string) => async (dispatch: any) => {
+  const response = await APIHelper.request(
+    RequestTypes.DELETE,
+    `/users/${userId}`,
+    {}
+  );
+
+  if (response) {
+    console.log(response.data);
+    if (response.data.status === "error") {
+      alert(response.data.message);
+    }
+    await dispatch({
+      type: USERS_DELETE,
+      payload: userId
+    }); // update our current list of users
   }
 };
 

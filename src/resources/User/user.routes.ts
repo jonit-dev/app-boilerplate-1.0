@@ -618,24 +618,6 @@ userRouter.delete("/users/profile/me", userAuthMiddleware, async (req, res) => {
   }
 });
 
-// User ==> Delete your own account
-
-userRouter.delete("/users/me", userAuthMiddleware, async (req, res) => {
-  const { user } = req;
-
-  try {
-    await user.remove();
-
-    return res.status(200).send(user);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      status: "error",
-      message: LanguageHelper.getLanguageString("user", "userDeleteError"),
-      details: error.message
-    });
-  }
-});
 
 userRouter.get("/users/profile", userAuthMiddleware, async (req, res) => {
   const { user } = req;
@@ -715,10 +697,68 @@ userRouter.post("/users/change-password", async (req, res) => {
   });
 });
 
-userRouter.patch("/users/:userId", userAuthMiddleware, async (req, res) => {
+
+userRouter.get('/test', async (req, res) => {
+
+  return res.status(200).send({
+    status: 'Success',
+    message: 'Request processed!'
+  })
+
+
+})
+
+/*#############################################################|
+|  >>> ADMIN ONLY ROUTES
+*##############################################################*/
+
+userRouter.get('/users', [userAuthMiddleware, (req, res, next) => {
+  UserMiddleware.restrictUserType(UserType.Admin, req, res, next)
+}], async (req, res) => {
+
+
+  const users = await User.find({});
+
+  return res.status(200).send(
+    users
+  )
 
 
 
+})
+
+
+// User ==> Delete an account
+
+userRouter.delete("/users/:id", [userAuthMiddleware, (req, res, next) => {
+  UserMiddleware.restrictUserType(UserType.Admin, req, res, next)
+}], async (req, res) => {
+  let user;
+
+  const { id } = req.params;
+
+  user = await User.findOne({
+    _id: id
+  })
+
+
+  try {
+    await user.remove();
+
+    return res.status(200).send(user);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      status: "error",
+      message: LanguageHelper.getLanguageString("user", "userDeleteError"),
+      details: error.message
+    });
+  }
+});
+
+userRouter.patch("/users/:id", [userAuthMiddleware, (req, res, next) => {
+  UserMiddleware.restrictUserType(UserType.Admin, req, res, next)
+}], async (req, res) => {
 
 
   const updates = Object.keys(req.body);
@@ -738,10 +778,10 @@ userRouter.patch("/users/:userId", userAuthMiddleware, async (req, res) => {
 
     let user;
 
-    const { userId } = req.params;
+    const { id } = req.params;
 
     user = await User.findOne({
-      _id: userId
+      _id: id
     })
 
     if (!user) {
@@ -774,34 +814,6 @@ userRouter.patch("/users/:userId", userAuthMiddleware, async (req, res) => {
   }
 });
 
-userRouter.get('/test', async (req, res) => {
-
-  return res.status(200).send({
-    status: 'Success',
-    message: 'Request processed!'
-  })
-
-
-})
-
-/*#############################################################|
-|  >>> ADMIN ONLY ROUTES
-*##############################################################*/
-
-userRouter.get('/users', [userAuthMiddleware, (req, res, next) => {
-  UserMiddleware.restrictUserType(UserType.Admin, req, res, next)
-}], async (req, res) => {
-
-
-  const users = await User.find({});
-
-  return res.status(200).send(
-    users
-  )
-
-
-
-})
 
 
 

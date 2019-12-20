@@ -19,16 +19,15 @@ export const EditUserForm = ({ user, userId }: IProps) => {
 
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
-  const [type, setType] = useState(user.type);
 
   const dispatch = useDispatch();
 
-  const handleSelectChange = (
-    setHook,
-    event: React.ChangeEvent<{ value: unknown }>
-  ) => {
-    setHook(event.target.value as string);
-  };
+  // const handleSelectChange = (
+  //   setHook,
+  //   event: React.ChangeEvent<{ value: unknown }>
+  // ) => {
+  //   setHook(event.target.value as string);
+  // };
 
   const onEditButtonClick = async () => {
     console.log(`Editing user ${userId}`);

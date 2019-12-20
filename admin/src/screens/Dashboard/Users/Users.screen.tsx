@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DefaultModal } from '../../../components/Generic/Modal';
 import { DefaultScreen } from '../../../components/Screen/DefaultScreen';
 import { setLoading, toggleModal } from '../../../store/actions/ui.actions';
-import { getUsers } from '../../../store/actions/user.action';
+import { getUsers, deleteUser } from '../../../store/actions/user.action';
 import { EditUserForm } from './EditUser.form';
 
 export const UsersScreen = () => {
@@ -58,8 +58,8 @@ export const UsersScreen = () => {
 
                 <DeleteIcon
                   color={"primary"}
-                  onClick={() => {
-                    setSelectedUserId(user._id);
+                  onClick={async () => {
+                    await dispatch(deleteUser(user._id))
                   }}
                 />
               </div>

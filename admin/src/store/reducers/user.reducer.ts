@@ -1,3 +1,5 @@
+import { IUser } from '../../typescript/User.types';
+
 const INITIAL_STATE = {
   user: null,
   token: null,
@@ -27,14 +29,27 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         users: action.payload
       };
 
-    case USER_LOGOUT:
-      localStorage.clear();
+    case USERS_EDIT:
+      const { editUserId, editUser } = action.payload;
 
       return {
         ...state,
-        user: null,
-        token: null
+        users: state.users.map((user: IUser) => {
+          if (user._id === editUserId) {
+            return editUser; //return edit user.
+          }
+          return user;
+        })
       };
+
+    case USERS_DELETE:
+      return {
+        ...state,
+        users: state.users.filter((user: IUser) => user._id !== action.payload)
+      };
+
+    case USER_LOGOUT:
+      localStorage.clear();
 
     default:
       return state;
@@ -48,3 +63,20 @@ export const USER_LOGIN = "USER_LOGIN";
 
 export const USERS_GET = "USERS_GET";
 export const USERS_EDIT = "USERS_EDIT";
+export const USERS_DELETE = "USERS_DELETE";
+
+/*
+
+ =========  Safe state update in reducers =========
+
+// From arrays
+Removing: state.filter(element => element !== 'hi');
+adding: [...state, 'hi'];
+replacing: state.map(el => el === 'hi' ? 'bye': el);
+
+//From objects
+updating: {...state, name: 'Sam'};
+adding: {...state, age: 30};
+removing: {state, age: undefined }
+
+*/
