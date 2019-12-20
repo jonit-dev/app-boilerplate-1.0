@@ -1,4 +1,4 @@
-import { SET_LOADING, SET_MESSAGE } from '../reducers/ui.reducer';
+import { SET_LOADING, SET_MESSAGE, TOGGLE_MODAL, SET_ACTIVE_MODAL } from '../reducers/ui.reducer';
 
 export const setLoading = (
   status: boolean,
@@ -28,3 +28,20 @@ export const showMessage = (messageObject: IMessage) => dispatch => {
     payload: messageObject
   });
 };
+
+export const toggleModal = (key: string, isOpen: boolean) => (dispatch: any) => {
+  dispatch({
+    type: TOGGLE_MODAL,
+    payload: {
+      key,
+      isOpen
+    }
+  })
+}
+
+export const setActiveModal = (key: string) => (dispatch: any) => {
+  dispatch({
+    type: SET_ACTIVE_MODAL,
+    payload: key
+  })
+}

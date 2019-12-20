@@ -3,13 +3,13 @@ import './App.css';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import {Router} from 'react-router-dom'
-import { Header } from './components/Header';
+import { Header } from './components/Layout/Header';
 import history from './router/history';
 import { LoginScreen } from './screens/Auth/Login.screen';
 import { AboutScreen } from './screens/Dashboard/About.screen';
 import { IndexScreen } from './screens/Dashboard/Index.screen';
-import { UsersScreen } from './screens/Dashboard/Users.screen';
 import { RegisterScreen } from "./screens/Auth/Register.screen";
+import { UsersScreen } from "./screens/Dashboard/Users/Users.screen";
 
 const App: React.FC = () => {
 

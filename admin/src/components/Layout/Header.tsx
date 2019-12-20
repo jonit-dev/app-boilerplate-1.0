@@ -21,7 +21,7 @@ import React, { ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { userLogout } from '../store/actions/user.action';
+import { userLogout } from '../../store/actions/user.action';
 
 const drawerWidth = 240;
 

@@ -715,12 +715,16 @@ userRouter.post("/users/change-password", async (req, res) => {
   });
 });
 
-userRouter.patch("/users/me", userAuthMiddleware, async (req, res) => {
-  const { user } = req;
+userRouter.patch("/users/:userId", userAuthMiddleware, async (req, res) => {
+
+
+
+
+
   const updates = Object.keys(req.body);
 
   if (
-    !RouterHelper.isAllowedKey(req.body, ["name", "email", "password", "age"])
+    !RouterHelper.isAllowedKey(req.body, ["name", "email"])
   ) {
     return res.status(400).send({
       status: "error",
@@ -731,6 +735,23 @@ userRouter.patch("/users/me", userAuthMiddleware, async (req, res) => {
     });
   }
   try {
+
+    let user;
+
+    const { userId } = req.params;
+
+    user = await User.findOne({
+      _id: userId
+    })
+
+    if (!user) {
+      return res.status(400).send({
+        status: 'error',
+        message: LanguageHelper.getLanguageString('user', 'userNotFound')
+      })
+    }
+
+
     // update every key on the user object
     updates.forEach(update => {
       user[update] = req.body[update];

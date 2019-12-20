@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
   user: null,
-  token: null
+  token: null,
+  users: [] //this is for admin panel editing. user is the logged in user!
 };
 
 export const userReducer = (state = INITIAL_STATE, action) => {
@@ -19,6 +20,13 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         user: action.payload.user,
         token: action.payload.token
       };
+
+    case USERS_GET:
+      return {
+        ...state,
+        users: action.payload
+      };
+
     case USER_LOGOUT:
       localStorage.clear();
 
@@ -37,3 +45,6 @@ export const USER_LOGOUT = "USER_LOGOUT";
 export const USER_REFRESH_INFO = "USER_REFRESH_INFO";
 export const USER_REGISTER = "USER_REGISTER";
 export const USER_LOGIN = "USER_LOGIN";
+
+export const USERS_GET = "USERS_GET";
+export const USERS_EDIT = "USERS_EDIT";

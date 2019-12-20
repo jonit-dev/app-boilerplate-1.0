@@ -1,7 +1,8 @@
 import { APIHelper } from '../../helpers/APIHelper';
 import { RequestTypes } from '../../typescript/Request.types';
 import { persistor } from '../persistor.store';
-import { USER_LOGIN, USER_LOGOUT, USER_REFRESH_INFO } from '../reducers/user.reducer';
+import { USER_LOGIN, USER_LOGOUT, USER_REFRESH_INFO, USERS_GET } from '../reducers/user.reducer';
+import { toggleModal } from './ui.actions';
 
 export enum AuthType {
   EmailPassword = "EmailPassword",
@@ -89,6 +90,44 @@ export const userLogin = (
     }
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const editUser = (userId: string, payload) => async (dispatch: any) => {
+  const response = await APIHelper.request(
+    RequestTypes.PATCH,
+    `/users/${userId}`,
+    payload
+  );
+
+  if (response) {
+    console.log(response.data);
+
+    if (response.data.status === "error") {
+      alert(response.data.message);
+    }
+
+    await dispatch(getUsers()); // update our current list of users
+
+    //close modal
+    await dispatch(toggleModal("EditUser", false));
+
+    alert("User edited successfully!");
+  }
+};
+
+export const getUsers = () => async (dispatch: any) => {
+  const response = await APIHelper.request(
+    RequestTypes.GET,
+    "/users",
+    {},
+    true
+  );
+
+  if (response) {
+    dispatch({ type: USERS_GET, payload: response.data });
+
+    return response.data;
   }
 };
 

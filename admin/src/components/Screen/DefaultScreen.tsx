@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Loading } from '../Loading';
+import { Loading } from '../Generic/Loading';
 
 interface IProps {
   title: string;

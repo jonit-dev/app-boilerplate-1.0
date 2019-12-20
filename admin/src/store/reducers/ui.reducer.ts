@@ -11,7 +11,12 @@ const INITIAL_STATE = {
     message: null,
     onPress: () => null,
     onDismiss: () => null
-  }
+  },
+  modal: {
+    key: '',
+    isOpen: false
+  },
+  activeModal: null
 };
 
 // tslint:disable-next-line: no-default-export
@@ -37,6 +42,11 @@ export const uiReducer = (state = INITIAL_STATE, action) => {
         ...state,
         alert: INITIAL_STATE.alert
       };
+    case TOGGLE_MODAL:
+      return {
+        ...state,
+        modal: action.payload
+      }
 
     default:
       return state;
@@ -48,3 +58,5 @@ export const uiReducer = (state = INITIAL_STATE, action) => {
 export const SET_LOADING = "SET_LOADING";
 export const SET_MESSAGE = "SET_ERROR";
 export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
+export const TOGGLE_MODAL = 'TOGGLE_MODAL'
+export const SET_ACTIVE_MODAL = 'SET_ACTIVE_MODAL'
