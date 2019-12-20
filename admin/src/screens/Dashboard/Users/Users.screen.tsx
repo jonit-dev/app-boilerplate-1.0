@@ -13,17 +13,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { DefaultModal } from '../../../components/Generic/Modal';
 import { DefaultScreen } from '../../../components/Screen/DefaultScreen';
-import { setLoading } from '../../../store/actions/ui.actions';
+import { setLoading, toggleModal } from '../../../store/actions/ui.actions';
 import { getUsers } from '../../../store/actions/user.action';
-import { ActionType } from '../../../typescript/Form.types';
-import { IUser } from '../../../typescript/User.types';
-import { AddUserForm } from './AddUser.form';
 import { EditUserForm } from './EditUser.form';
 
 export const UsersScreen = () => {
   const classes = useStyles();
 
-  const [actionScreen, setActionScreen] = useState("");
   const [selectedUserId, setSelectedUserId] = useState("");
 
   const dispatch = useDispatch();
@@ -54,22 +50,15 @@ export const UsersScreen = () => {
               <div className={classes.actionContainer}>
                 <EditIcon
                   color={"primary"}
-                  onClick={() => {
-                    setActionScreen(ActionType.EditResource);
+                  onClick={async () => {
                     setSelectedUserId(user._id);
+                    await dispatch(toggleModal("editUser", true)); //open edit modal 
                   }}
                 />
-                {/* <AddCircleIcon
-                  color={"primary"}
-                  onClick={() => {
-                    setActionScreen(ActionType.AddResource);
-                    setSelectedUserId(user._id);
-                  }}
-                /> */}
+
                 <DeleteIcon
                   color={"primary"}
                   onClick={() => {
-                    setActionScreen(ActionType.DeleteResource);
                     setSelectedUserId(user._id);
                   }}
                 />
@@ -82,41 +71,18 @@ export const UsersScreen = () => {
     return null;
   };
 
-  const renderActionScreen = actionScreen => {
-    if (users) {
-      const selectedUser = users.find(
-        (user: IUser) => user._id === selectedUserId
-      );
+  const renderModals = () => {
+    const selectedUser = users.find(user => user._id === selectedUserId);
 
-      if (selectedUser) {
-        switch (actionScreen) {
-          case ActionType.AddResource:
-            return (
-              <DefaultModal
-                title={"Add New User"}
-                content={<AddUserForm user={selectedUser} />}
-              />
-            );
-
-          case ActionType.DeleteResource:
-            return <AddUserForm user={selectedUser} />;
-          case ActionType.EditResource:
-            return (
-              <DefaultModal
-                title={"Edit User"}
-                content={
-                  <EditUserForm user={selectedUser} userId={selectedUserId} />
-                }
-              />
-            );
-
-          default:
-            return null;
-        }
-      }
-    }
-
-    return null;
+    return (
+      <>
+        <DefaultModal
+          modalKey={"editUser"}
+          title={"Edit User"}
+          content={<EditUserForm user={selectedUser} userId={selectedUserId} />}
+        />
+      </>
+    );
   };
 
   return (
@@ -141,7 +107,7 @@ export const UsersScreen = () => {
         </Table>
       </TableContainer>
 
-      {renderActionScreen(actionScreen)}
+      {renderModals()}
     </DefaultScreen>
   );
 };

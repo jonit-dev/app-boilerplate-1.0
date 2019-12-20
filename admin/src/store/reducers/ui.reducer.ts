@@ -15,8 +15,7 @@ const INITIAL_STATE = {
   modal: {
     key: '',
     isOpen: false
-  },
-  activeModal: null
+  }
 };
 
 // tslint:disable-next-line: no-default-export

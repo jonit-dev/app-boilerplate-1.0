@@ -4,35 +4,37 @@ import Modal from '@material-ui/core/Modal';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import React, { ReactNode } from 'react';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { toggleModal } from '../../store/actions/ui.actions';
 
 interface IProps {
+  modalKey: string;
   title: string;
   content: ReactNode;
 }
 
-export const DefaultModal = ({ title, content }: IProps) => {
+export const DefaultModal = ({ modalKey, title, content }: IProps) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
-  const activeModal = useSelector<any, any>(
-    state => state.uiReducer.activeModal
-  );
-
   const modal = useSelector<any, any>(state => state.uiReducer.modal);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (modal.key === activeModal && !modal.isOpen) {
-      handleClose();
+    //watches for changes on modal object (coming from our state!)
+
+    if (modal.key === modalKey && modal.isOpen) {
+      setOpen(true);
+    } else {
+      setOpen(false);
     }
-  });
+  }, [modal]);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+  const onBackdropClick = async () => {
+    //close modal
+    await dispatch(toggleModal(modalKey, false));
   };
 
   return (
@@ -42,12 +44,13 @@ export const DefaultModal = ({ title, content }: IProps) => {
         aria-describedby="transition-modal-description"
         className={classes.modal}
         open={open}
-        onClose={handleClose}
+        onClose={() => setOpen(false)}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500
         }}
+        onBackdropClick={() => onBackdropClick()}
       >
         <Fade in={open}>
           <div className={classes.paper}>

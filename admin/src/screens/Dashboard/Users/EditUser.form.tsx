@@ -1,17 +1,13 @@
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { setLoading, setActiveModal } from "../../../store/actions/ui.actions";
+import { setLoading, toggleModal } from '../../../store/actions/ui.actions';
 import { editUser } from '../../../store/actions/user.action';
 import { IUser } from '../../../typescript/User.types';
- 
 
 interface IProps {
   user: IUser;
@@ -26,13 +22,6 @@ export const EditUserForm = ({ user, userId }: IProps) => {
   const [type, setType] = useState(user.type);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const initActiveModal = async () => {
-      await dispatch(setActiveModal("EditUser"));
-    };
-    initActiveModal();
-  }, []);
 
   const handleSelectChange = (
     setHook,
@@ -51,6 +40,7 @@ export const EditUserForm = ({ user, userId }: IProps) => {
 
     await dispatch(setLoading(true));
     await dispatch(editUser(userId, payload));
+    await dispatch(toggleModal("EditUser", false)); //close edit user modal
     await dispatch(setLoading(false));
   };
 
@@ -70,7 +60,7 @@ export const EditUserForm = ({ user, userId }: IProps) => {
           onChange={e => setEmail(e.target.value)}
         />
       </FormControl>
-      <FormControl className={classes.formControl}>
+      {/* <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-label">Type</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -82,7 +72,7 @@ export const EditUserForm = ({ user, userId }: IProps) => {
           <MenuItem value="Default">Default</MenuItem>
           <MenuItem value="Staff">Staff</MenuItem>
         </Select>
-      </FormControl>
+      </FormControl> */}
 
       <FormControl className={classes.formControl}>
         <Button
