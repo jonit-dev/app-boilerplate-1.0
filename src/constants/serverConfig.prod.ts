@@ -21,6 +21,9 @@ export const prodServerConfig = {
       "Company Address": "1234, Street Rd. Suite 1234"
     }
   },
+  tracking: {
+    mixpanelToken: "4d3748881a3b25bb07ece7cf97f22918"
+  },
 
   maintenanceMode: false,
   language: "eng",

@@ -13,6 +13,7 @@ import { userAuthMiddleware } from '../../middlewares/auth.middleware';
 import { UserMiddleware } from '../../middlewares/user.middleware';
 import { EncryptionHelper } from '../../utils/EncryptionHelper';
 import { LanguageHelper } from '../../utils/LanguageHelper';
+import { MixpanelHelper } from '../../utils/MixpanelHelper';
 import { RouterHelper } from '../../utils/RouterHelper';
 import { TextHelper } from '../../utils/TextHelper';
 import { Log } from '../Log/log.model';
@@ -65,6 +66,11 @@ userRouter.post("/users/login", async (req, res) => {
   try {
     const user = await User.findByCredentials(preparedEmail, password);
     const token = await user.generateAuthToken();
+
+
+    MixpanelHelper.mixpanel.track('USER_LOGIN', {
+      distinct_id: user._id
+    })
 
     return res.status(200).send({
       user,
@@ -134,7 +140,7 @@ userRouter.post("/users/login/google-oauth", async (req, res) => {
         });
       }
 
-      const { token } = await user.registerUser();
+      const { token } = await user.registerUser(req);
 
       return res.status(201).send({
         user,
@@ -144,6 +150,10 @@ userRouter.post("/users/login/google-oauth", async (req, res) => {
       // if he does exist, let's just login...
 
       console.log("User was found, sending back current info!");
+
+      MixpanelHelper.mixpanel.track('USER_LOGIN', {
+        distinct_id: foundUser._id
+      })
 
       const token = await foundUser.generateAuthToken();
 
@@ -217,7 +227,7 @@ userRouter.post("/users/login/facebook-oauth", async (req, res) => {
       });
     }
 
-    const { token } = await user.registerUser();
+    const { token } = await user.registerUser(req);
 
     return res.status(201).send({
       user,
@@ -227,6 +237,10 @@ userRouter.post("/users/login/facebook-oauth", async (req, res) => {
     // if he does exist, let's just login...
 
     console.log("User was found, sending back current info!");
+
+    MixpanelHelper.mixpanel.track('USER_LOGIN', {
+      distinct_id: foundUser._id
+    })
 
     const token = await foundUser.generateAuthToken();
 
@@ -258,6 +272,10 @@ userRouter.post("/users/reset-password", async (req, res) => {
   const user: any = await User.findOne({
     email
   });
+
+  MixpanelHelper.mixpanel.track('USER_RESET_PASSWORD', {
+    distinct_id: user._id
+  })
 
   if (!user) {
     return res.status(400).send({
@@ -304,6 +322,13 @@ userRouter.get("/users/reset-password/link", async (req, res) => {
     email
   });
 
+  if (user) {
+    MixpanelHelper.mixpanel.track('USER_RESET_PASSWORD_LINK', {
+      distinct_id: user._id
+    })
+  }
+
+
   if (!user) {
     return res.status(401).send({
       status: "error",
@@ -349,7 +374,7 @@ userRouter.post("/users", async (req, res) => {
 
     await user.save();
 
-    const { token } = await user.registerUser();
+    const { token } = await user.registerUser(req);
 
     return res.status(201).send({
       user,
@@ -445,6 +470,10 @@ userRouter.post(
 userRouter.post("/users/logout", userAuthMiddleware, async (req, res) => {
   const { user } = req;
   const reqToken = req.token;
+
+  MixpanelHelper.mixpanel.track('USER_LOGOUT', {
+    distinct_id: user._id
+  })
 
   try {
     // remove the token that's being used for the user from our user tokens array in our database
@@ -645,6 +674,14 @@ userRouter.post("/users/change-password", async (req, res) => {
 
   try {
     user = await User.findByCredentials(preparedEmail, currentPassword);
+
+    if (user) {
+      MixpanelHelper.mixpanel.track('USER_CHANGE_PASSWORD', {
+        distinct_id: user._id
+      })
+    }
+
+
   } catch (error) {
     console.error(error);
     return res.status(400).send({

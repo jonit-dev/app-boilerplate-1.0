@@ -28,7 +28,9 @@ export const devServerConfig = {
       }
     }
   },
-
+  tracking: {
+    mixpanelToken: "4d3748881a3b25bb07ece7cf97f22918"
+  },
   maintenanceMode: false,
   language: "eng",
   jwtSecret: "pez9SHY+4By+ce4PFMevcg=="

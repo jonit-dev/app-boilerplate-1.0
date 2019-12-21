@@ -7,7 +7,9 @@ import { serverConfig } from '../../constants/env';
 import { SUPPORT_EMAIL } from '../../constants/server.constants';
 import { AccountEmailManager } from '../../emails/account.email';
 import { MarketingEmailManager } from '../../emails/MarketingEmailManager';
+import { GenericHelper } from '../../utils/GenericHelper';
 import { LanguageHelper } from '../../utils/LanguageHelper';
+import { MixpanelHelper } from '../../utils/MixpanelHelper';
 import { TextHelper } from '../../utils/TextHelper';
 
 /*#############################################################|
@@ -42,7 +44,7 @@ export interface IUser extends IUserDocument {
   hashPassword: (string) => string;
   generateAuthToken: () => string;
   toJSON: () => Object;
-  registerUser: () => { token: string };
+  registerUser: (req?: any) => { token: string };
 }
 
 // static methods
@@ -118,7 +120,7 @@ userSchema.statics.hashPassword = async (password: string): Promise<string> => {
 
 // here we use function() instead of an arrow function because we need access to "this", that's not present on the later.
 
-userSchema.methods.registerUser = async function () {
+userSchema.methods.registerUser = async function (req?) {
   const user = this;
 
   const token = await user.generateAuthToken();
@@ -126,6 +128,34 @@ userSchema.methods.registerUser = async function () {
   console.log(`User created: ${user.email}`);
 
   const accountEmailManager = new AccountEmailManager();
+
+
+  // Register on mixpanel
+
+  const splittedName = user.name.split(' ');
+
+  try {
+    MixpanelHelper.mixpanel.people.set(user._id, {
+      $first_name: splittedName[0],
+      $last_name: splittedName[splittedName.length - 1],
+      $created: (new Date()).toISOString(),
+      $email: user.email,
+      type: user.type,
+      authType: user.authType,
+      IP: GenericHelper.getUserIp(req)
+    })
+
+    MixpanelHelper.mixpanel.track('USER_REGISTER', {
+      distinct_id: user._id
+    })
+    console.log('Mixpanel: registered user on mixpanel');
+  }
+  catch (error) {
+    console.log('Mixpanel: failed to register new user');
+    console.error(error);
+
+  }
+
 
   // Send transactional email
 

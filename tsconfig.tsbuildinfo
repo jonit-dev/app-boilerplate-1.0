@@ -378,8 +378,8 @@
         "signature": "230b1fde7c459d24755c0dc8ff1d5c1405f4691db9103b2a01d45ee8cd4563a7"
       },
       "./src/middlewares/global.middleware.ts": {
-        "version": "77faba180462c760b80f267a1e4f9459da0fca8457a68420eca199601f227356",
-        "signature": "5646266ebb90016ebeb406e99a254aa6b7778167b143d05fb7e140cbe8831da9"
+        "version": "68082a0fb11b7d84700123f8869e5c9d99d5c090e53ed7f476e19dd01a3fec2f",
+        "signature": "b789c28b8772696c3fe10e7c25f6ae0392d18b198b3d2bc1a5757cb3780a2f83"
       },
       "./node_modules/@types/jsonwebtoken/index.d.ts": {
         "version": "5b8f3001f7ba824380c3e0b0f882207c0fb9522732a0025b20d4989e3322f9b1",
@@ -466,11 +466,15 @@
         "signature": "19a32a64cd9144cb54ff213d3fcabb774277809503a51108a7a964405fef4def"
       },
       "./src/resources/User/user.model.ts": {
-        "version": "e24b26edbdcf59e5971a537e9cc7613b2a2db2974c63d3625227095a0ed5ae70",
-        "signature": "c5b0bcfac17bc8b21ff21f9656315d24860c33aba2142fb8d941114e1e5197aa"
+        "version": "f860a9e83643ce84e0ca145e571d7339e80a1238b63fbbb39de67c905be1ee60",
+        "signature": "4e1b97e3c31fbb38d120703ea1061071af17e27c820ed806eec187d4ec24d843"
+      },
+      "./src/utils/MiddlewareHelper.ts": {
+        "version": "113c49fc104c860977d590867b8e1bab715a41713893bcb66dc3b6d4d1e86629",
+        "signature": "75cd0fa221d7955b07c06d04effe13515da67f20e74ec3b93d7f2487c40976d6"
       },
       "./src/middlewares/auth.middleware.ts": {
-        "version": "d0be925972133ecdf5a5081cf743dd48204ee6dc5c7e35a14f9b1e2f34fcd70a",
+        "version": "52b6ffd9cc287d6712dd70e1394186d704752ffa0687d1759743e7e206406c7b",
         "signature": "ce97c51b326e4298ea3f591afe643174f015bc04925b1ac9d859b907e6c1d9eb"
       },
       "./src/types/global.ts": {
@@ -577,6 +581,10 @@
         "version": "7622d27b758b59a7c84d5ad6cad8006db5f22cf52f08a8fb5e9cccb2ef8bd56b",
         "signature": "d3828dfff403e1bd5d1b1198207a10514be5746824c57907ebf0c516510962c9"
       },
+      "./src/middlewares/user.middleware.ts": {
+        "version": "a7faf6ab839d3bf00db3774c8910af5220b9afb0852c3365efc0b1783430a7fc",
+        "signature": "ff95fb64f941f749b7100c70efac9a9e2e6aa57501e8c1e6cf2e9c6b51a82a39"
+      },
       "./src/utils/EncryptionHelper.ts": {
         "version": "d5cbb11bdf1b7351d600a82c16110252e16e43be9eef372d658f462f338c08b8",
         "signature": "d4002a5fc661e6323753a628a1e4e84de4923c1ec72f15c5818b588eccc24d4e"
@@ -586,7 +594,7 @@
         "signature": "75c288f55286361fe276c788b434f01895fd9227e0ac8de0cb0792d1f950cb3d"
       },
       "./src/resources/User/user.routes.ts": {
-        "version": "2fa96dbad7927996b87972e28d700a292b87c34016db3688de9522ffbebfbcf3",
+        "version": "1ef2f52ca114ab114d036fa2d2b822fda7bc105fa65f2f8555e86d31b9269e70",
         "signature": "8c8ea754c669ad8c1fd4c1dcbfa611ebfd5497455396256ab0141e96103f835a"
       },
       "./src/index.ts": {
@@ -602,8 +610,8 @@
         "signature": "27162da05b60e4d25abe5861deeeeb5f274beff77f2768213910025e60a54d38"
       },
       "./src/resources/User/user.lang.ts": {
-        "version": "5279bc4f1a6ac63e921e587fb1d3fa3de2ab6c534aa278364cf166058c941cc2",
-        "signature": "f4e2077e6ed46b954254b6bdf30e4af1a1036e07ccca57ba61bceb6c836e2be2"
+        "version": "fd74d4c96291c6e6ce102ff537639a8920087cbc438acbf2f237164568450036",
+        "signature": "db495d90cb63d5c0d37f9f05fc5367bad703aaa620008b30b642de1bf92b3718"
       },
       "./node_modules/expo-server-sdk/build/ExpoClient.d.ts": {
         "version": "cae600b1078a8d7af80f8df20a6aeb0f4e963e8055bd40435056df6a6fd51bcf",
@@ -1290,11 +1298,16 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "./src/middlewares/auth.middleware.ts": [
+      "./src/utils/MiddlewareHelper.ts": [
         "./node_modules/@types/jsonwebtoken/index.d.ts",
         "./src/constants/env.ts",
         "./src/resources/User/user.model.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./src/middlewares/auth.middleware.ts": [
         "./src/utils/LanguageHelper.ts",
+        "./src/utils/MiddlewareHelper.ts",
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1468,6 +1481,12 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "./src/middlewares/user.middleware.ts": [
+        "./src/utils/LanguageHelper.ts",
+        "./src/utils/MiddlewareHelper.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "./src/utils/EncryptionHelper.ts": [
         "./node_modules/@types/node/crypto.d.ts",
         "./src/constants/env.ts",
@@ -1487,6 +1506,7 @@
         "./src/constants/env.ts",
         "./src/emails/generic.email.ts",
         "./src/middlewares/auth.middleware.ts",
+        "./src/middlewares/user.middleware.ts",
         "./src/utils/EncryptionHelper.ts",
         "./src/utils/LanguageHelper.ts",
         "./src/utils/RouterHelper.ts",
@@ -2284,6 +2304,9 @@
       "./node_modules/@types/strip-json-comments/index.d.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./src/utils/MiddlewareHelper.ts": [
+        "./src/resources/User/user.model.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -2381,7 +2404,6 @@
       "./src/lang/global.lang.ts",
       "./src/utils/TextHelper.ts",
       "./src/utils/LanguageHelper.ts",
-      "./src/middlewares/global.middleware.ts",
       "./node_modules/@types/jsonwebtoken/index.d.ts",
       "./node_modules/@sendgrid/helpers/classes/attachment.d.ts",
       "./node_modules/@sendgrid/helpers/classes/email-address.d.ts",
@@ -2403,12 +2425,9 @@
       "./src/emails/account.email.ts",
       "./node_modules/mailchimp-api-v3/index.d.ts",
       "./src/emails/MarketingEmailManager.ts",
-      "./src/resources/User/user.model.ts",
-      "./src/middlewares/auth.middleware.ts",
       "./src/types/global.ts",
       "./src/utils/RouterHelper.ts",
       "./src/resources/Task/task.model.ts",
-      "./src/resources/Task/task.routes.ts",
       "./node_modules/axios/index.d.ts",
       "./node_modules/event-target-shim/index.d.ts",
       "./node_modules/abort-controller/dist/abort-controller.d.ts",
@@ -2435,14 +2454,20 @@
       "./src/resources/Log/log.model.ts",
       "./src/cron_jobs/main.cron.ts",
       "./src/resources/Task/task.lang.ts",
-      "./src/resources/User/user.lang.ts",
       "./node_modules/expo-server-sdk/build/ExpoClient.d.ts",
       "./src/utils/PushNotificationHelper.ts",
       "./node_modules/@types/normalize-package-data/index.d.ts",
       "./node_modules/@types/strip-bom/index.d.ts",
       "./node_modules/@types/strip-json-comments/index.d.ts",
+      "./src/middlewares/global.middleware.ts",
+      "./src/index.ts",
+      "./src/resources/User/user.model.ts",
       "./src/resources/User/user.routes.ts",
-      "./src/index.ts"
+      "./src/utils/MiddlewareHelper.ts",
+      "./src/middlewares/user.middleware.ts",
+      "./src/middlewares/auth.middleware.ts",
+      "./src/resources/User/user.lang.ts",
+      "./src/resources/Task/task.routes.ts"
     ]
   },
   "version": "3.7.2"
