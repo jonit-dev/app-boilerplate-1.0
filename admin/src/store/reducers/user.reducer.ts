@@ -50,6 +50,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
 
     case USER_LOGOUT:
       localStorage.clear();
+      break;
 
     default:
       return state;
