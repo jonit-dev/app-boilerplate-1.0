@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { Router } from 'express';
 import { readFileSync } from 'fs';
 import { OAuth2Client } from 'google-auth-library';
+import _ from 'lodash';
 import multer from 'multer';
 import randomstring from 'randomstring';
 import sharp from 'sharp';
@@ -28,6 +29,28 @@ const userRouter = new Router();
 /*#############################################################|
 |  >>> PUBLIC ROUTES
 *##############################################################*/
+
+// User => get users
+
+userRouter.get('/users/search/:keyword', async (req, res) => {
+
+  const { keyword } = req.params;
+
+  console.log(`Searching for ${keyword}`);
+
+  const users = await User.find({
+    name: { '$regex': keyword, '$options': 'i' }
+  });
+
+  // show only user name and id (for obvious security reasons!)
+  const publicUsers = users.map((user) => _.pick(user, ['name', '_id'])
+  )
+
+  return res.status(200).send(
+    publicUsers
+  )
+})
+
 
 // Authentication ========================================
 

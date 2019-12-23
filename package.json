@@ -20,7 +20,6 @@
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^6.4.0",
-    "@types/socket.io": "^2.1.4",
     "axios": "^0.19.0",
     "bad-words": "^3.0.3",
     "bcryptjs": "^2.4.3",
@@ -30,7 +29,6 @@
     "express": "^4.17.1",
     "fs": "^0.0.1-security",
     "google-auth-library": "^5.6.1",
-    "husky": "^3.1.0",
     "jsonwebtoken": "^8.5.1",
     "mailchimp-api-v3": "^1.13.1",
     "mixpanel": "^0.11.0",
@@ -45,17 +43,21 @@
     "sharp": "^0.23.2",
     "socket.io": "^2.3.0",
     "ts-node": "^8.4.1",
-    "tslint-react": "^4.1.0",
     "validator": "^11.1.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.1",
     "@types/jsonwebtoken": "^8.3.4",
+    "@types/lodash": "^4.14.149",
     "@types/mongoose": "^5.5.19",
     "@types/node": "^12.7.12",
+    "@types/socket.io": "^2.1.4",
+    "husky": "^3.1.0",
+    "lodash": "^4.17.15",
     "ts-node-dev": "^1.0.0-pre.44",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
+    "tslint-react": "^4.1.0",
     "typescript": "^3.7.2"
   },
   "nodemonConfig": {
