@@ -23,6 +23,7 @@
         "semicolon": [
             false
         ],
+        "no-implicit-dependencies": false,
         "object-literal-sort-keys": false,
         "no-this-assignment": false,
         "no-empty-interface": true,
