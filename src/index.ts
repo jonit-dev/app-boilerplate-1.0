@@ -11,7 +11,7 @@ import { GlobalMiddleware } from './middlewares/global.middleware';
 import { taskRouter } from './resources/Task/task.routes';
 import { userRouter } from './resources/User/user.routes';
 import { MixpanelHelper } from './utils/MixpanelHelper';
-import { SocketIOExampleHelper } from './utils/SocketIOExampleHelper';
+import { SocketIOHelper } from './utils/SocketIOHelper';
 
 mongoose.connect(serverConfig.app.mongodbConnectionUrl, {
   useNewUrlParser: true,
@@ -95,4 +95,4 @@ app.on("error", err => {
 *##############################################################*/
 
 
-SocketIOExampleHelper.initialize(io);
+SocketIOHelper.initialize(io);

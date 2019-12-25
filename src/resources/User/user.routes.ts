@@ -43,7 +43,7 @@ userRouter.get('/users/search/:keyword', async (req, res) => {
   });
 
   // show only user name and id (for obvious security reasons!)
-  const publicUsers = users.map((user) => _.pick(user, ['name', '_id'])
+  const publicUsers = users.map((user) => _.pick(user, ['name', '_id', 'type', 'avatarUrl'])
   )
 
   return res.status(200).send(
