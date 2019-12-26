@@ -38,6 +38,8 @@ services:
     image: "mrvautin/adminmongo"
     links:
       - "mongo"
+    depends_on:
+      - "mongo"
     environment:
       - HOST=0.0.0.0
     ports:

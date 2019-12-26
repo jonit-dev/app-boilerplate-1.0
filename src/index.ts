@@ -8,6 +8,7 @@ import socketio from 'socket.io';
 
 import { ENV, serverConfig } from './constants/env';
 import { GlobalMiddleware } from './middlewares/global.middleware';
+import { conversationRouter } from './resources/Conversation/conversation.routes';
 import { taskRouter } from './resources/Task/task.routes';
 import { userRouter } from './resources/User/user.routes';
 import { MixpanelHelper } from './utils/MixpanelHelper';
@@ -66,13 +67,9 @@ app.use(express.static(publicDirectory))
 |  >>> ROUTES
 *##############################################################*/
 
-// USERS ========================================
-
 app.use(userRouter);
-
-// TASKS ========================================
-
 app.use(taskRouter);
+app.use(conversationRouter)
 
 server.listen(port, () => {
   // tslint:disable-next-line: no-console
