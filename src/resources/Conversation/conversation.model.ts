@@ -9,10 +9,16 @@ const conversationSchema = new mongoose.Schema(
     subtitle: {
       type: String
     },
-    receiverId: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true
-    },
+    receiverIds: [
+      {
+        receiverId: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true
+        }
+      }
+    ],
+
+
     senderId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true
@@ -22,11 +28,14 @@ const conversationSchema = new mongoose.Schema(
     },
 
     messages: [
-      {
-        message: {
+      { // message
+        text: {
           type: String,
         },
-        default: []
+        senderId: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true
+        }
       },
       {
         timestamps: true

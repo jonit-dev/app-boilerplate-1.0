@@ -8,11 +8,34 @@ import { Conversation } from './conversation.model';
 // @ts-ignore
 const conversationRouter = new Router();
 
-// Get user's conversations ========================================
+// Get user's conversations or conversation by id ========================================
 
 conversationRouter.get('/conversations', userAuthMiddleware, async (req, res) => {
 
   const { user } = req;
+
+  const { id } = req.query;
+
+
+  if (id) {
+
+    // if user specified an Id, its because he wants a particular conversation data (not all)
+
+    try {
+      const userConversation = await Conversation.findOne({ _id: id })
+
+      return res.status(200).send(userConversation)
+
+    }
+    catch (error) {
+      console.error(error);
+      return res.status(400).send([])
+    }
+
+
+  }
+
+  // if no id was specified, return all conversations
 
   const userConversations = await Conversation.find({ senderId: user._id })
 
@@ -20,6 +43,7 @@ conversationRouter.get('/conversations', userAuthMiddleware, async (req, res) =>
 
 
 })
+
 
 // create a new conversation ========================================
 
@@ -40,7 +64,7 @@ conversationRouter.post('/conversations', userAuthMiddleware, async (req, res) =
       title: receiverUser.name,
       subtitle: receiverUser.type,
       avatarUrl: receiverUser.avatarUrl,
-      receiverId,
+      receiverIds: [{ receiverId: receiverUser._id }],
       senderId: user._id,
       messages: []
     })
@@ -58,6 +82,8 @@ conversationRouter.post('/conversations', userAuthMiddleware, async (req, res) =
     })
   }
 })
+
+// delete conversation ========================================
 
 conversationRouter.delete('/conversations/:id', userAuthMiddleware, async (req, res) => {
 
@@ -110,6 +136,7 @@ conversationRouter.delete('/conversations/:id', userAuthMiddleware, async (req, 
 
 
 })
+
 
 
 export { conversationRouter }

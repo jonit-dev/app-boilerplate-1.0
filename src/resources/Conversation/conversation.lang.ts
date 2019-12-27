@@ -13,6 +13,9 @@ export const strings = {
   },
   conversationDeletionErrorNotOwner: {
     eng: 'You cannot delete a conversation that you do not own.'
+  },
+  conversationErrorLoading: {
+    eng: 'Error while loading your conversation'
   }
 
 };
