@@ -30,13 +30,17 @@ export enum UserType {
 
 export interface IUserDocument extends Document {
   name: string;
+  givenName: string;
+  familyName: string;
   type: string;
   password: string;
   authType: { type: string; default: AuthType.EmailPassword };
+  facebookId: string;
   email: string;
   tokens: Object[];
   avatar: Binary;
   avatarUrl: string;
+  pushToken: string;
 }
 
 // methods
