@@ -482,8 +482,8 @@
         "signature": "480e40de06e1a8d8d79ede6a0168260bf5ce316cf6d56eeeacb0720e718d0de0"
       },
       "./src/resources/User/user.model.ts": {
-        "version": "e525c99ae5f32fcd3567e9bce703e5ae265170ecf22ebe9340cc266041b3bfde",
-        "signature": "7dbf4ca73f45f32c6ec1bffe7bc9a319a5e70e21bebccf62f112bba4f471b2d1"
+        "version": "ff902616749e84dc5bf5bde5d3ed100b3ebc0b1da2aa1c71ec0874da6cd833a8",
+        "signature": "c3e4bb589b2834485147ec2f54733bbbaf46bbc3a59197b2f8753cb2e8cb0a6f"
       },
       "./src/utils/MiddlewareHelper.ts": {
         "version": "113c49fc104c860977d590867b8e1bab715a41713893bcb66dc3b6d4d1e86629",
@@ -494,8 +494,8 @@
         "signature": "ce97c51b326e4298ea3f591afe643174f015bc04925b1ac9d859b907e6c1d9eb"
       },
       "./src/resources/Conversation/conversation.model.ts": {
-        "version": "f5565360293e7b7007d40c78bb9a4265a30ff8db506b7c15592c67e8dbf9d802",
-        "signature": "3b6ef521f180cfd8d314c5022f0c1c87f89b3551625e35f8b8b837796b2fbef6"
+        "version": "16d767e8811e0130ceee4f8358f8a3abd7e98311182ed91f16751dfed5c4079c",
+        "signature": "9e6c813954cb1f0d91f6aa48cb370b35ff8b097d1e6eaa7b85187131662c5708"
       },
       "./src/resources/Conversation/conversation.routes.ts": {
         "version": "478d24b72b689465c5011be92991fbb044d1faf327edb2c8fb2b8b5cc60c11c9",
@@ -673,8 +673,16 @@
         "version": "b3b4784433d3327733ac5374b59cfc0e14166792daa91ad1f435ffb30ead2a0b",
         "signature": "8c8ea754c669ad8c1fd4c1dcbfa611ebfd5497455396256ab0141e96103f835a"
       },
+      "./node_modules/expo-server-sdk/build/ExpoClient.d.ts": {
+        "version": "cae600b1078a8d7af80f8df20a6aeb0f4e963e8055bd40435056df6a6fd51bcf",
+        "signature": "cae600b1078a8d7af80f8df20a6aeb0f4e963e8055bd40435056df6a6fd51bcf"
+      },
+      "./src/utils/PushNotificationHelper.ts": {
+        "version": "fada8b8f5282e16585247e2fadee678ff965e609f1ff1f0462d452273813cb98",
+        "signature": "d4f9b58a89130a6b8bf753825adb635980eafa75a7bf4891f9c1e5b7dd176ae5"
+      },
       "./src/utils/SocketIOHelper.ts": {
-        "version": "510ce0344b9c82a894e85e812615593159bc4b1c81ae4fd5ed7d3307e06288f4",
+        "version": "7d109ba13cf7a099b3d0afd750b3952de12a59e7ab75ffd30b727e3a21880519",
         "signature": "18379cc8e31315289920375b211ab2f328bf9b8b50d115a3e46ceb75abed2310"
       },
       "./src/index.ts": {
@@ -696,14 +704,6 @@
       "./src/resources/User/user.lang.ts": {
         "version": "fd74d4c96291c6e6ce102ff537639a8920087cbc438acbf2f237164568450036",
         "signature": "db495d90cb63d5c0d37f9f05fc5367bad703aaa620008b30b642de1bf92b3718"
-      },
-      "./node_modules/expo-server-sdk/build/ExpoClient.d.ts": {
-        "version": "cae600b1078a8d7af80f8df20a6aeb0f4e963e8055bd40435056df6a6fd51bcf",
-        "signature": "cae600b1078a8d7af80f8df20a6aeb0f4e963e8055bd40435056df6a6fd51bcf"
-      },
-      "./src/utils/PushNotificationHelper.ts": {
-        "version": "fada8b8f5282e16585247e2fadee678ff965e609f1ff1f0462d452273813cb98",
-        "signature": "d4f9b58a89130a6b8bf753825adb635980eafa75a7bf4891f9c1e5b7dd176ae5"
       },
       "./src/utils/SocketIOExampleHelper.ts": {
         "version": "4403610ed86e9c85e614ace14bb9bd2b04ca4593ecca5a3145f3d3801ce83f26",
@@ -1849,8 +1849,21 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "./node_modules/expo-server-sdk/build/ExpoClient.d.ts": [
+        "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/ts3.2/index.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./src/utils/PushNotificationHelper.ts": [
+        "./node_modules/expo-server-sdk/build/ExpoClient.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "./src/utils/SocketIOHelper.ts": [
         "./src/resources/Conversation/conversation.model.ts",
+        "./src/resources/User/user.model.ts",
+        "./src/utils/PushNotificationHelper.ts",
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1884,17 +1897,6 @@
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "./src/resources/User/user.lang.ts": [
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./node_modules/expo-server-sdk/build/ExpoClient.d.ts": [
-        "./node_modules/@types/node/http.d.ts",
-        "./node_modules/@types/node/ts3.2/index.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./src/utils/PushNotificationHelper.ts": [
-        "./node_modules/expo-server-sdk/build/ExpoClient.d.ts",
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -2502,6 +2504,9 @@
       "./src/utils/MiddlewareHelper.ts": [
         "./src/resources/User/user.model.ts"
       ],
+      "./src/resources/Conversation/conversation.model.ts": [
+        "./node_modules/@types/mongoose/index.d.ts"
+      ],
       "./src/resources/Task/task.model.ts": [
         "./node_modules/@types/mongoose/index.d.ts"
       ],
@@ -2876,9 +2881,6 @@
       "./node_modules/@types/strip-json-comments/index.d.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "./src/resources/Conversation/conversation.model.ts": [
-        "./node_modules/@types/mongoose/index.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -3002,13 +3004,9 @@
       "./src/utils/GenericHelper.ts",
       "./node_modules/mixpanel/lib/mixpanel-node.d.ts",
       "./src/utils/MixpanelHelper.ts",
-      "./src/resources/User/user.model.ts",
-      "./src/utils/MiddlewareHelper.ts",
-      "./src/middlewares/auth.middleware.ts",
       "./src/types/global.ts",
       "./src/utils/RouterHelper.ts",
       "./src/resources/Task/task.model.ts",
-      "./src/resources/Task/task.routes.ts",
       "./node_modules/axios/index.d.ts",
       "./node_modules/event-target-shim/index.d.ts",
       "./node_modules/abort-controller/dist/abort-controller.d.ts",
@@ -3044,24 +3042,28 @@
       "./node_modules/@types/lodash/ts3.1/common/util.d.ts",
       "./node_modules/@types/lodash/ts3.1/index.d.ts",
       "./src/emails/generic.email.ts",
-      "./src/middlewares/user.middleware.ts",
       "./src/utils/EncryptionHelper.ts",
       "./src/resources/Log/log.model.ts",
-      "./src/resources/User/user.routes.ts",
-      "./src/cron_jobs/main.cron.ts",
-      "./src/resources/Task/task.lang.ts",
-      "./src/resources/User/user.lang.ts",
       "./node_modules/expo-server-sdk/build/ExpoClient.d.ts",
       "./src/utils/PushNotificationHelper.ts",
+      "./src/index.ts",
+      "./src/cron_jobs/main.cron.ts",
+      "./src/resources/Conversation/conversation.lang.ts",
+      "./src/resources/Task/task.lang.ts",
+      "./src/resources/User/user.lang.ts",
       "./src/utils/SocketIOExampleHelper.ts",
       "./node_modules/@types/normalize-package-data/index.d.ts",
       "./node_modules/@types/strip-bom/index.d.ts",
       "./node_modules/@types/strip-json-comments/index.d.ts",
-      "./src/resources/Conversation/conversation.model.ts",
+      "./src/resources/User/user.model.ts",
       "./src/utils/SocketIOHelper.ts",
+      "./src/resources/User/user.routes.ts",
       "./src/resources/Conversation/conversation.routes.ts",
-      "./src/index.ts",
-      "./src/resources/Conversation/conversation.lang.ts"
+      "./src/utils/MiddlewareHelper.ts",
+      "./src/resources/Conversation/conversation.model.ts",
+      "./src/middlewares/auth.middleware.ts",
+      "./src/resources/Task/task.routes.ts",
+      "./src/middlewares/user.middleware.ts"
     ]
   },
   "version": "3.7.2"

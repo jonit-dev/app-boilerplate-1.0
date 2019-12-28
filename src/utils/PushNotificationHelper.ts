@@ -3,10 +3,11 @@ import Expo, { ExpoPushMessage } from 'expo-server-sdk';
 export class PushNotificationHelper {
   public static sendPush(pushTokens: string[], customMessage: object) {
     const expo = new Expo();
-
     const messages: ExpoPushMessage[] = [];
 
-    for (const pushToken of pushTokens) {
+    const uniquePushTokens = Array.from(new Set(pushTokens));
+
+    for (const pushToken of uniquePushTokens) {
       // Check that all your push tokens appear to be valid Expo push tokens
       if (!Expo.isExpoPushToken(pushToken)) {
         console.error(`Push token ${pushToken} is not a valid Expo push token`);
