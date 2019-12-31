@@ -9,11 +9,12 @@ import socketio from 'socket.io';
 import { ENV, serverConfig } from './constants/env';
 import { GlobalMiddleware } from './middlewares/global.middleware';
 import { conversationRouter } from './resources/Conversation/conversation.routes';
-import { feedPostRouter } from './resources/FeedPost/feedpost.routes';
+import { postRouter } from './resources/Post/post.routes';
 import { taskRouter } from './resources/Task/task.routes';
 import { userRouter } from './resources/User/user.routes';
 import { MixpanelHelper } from './utils/MixpanelHelper';
 import { SocketIOHelper } from './utils/SocketIOHelper';
+
 
 mongoose.connect(serverConfig.app.mongodbConnectionUrl, {
   useNewUrlParser: true,
@@ -71,7 +72,7 @@ app.use(express.static(publicDirectory))
 app.use(userRouter);
 app.use(taskRouter);
 app.use(conversationRouter)
-app.use(feedPostRouter)
+app.use(postRouter)
 
 server.listen(port, () => {
   // tslint:disable-next-line: no-console

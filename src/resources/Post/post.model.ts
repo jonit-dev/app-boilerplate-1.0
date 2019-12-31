@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 
-export enum FeedPostCategory {
+export enum PostCategory {
   Default = 'Default'
 }
 
-const feedPostSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -26,7 +26,7 @@ const feedPostSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    default: FeedPostCategory.Default
+    default: PostCategory.Default
   },
   likes: {
     type: Number,
@@ -42,4 +42,4 @@ const feedPostSchema = new mongoose.Schema({
   timestamps: true
 })
 
-export const FeedPost = mongoose.model('FeedPost', feedPostSchema)
+export const Post = mongoose.model('Post', PostSchema)
