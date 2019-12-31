@@ -31,7 +31,12 @@ const feedPostSchema = new mongoose.Schema({
   likes: {
     type: Number,
     default: 0
-  }
+  },
+  usersWhoLiked: [
+    {
+      type: String
+    }
+  ]
 
 }, {
   timestamps: true
