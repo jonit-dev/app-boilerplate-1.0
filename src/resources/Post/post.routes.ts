@@ -23,9 +23,9 @@ postRouter.get('/post', userAuthMiddleware, async (req, res) => {
     // if user specified an Id, its because he wants a particular post data (not all)
 
     try {
-      const post = await Post.findOne({ _id: id })
+      const foundPost = await Post.findOne({ _id: id })
 
-      return res.status(200).send(post)
+      return res.status(200).send(foundPost)
 
     }
     catch (error) {
