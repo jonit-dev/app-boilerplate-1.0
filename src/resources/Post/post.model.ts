@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 
 export enum PostCategory {
-  Default = 'Default'
+  Default,
+  Post
 }
 
 const PostSchema = new mongoose.Schema({
@@ -20,10 +21,12 @@ const PostSchema = new mongoose.Schema({
     type: Object,
     required: true
   },
-  image: {
-    type: Buffer,
-    default: null
-  },
+  images: [
+    {
+      type: String,
+      default: null
+    }
+  ],
   category: {
     type: String,
     default: PostCategory.Default

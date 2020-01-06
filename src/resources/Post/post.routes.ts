@@ -1,7 +1,10 @@
 import { Router } from 'express';
+import fileType from 'file-type';
+import fs from 'fs';
 
 import { userAuthMiddleware } from '../../middlewares/auth.middleware';
 import { LanguageHelper } from '../../utils/LanguageHelper';
+import { UploadHelper } from '../../utils/UploadHelper';
 import { Post } from './post.model';
 
 
@@ -109,12 +112,13 @@ postRouter.post('/post/like', userAuthMiddleware, async (req, res) => {
 
 // Post a new post ========================================
 
+
+
 postRouter.post('/post', userAuthMiddleware, async (req, res) => {
 
   const { user } = req;
 
-  const { title, text, image, category } = req.body;
-
+  const { title, text, images, category } = req.body;
 
   try {
 
@@ -122,11 +126,67 @@ postRouter.post('/post', userAuthMiddleware, async (req, res) => {
       title,
       text,
       ownerId: user._id,
-      image,
       category
     })
 
     await newPost.save();
+
+
+    // Save images to database
+
+    const imagesURI = await Promise.all(images.map(async (imageStream) => {
+
+      const data = fs.readFileSync(imageStream.path);
+      const buffer = Buffer.from(data)
+
+      const options = {
+        maxFileSizeInMb: 15,
+        // @ts-ignore
+        fileExtension: fileType(buffer).ext,
+        allowedFileExtensions: ['png', 'jpg', 'jpeg'],
+        resizeWidthHeight: {
+          width: null,
+          height: 600
+        }
+      }
+
+
+      try {
+        const uploadOutput = await UploadHelper.saveImageToFolder('post', newPost._id, 'jpg', buffer, options)
+
+        if (uploadOutput === 'unallowedExtension') {
+          return res.status(401).send({
+            status: 'error',
+            message: LanguageHelper.getLanguageString('post', 'postFileTypeError', {
+              type: options.fileExtension
+            })
+          })
+        }
+
+        if (uploadOutput === 'maxFileSize') {
+          return res.status(401).send({
+            status: 'error',
+            message: LanguageHelper.getLanguageString('post', 'postFileMaximumSize', {
+              size: '15mb'
+            })
+          })
+        }
+        return uploadOutput
+      }
+      catch (error) {
+        console.error(error);
+        return res.status(401).send({
+          status: 'error',
+          message: LanguageHelper.getLanguageString('post', 'postFileUploadError')
+        })
+      }
+
+    }))
+
+    // @ts-ignore
+    newPost.images = imagesURI
+    await newPost.save()
+
 
     return res.status(200).send(newPost)
   }

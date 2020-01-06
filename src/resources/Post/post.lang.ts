@@ -13,5 +13,14 @@ export const strings = {
   },
   postDeletionError: {
     eng: 'Error while trying to delete your post'
+  },
+  postFileTypeError: {
+    eng: 'Invalid file type: {{type}}. Please, use png, jpg or jpeg format'
+  },
+  postFileMaximumSize: {
+    eng: 'Your uploaded file exceeds the maximum allowed size of {{size}}'
+  },
+  postFileUploadError: {
+    eng: 'An error occurred while trying to upload your files. Please contact the support.'
   }
 };

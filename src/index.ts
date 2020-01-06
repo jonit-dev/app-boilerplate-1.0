@@ -1,8 +1,10 @@
 import { exec } from 'child_process';
 import cors from 'cors';
 import express from 'express';
+import formData from 'express-form-data';
 import http from 'http';
 import mongoose from 'mongoose';
+import os from 'os';
 import path from 'path';
 import socketio from 'socket.io';
 
@@ -34,7 +36,7 @@ const io = socketio(server); // now we pass this server variable to our server
 
 const port = process.env.PORT || serverConfig.app.port;
 
-const publicDirectory = path.join(__dirname, './public')
+export const publicDirectory = path.join(__dirname, './public')
 
 app.use(cors())
 
@@ -53,6 +55,23 @@ MixpanelHelper.init();
 |  >>> MIDDLEWARES
 *##############################################################*/
 
+// handling formdata
+
+const options = {
+  uploadDir: os.tmpdir(),
+  autoClean: true
+};
+
+// parse data with connect-multiparty.
+app.use(formData.parse(options));
+// delete from the request all empty files (size == 0)
+app.use(formData.format());
+// change the file objects to fs.ReadStream
+app.use(formData.stream());
+// union the body and the files
+app.use(formData.union());
+
+
 // app.use(GlobalMiddleware.enableCors);
 
 if (serverConfig.maintenanceMode) {
@@ -68,6 +87,7 @@ app.use(express.static(publicDirectory))
 /*#############################################################|
 |  >>> ROUTES
 *##############################################################*/
+
 
 app.use(userRouter);
 app.use(taskRouter);
