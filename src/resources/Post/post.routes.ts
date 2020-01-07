@@ -120,6 +120,8 @@ postRouter.post('/post', userAuthMiddleware, async (req, res) => {
 
   const { title, text, images, category } = req.body;
 
+
+
   try {
 
     const newPost = new Post({
