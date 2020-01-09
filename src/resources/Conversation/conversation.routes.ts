@@ -51,7 +51,36 @@ conversationRouter.post('/conversations', userAuthMiddleware, async (req, res) =
 
   const { user } = req;
 
-  const { receiverId } = req.body;
+  const { receiverId, type } = req.body;
+
+  if (type === "Individual") {
+
+    const conversations: any = await Conversation.find({
+      type,
+      senderId: user._id
+    })
+
+
+    for (const conversation of conversations) {
+      // if we already have a conversation from this user with the same receiver (individual conversation only)
+      if (conversation.receiverIds[0].receiverId.equals(receiverId)) {
+        console.log('conversation already exists, skipping creation...');
+        // in other words, if conversation already exists, return an error
+        return res.status(400).send({
+          status: 'error',
+          message: LanguageHelper.getLanguageString('conversation', 'conversationAlreadyExistsError')
+        })
+      }
+    }
+
+
+
+
+
+  }
+
+
+
 
 
   try {

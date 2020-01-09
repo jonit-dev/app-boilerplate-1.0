@@ -514,7 +514,7 @@
         "signature": "3d5e77e40e80d27db0288418d5ac917ecac64e18c7cca2dfeace6c2ca5927fa7"
       },
       "./src/resources/Post/post.routes.ts": {
-        "version": "ea200151428bc0be135f7f923daf44b4b61bda9281969dc63ab2ce5784acbccf",
+        "version": "3b0b7cadf536bca37faa70a8d0dcce2d5595b97d86d34001650d8e8904e74790",
         "signature": "b7ab2298872e413229ebf0c184245ee0da750eecb0789d6fcc048e8fdf6732bf"
       },
       "./src/types/global.ts": {
@@ -3073,8 +3073,8 @@
       "./src/resources/Conversation/conversation.model.ts",
       "./src/resources/Conversation/conversation.routes.ts",
       "./node_modules/file-type/index.d.ts",
+      "./src/utils/UploadHelper.ts",
       "./src/resources/Post/post.model.ts",
-      "./src/resources/Post/post.routes.ts",
       "./src/types/global.ts",
       "./src/utils/RouterHelper.ts",
       "./src/resources/Task/task.model.ts",
@@ -3131,7 +3131,7 @@
       "./node_modules/@types/normalize-package-data/index.d.ts",
       "./node_modules/@types/strip-bom/index.d.ts",
       "./node_modules/@types/strip-json-comments/index.d.ts",
-      "./src/utils/UploadHelper.ts"
+      "./src/resources/Post/post.routes.ts"
     ]
   },
   "version": "3.7.2"

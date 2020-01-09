@@ -16,6 +16,9 @@ export const strings = {
   },
   conversationErrorLoading: {
     eng: 'Error while loading your conversation'
+  },
+  conversationAlreadyExistsError: {
+    eng: 'Conversation already exists. Please select another user'
   }
 
 };
