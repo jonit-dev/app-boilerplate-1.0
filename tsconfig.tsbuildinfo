@@ -498,7 +498,7 @@
         "signature": "9e6c813954cb1f0d91f6aa48cb370b35ff8b097d1e6eaa7b85187131662c5708"
       },
       "./src/resources/Conversation/conversation.routes.ts": {
-        "version": "478d24b72b689465c5011be92991fbb044d1faf327edb2c8fb2b8b5cc60c11c9",
+        "version": "7e1e07de3caa1d67c1798c2bd1669d7bc50ee1fa665889571afaf71bb13cc2dd",
         "signature": "7286a0dde2ab01a72f1e2136050a1394c8718fa8bac609ebf8e7a1a7cee17592"
       },
       "./node_modules/file-type/index.d.ts": {
@@ -710,8 +710,8 @@
         "signature": "7fd667efb4393d57187166225af08b1761f9ca008b43a1219eddb6a8948d35e1"
       },
       "./src/resources/Conversation/conversation.lang.ts": {
-        "version": "ffd3677231cf8c5d8e4179c10f70e2763f75ff10d435916fba65915dd03098e1",
-        "signature": "4f8a33c18a9320cf4396a1eb82bb137af309822d894e7cf7b9026954d0212aaf"
+        "version": "3a1a956155fa781959bf20f3f896aa7aa2562de1b36debe21610ff1a343b735a",
+        "signature": "4832814b60c031486a028411766545185cb9de5952f31c8b4fe8dbfb2fff617b"
       },
       "./src/resources/Post/post.lang.ts": {
         "version": "ae323501be6e70c3a13525d17e303775ab729b6cdbf2e928ee0e6b7dd5814bf8",
@@ -3071,10 +3071,10 @@
       "./src/utils/MiddlewareHelper.ts",
       "./src/middlewares/auth.middleware.ts",
       "./src/resources/Conversation/conversation.model.ts",
-      "./src/resources/Conversation/conversation.routes.ts",
       "./node_modules/file-type/index.d.ts",
       "./src/utils/UploadHelper.ts",
       "./src/resources/Post/post.model.ts",
+      "./src/resources/Post/post.routes.ts",
       "./src/types/global.ts",
       "./src/utils/RouterHelper.ts",
       "./src/resources/Task/task.model.ts",
@@ -3123,7 +3123,6 @@
       "./src/utils/SocketIOHelper.ts",
       "./src/index.ts",
       "./src/cron_jobs/main.cron.ts",
-      "./src/resources/Conversation/conversation.lang.ts",
       "./src/resources/Post/post.lang.ts",
       "./src/resources/Task/task.lang.ts",
       "./src/resources/User/user.lang.ts",
@@ -3131,7 +3130,8 @@
       "./node_modules/@types/normalize-package-data/index.d.ts",
       "./node_modules/@types/strip-bom/index.d.ts",
       "./node_modules/@types/strip-json-comments/index.d.ts",
-      "./src/resources/Post/post.routes.ts"
+      "./src/resources/Conversation/conversation.routes.ts",
+      "./src/resources/Conversation/conversation.lang.ts"
     ]
   },
   "version": "3.7.2"

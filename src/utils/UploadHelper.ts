@@ -1,4 +1,5 @@
 import fs from 'fs';
+import randomstring from 'randomstring';
 import sharp from 'sharp';
 
 import { publicDirectory } from '..';
@@ -66,7 +67,11 @@ export class UploadHelper {
 
     // check number of files we already have on the folder
     const files = fs.readdirSync(fileDirectory)
-    const fileFullName = `${files.length}.${extension}`; // make sure we always have an unique name
+    const randomHash = randomstring.generate({
+      length: 12,
+      charset: 'alphabetic'
+    });
+    const fileFullName = `${randomHash}_${files.length}.${extension}`; // make sure we always have an unique name
 
     const filePath = `${fileDirectory}/${fileFullName}`
 

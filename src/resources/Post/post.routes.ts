@@ -13,10 +13,7 @@ const postRouter = new Router();
 
 postRouter.get('/post', userAuthMiddleware, async (req, res) => {
 
-
-
   const { id } = req.query;
-
 
   if (id) {
 
