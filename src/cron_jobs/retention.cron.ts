@@ -8,9 +8,11 @@ import { PushNotificationHelper } from '../utils/PushNotificationHelper';
 
 export class RetentionCron {
   public static inactiveUserReminder() {
-    console.log("RetentionCron => inactiveUserReminder");
-    
+
     cron.schedule("0 0 */3 * *", async () => {
+
+      console.log("RetentionCron => inactiveUserReminder");
+
 
       const users: IUser[] = await User.find({}) // select all users
 
