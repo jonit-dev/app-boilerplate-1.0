@@ -9,6 +9,7 @@ import path from 'path';
 import socketio from 'socket.io';
 
 import { ENV, serverConfig } from './constants/env';
+import { RetentionCron } from './cron_jobs/retention.cron';
 import { GlobalMiddleware } from './middlewares/global.middleware';
 import { conversationRouter } from './resources/Conversation/conversation.routes';
 import { postRouter } from './resources/Post/post.routes';
@@ -50,6 +51,7 @@ MixpanelHelper.init();
 
 // CRON JOBS ========================================
 // MainCron.sampleCron();
+RetentionCron.inactiveUserReminder()
 
 /*#############################################################|
 |  >>> MIDDLEWARES

@@ -41,6 +41,8 @@ export interface IUserDocument extends Document {
   avatar: Binary;
   avatarUrl: string;
   pushToken: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 // methods
