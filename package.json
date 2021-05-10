@@ -56,7 +56,7 @@
     "@types/node": "^12.7.12",
     "@types/socket.io": "^2.1.4",
     "husky": "^3.1.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "ts-node-dev": "^1.0.0-pre.44",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
