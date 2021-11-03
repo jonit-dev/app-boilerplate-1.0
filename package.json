@@ -46,7 +46,7 @@
     "sharp": "^0.23.2",
     "socket.io": "^2.3.0",
     "ts-node": "^8.4.1",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.1",
