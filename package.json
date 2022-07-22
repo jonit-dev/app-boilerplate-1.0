@@ -29,7 +29,7 @@
     "expo-server-sdk": "^3.4.0",
     "express": "^4.17.1",
     "express-form-data": "^2.0.10",
-    "file-type": "^12.4.2",
+    "file-type": "^16.5.4",
     "fs": "^0.0.1-security",
     "google-auth-library": "^5.6.1",
     "jsonwebtoken": "^8.5.1",
