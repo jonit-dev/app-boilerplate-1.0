@@ -27,7 +27,7 @@
     "crypto": "^1.0.1",
     "date-diff": "^0.2.1",
     "expo-server-sdk": "^3.4.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-form-data": "^2.0.10",
     "file-type": "^12.4.2",
     "fs": "^0.0.1-security",
